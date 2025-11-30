@@ -1,0 +1,18 @@
+.page-product { padding:20px; min-height:100vh; background:#0b1724; color:#fff; }
+.back-btn { background:transparent; color:#9aa6b2; border:none; margin-bottom:12px; cursor:pointer; }
+.product-layout { display:flex; gap:18px; align-items:flex-start; }
+.gallery { flex: 1 1 45%; background:#0f2636; padding:12px; border-radius:12px; display:flex; gap:8px; overflow:auto; }
+.gallery-img { width:100%; object-fit:cover; border-radius:8px; }
+.product-meta { flex:1 1 45%; }
+.price-row { display:flex; align-items:center; gap:12px; margin:8px 0; }
+.meta-actions { margin-left:auto; display:flex; gap:8px; }
+.icon-btn { background: rgba(0,0,0,0.35); border:none; color:#fff; padding:8px; border-radius:8px; cursor:pointer; }
+.sizes { display:flex; gap:8px; margin:12px 0; flex-wrap:wrap; }
+.size-btn { padding:8px 12px; background:#0b1b26; border-radius:8px; border:1px solid rgba(255,255,255,0.03); color:#fff; cursor:pointer; }
+.size-btn.disabled { opacity:0.4; cursor:not-allowed; }
+.vendor-line { color:#9aa6b2; margin-top:8px; }
+.description { margin-top:16px; color:#cfd8dc; line-height:1.5; }
+@media (max-width: 768px) {
+  .product-layout { flex-direction: column; }
+  .gallery { height: 50vh; }
+}
