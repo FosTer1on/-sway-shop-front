@@ -1,52 +1,78 @@
-import React from "react";
-import ProductCard from "../../components/ProductCard/ProductCard";
-import "./Home.css";
+import { useState, useMemo } from "react";
+// ^ COMPONENTS
+import Layout from "@components/NavBar/Layout";
+import { CatalogOfProducts } from "@components/Product/CatalogOfProducts";
+// import { FilterBar } from "../../components/FilterBar";
+// import { ProductGrid } from "../../components/ProductCard";
+// ? CSS
+import styles from "./Home.module.css";
 
-/*
-Home page visual example.
-Props expected: products (array), onNavigate, onToggleWishlist, onAddToCart
-*/
-
-export default function Home({
-  products = [],
-  onNavigate,
-  onToggleWishlist,
-  onAddToCart,
-}) {
+export default function Home() {
   return (
-    <main className="page-home">
-      <section className="hero">
-        <div className="hero-inner">
-          <h1>Каталог</h1>
-          <p>Соберите свой стиль — минималистичный тёмный дизайн.</p>
+    <Layout>
+      <div className={styles.container}>
+        {/* Header */}
+        <div className={styles.header}>
+          <h1 className={styles.title}>Catalog</h1>
+          <p className={styles.subtitle}>
+            Explore our collection of quality clothing items
+          </p>
         </div>
-      </section>
 
-      <section className="filters">
-        <div className="filter-row">
-          <div className="filter-item">Status (multi)</div>
-          <div className="filter-item">Sort</div>
-          <div className="filter-item">Category</div>
-          <div className="filter-item">Brand / Store</div>
-          <div className="filter-item price-range">Price from — to</div>
+        {/* Filter Bar */}
+        {/* <FilterBar
+          onFilterChange={handleFilterChange}
+          isOpen={filterOpen}
+          onToggle={() => setFilterOpen(!filterOpen)}
+        /> */}
+
+        {/* Results Info */}
+        <div className={styles.resultsInfo}>
+          <p>
+            Showing 1 of 1{" "}
+            products
+          </p>
+          {/* <p>
+            Showing {displayedProducts.length} of {filteredProducts.length}{" "}
+            products
+          </p> */}
         </div>
-      </section>
 
-      <section className="products-grid">
-        {products.map((p) => (
-          <ProductCard
-            key={p.id}
-            product={p}
-            onNavigate={onNavigate}
-            onToggleWishlist={onToggleWishlist}
-            onAddToCart={onAddToCart}
+        {/* Product Grid */}
+        <CatalogOfProducts />
+        {/* {displayedProducts.length > 0 ? (
+          <ProductGrid
+            products={displayedProducts.map((p) => ({
+              ...p,
+              isFavorite: favorites.has(p.id),
+            }))}
+            isLoading={isLoadingMore}
+            onAddToCart={handleAddToCart}
+            onToggleFavorite={handleToggleFavorite}
+            onLoadMore={handleLoadMore}
+            hasMore={displayCount < filteredProducts.length}
           />
-        ))}
-      </section>
-
-      <div style={{ textAlign: "center", margin: "24px 0" }}>
-        <button className="load-more">Загрузить ещё</button>
+        ) : (
+          <div className={styles.noResults}>
+            <p>No products found matching your filters.</p>
+            <button
+              className={styles.resetBtn}
+              onClick={() =>
+                handleFilterChange({
+                  status: [],
+                  sort: "",
+                  category: [],
+                  brand: [],
+                  minPrice: 0,
+                  maxPrice: 5000000,
+                })
+              }
+            >
+              Reset Filters
+            </button>
+          </div>
+        )} */}
       </div>
-    </main>
+    </Layout>
   );
 }

@@ -1,28 +1,20 @@
-import React from 'react';
-import './Sidebar.css';
+import { Link, useLocation } from "react-router-dom";
+import {
+  HomeIcon,
+  ProfileIcon,
+  HeartIcon,
+  CartIcon,
+  LanguageIcon,
+} from "@components/icons";
+import styles from "./Sidebar.module.css";
 
-/*
-Props: active ('home'|'wishlist'|'lang'|'cart'|'profile'), counts: {wishlist, cart}, onNavigate, isMobile
-*/
-export default function Sidebar({ active='home', counts={}, onNavigate }) {
-  const items = [
-    {key:'home', label:'Home', icon:'🏠'},
-    {key:'wishlist', label:'Wishlist', icon:'♡'},
-    {key:'lang', label:'Lang', icon:'🌐'},
-    {key:'cart', label:'Cart', icon:'🛒'},
-    {key:'profile', label:'Profile', icon:'👤'},
-  ];
+
+export default function Sidebar() {
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
 
   return (
-    // <nav className="app-sidebar">
-    //   {items.map(it => (
-    //     <button key={it.key} className={`sb-item ${active===it.key ? 'active':''}`} onClick={()=>onNavigate && onNavigate(it.key)} aria-label={it.label}>
-    //       <span className="icon">{it.icon}</span>
-    //       { (it.key === 'wishlist' || it.key === 'cart') && counts[it.key] ? <span className="count">{counts[it.key]}</span> : null }
-    //     </button>
-    //   ))}
-    // </nav>
-
     <aside className={styles.sidebar}>
       <nav className={styles.nav}>
         <Link
@@ -47,9 +39,12 @@ export default function Sidebar({ active='home', counts={}, onNavigate }) {
           title="Wishlist"
         >
           <HeartIcon className={styles.icon} />
-          {wishlistCount > 0 && (
+
+            <span className={styles.badge}>2</span>
+
+          {/* {wishlistCount > 0 && (
             <span className={styles.badge}>{wishlistCount}</span>
-          )}
+          )} */}
         </Link>
 
         <Link
@@ -58,18 +53,19 @@ export default function Sidebar({ active='home', counts={}, onNavigate }) {
           title="Cart"
         >
           <CartIcon className={styles.icon} />
-          {cartCount > 0 && <span className={styles.badge}>{cartCount}</span>}
+          <span className={styles.badge}>1</span>
+          {/* {cartCount > 0 && <span className={styles.badge}>{cartCount}</span>} */}
         </Link>
 
         <button
           className={styles.navItem}
-          onClick={() => onLanguageChange?.(currentLanguage === "ru" ? "uz" : "ru")}
+          // onClick={() => onLanguageChange?.(currentLanguage === "ru" ? "uz" : "ru")}
           title="Language"
           aria-label="Toggle language"
         >
           <LanguageIcon className={styles.icon} />
           <span className={styles.langLabel}>
-            {currentLanguage.toUpperCase()}
+            {/* {currentLanguage.toUpperCase()} */}RU
           </span>
         </button>
       </nav>

@@ -1,1 +1,0 @@
-export const formatPrice = p => new Intl.NumberFormat('ru-RU').format(p);

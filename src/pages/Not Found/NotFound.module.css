@@ -1,0 +1,109 @@
+.container {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  text-align: center;
+  max-width: 600px;
+}
+
+.errorCode {
+  margin: 0;
+  font-size: 6rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, hsl(var(--accent)), hsl(168 83% 46%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+}
+
+.message {
+  margin: 0;
+  font-size: 1.05rem;
+  color: hsl(var(--muted-foreground));
+  line-height: 1.6;
+}
+
+.homeLink {
+  padding: 12px 32px;
+  background-color: hsl(var(--accent));
+  color: hsl(var(--primary-foreground));
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+.homeLink:hover {
+  background-color: hsl(168 83% 46%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 212, 191, 0.2);
+}
+
+.homeLink:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 1023px) {
+  .container {
+    padding: 1.5rem;
+    min-height: 60vh;
+  }
+
+  .errorCode {
+    font-size: 5rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .message {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 1rem;
+    min-height: 50vh;
+  }
+
+  .errorCode {
+    font-size: 4rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .message {
+    font-size: 0.95rem;
+  }
+
+  .homeLink {
+    padding: 10px 24px;
+    font-size: 0.95rem;
+  }
+}

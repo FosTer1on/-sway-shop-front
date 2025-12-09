@@ -1,0 +1,14 @@
+export { HomeIcon } from './HomeIcon';
+export { ProfileIcon } from './ProfileIcon';
+export { HeartIcon } from './HeartIcon';
+export { CartIcon } from './CartIcon';
+export { SearchIcon } from './SearchIcon';
+export { BackArrowIcon } from './BackArrowIcon';
+export { FireIcon } from './FireIcon';
+export { PercentIcon } from './PercentIcon';
+export { BestIcon } from './BestIcon';
+export { LanguageIcon } from './LanguageIcon';
+export { RuFlag } from './RuFlag';
+export { UzFlag } from './UzFlag';
+export { MenuIcon } from './MenuIcon';
+export { CloseIcon } from './CloseIcon';

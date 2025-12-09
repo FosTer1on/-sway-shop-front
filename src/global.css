@@ -1,0 +1,141 @@
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/** @import must precede all other statements */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme - Dark e-commerce theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    /* Main background: #0b1724 -> hsl(207, 68%, 8%) */
+    --background: 207 68% 8%;
+    /* Main text: #ffffff */
+    --foreground: 0 0% 100%;
+
+    /* Card background: #0f2636 -> hsl(198, 55%, 15%) */
+    --card: 198 55% 15%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 198 55% 15%;
+    --popover-foreground: 0 0% 100%;
+
+    /* Accent (primary): #2dd4bf -> hsl(168, 83%, 56%) */
+    --primary: 168 83% 56%;
+    --primary-foreground: 207 68% 8%;
+
+    /* Secondary text: #9aa6b2 -> hsl(213, 9%, 68%) */
+    --secondary: 198 55% 15%;
+    --secondary-foreground: 213 9% 68%;
+
+    /* Secondary text: #9aa6b2 */
+    --muted: 213 9% 68%;
+    --muted-foreground: 213 9% 68%;
+
+    /* Accent: #2dd4bf */
+    --accent: 168 83% 56%;
+    --accent-foreground: 207 68% 8%;
+
+    /* Error: #ef4444 -> hsl(0, 91%, 71%) */
+    --destructive: 0 91% 71%;
+    --destructive-foreground: 207 68% 8%;
+
+    /* Border color - slightly lighter than background */
+    --border: 198 45% 20%;
+    --input: 198 45% 20%;
+    --ring: 168 83% 56%;
+
+    --radius: 0.5rem;
+
+    /* Sidebar colors */
+    --sidebar-background: 207 68% 8%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 168 83% 56%;
+    --sidebar-primary-foreground: 207 68% 8%;
+    --sidebar-accent: 168 83% 56%;
+    --sidebar-accent-foreground: 207 68% 8%;
+    --sidebar-border: 198 45% 20%;
+    --sidebar-ring: 168 83% 56%;
+
+    /* Status colors */
+    --status-waiting: 38 92% 50%;     /* #f59e0b */
+    --status-delivering: 188 94% 41%; /* #06b6d4 */
+    --status-delivered: 160 84% 39%;  /* #10b981 */
+    --status-canceled: 0 91% 71%;     /* #ef4444 */
+  }
+
+  .dark {
+    --background: 207 68% 8%;
+    --foreground: 0 0% 100%;
+
+    --card: 198 55% 15%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 198 55% 15%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 168 83% 56%;
+    --primary-foreground: 207 68% 8%;
+
+    --secondary: 198 55% 15%;
+    --secondary-foreground: 213 9% 68%;
+
+    --muted: 213 9% 68%;
+    --muted-foreground: 213 9% 68%;
+
+    --accent: 168 83% 56%;
+    --accent-foreground: 207 68% 8%;
+
+    --destructive: 0 91% 71%;
+    --destructive-foreground: 207 68% 8%;
+
+    --border: 198 45% 20%;
+    --input: 198 45% 20%;
+    --ring: 168 83% 56%;
+
+    --sidebar-background: 207 68% 8%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 168 83% 56%;
+    --sidebar-primary-foreground: 207 68% 8%;
+    --sidebar-accent: 168 83% 56%;
+    --sidebar-accent-foreground: 207 68% 8%;
+    --sidebar-border: 198 45% 20%;
+    --sidebar-ring: 168 83% 56%;
+
+    --status-waiting: 38 92% 50%;
+    --status-delivering: 188 94% 41%;
+    --status-delivered: 160 84% 39%;
+    --status-canceled: 0 91% 71%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  pre,
+  code {
+    overflow-x: auto;
+    white-space: pre;
+  }
+}
