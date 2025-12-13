@@ -1,52 +1,64 @@
-import React from "react";
-// ^ COMPONENTS
+import { useEffect } from "react";
+
+// COMPONENTS
 import { ProductCard } from "./components/ProductCard";
 
-// ? CSS
+// STORE
+import useProductStore from "@/store/product/useProductStore";
+
+// CSS
 import styles from "./CatalogOfProducts.module.css";
 
 export const CatalogOfProducts = () => {
+  const {
+    products,
+    fetchProducts,
+    loading,
+    hasMore,
+    error,
+    resetProducts,
+  } = useProductStore();
+
+  // первая загрузка
+  useEffect(() => {
+    resetProducts();
+    fetchProducts({ reset: true });
+  }, []);
+
   return (
     <div className={styles.container}>
+      {/* GRID */}
       <div className={styles.grid}>
-        <ProductCard
-            // key={product.id}
-            
-          />
-          <ProductCard
-            // key={product.id}
-            
-          />
-        {/* {products.map((product) => (
+        {products.map((product) => (
           <ProductCard
             key={product.id}
             {...product}
-            onAddToCart={onAddToCart}
-            onToggleFavorite={onToggleFavorite}
           />
-        ))} */}
+        ))}
+
+        {/* skeleton / loader */}
+        {loading && products.length === 0 && (
+          <p className={styles.loading}>Loading products...</p>
+        )}
+
+        {error && (
+          <p className={styles.error}>{error}</p>
+        )}
       </div>
 
-      {/* {hasMore && ( */}
+      {/* LOAD MORE */}
+      {hasMore && (
         <div className={styles.loadMoreContainer}>
           <button
             className={styles.loadMoreBtn}
-            // onClick={onLoadMore}
-            // disabled={isLoading}
-            // aria-busy={isLoading}
+            onClick={() => fetchProducts()}
+            disabled={loading}
+            aria-busy={loading}
           >
-            Load More Products
-            {/* {isLoading ? (
-              <>
-                <span className={styles.spinner}></span>
-                Loading...
-              </>
-            ) : (
-              "Load More Products"
-            )} */}
+            {loading ? "Loading..." : "Load More Products"}
           </button>
         </div>
-      {/* // )} */}
+      )}
     </div>
   );
 };
