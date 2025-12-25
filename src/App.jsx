@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "@pages/Home/Home";
 import NotFound from "@pages/Not Found/NotFound";
 import Product from "@/pages/Product/Product";
+import Login from "./pages/Auth/Login";
 
 export default function App() {
   return (
@@ -16,7 +17,7 @@ export default function App() {
           <Route path="/product/:slug" element={<Product />} />
           {/* <Route path="/cart" element={<Cart />} /> */}
           {/* <Route path="/checkout" element={<Checkout />} /> */}
-          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/login" element={<Login />} />
           {/* <Route path="/register" element={<Register />} /> */}
           {/* <Route path="/profile" element={<Profile />} /> */}
           {/* <Route path="/wishlist" element={<Wishlist />} /> */}
