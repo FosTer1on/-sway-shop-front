@@ -1,47 +1,219 @@
-import React from 'react';
-import './Product.css';
-import { formatPrice } from '../../utils/formatPrice';
+// & REACT
+import { useEffect, useState } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+// ^ COMPONENTS
+import Layout from "@/components/NavBar/Layout";
+import {
+  BackArrowIcon,
+  HeartIcon,
+  FireIcon,
+  PercentIcon,
+  BestIcon,
+} from "@components/icons";
+import { ProductGallery } from "@/components/Product/components/ProductGallery";
+// ~ STYLES
+import styles from "./Product.module.css";
+// ? STORE
+import useProductStore from "@/store/product/useProductStore";
+import { ProductSkeleton } from "@/components/Skeleton/ProductSkeleton";
 
-/*
-Props: product {name, images, price, discountPercent, store, brand, description, sizes: [{name, available}] }
-onBack() - callback to go back
-onToggleWishlist, onAddToCart
-*/
+export default function Product() {
+  const { slug } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-export default function Product({ product, onBack, onToggleWishlist, onAddToCart }) {
-  const finalPrice = product.discountPercent ? Math.round(product.price * (1 - product.discountPercent/100)) : product.price;
+  const { product, fetchProductBySlug, isLoading } = useProductStore();
+
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    fetchProductBySlug(slug);
+  }, [slug]);
+
+  const handleAddToCart = () => {
+    console.log("ADD TO CART:", {
+      product,
+      size: selectedSize,
+      quantity,
+    });
+  };
+
+  const handleToggleFavorite = () => {
+    setIsFavorite((prev) => !prev);
+    console.log("TOGGLE FAVORITE:", product);
+  };
+
+  const statusConfig = {
+    popular: {
+      icon: <FireIcon className={styles.badgeIcon} />,
+      label: "Popular",
+    },
+    best_seller: {
+      icon: <BestIcon className={styles.badgeIcon} />,
+      label: "Best Seller",
+    },
+  };
+
+  const statusBadge = statusConfig[product.status];
+
+  if (isLoading || !product) {
+    return (
+      <Layout>
+        <ProductSkeleton />
+      </Layout>
+    );
+  }
+
+  const isDiscount = product.discount > 0;
+
   return (
-    <main className="page-product">
-      <button className="back-btn" onClick={onBack}>← Назад</button>
-      <div className="product-layout">
-        <div className="gallery">
-          {product.images && product.images.length ? (
-            product.images.map((src, i) => <img key={i} src={src} alt={product.name} className="gallery-img" />)
-          ) : (
-            <div className="gallery-placeholder">No images</div>
-          )}
-        </div>
-        <div className="product-meta">
-          <h1>{product.name}</h1>
-          <div className="price-row">
-            {product.discountPercent ? (<span className="price-old">{formatPrice(product.price)}</span>) : null}
-            <span className="price-current">{formatPrice(finalPrice)}</span>
-            <div className="meta-actions">
-              <button onClick={onToggleWishlist} className="icon-btn">♡</button>
-              <button onClick={onAddToCart} className="icon-btn">🛒</button>
+    <Layout>
+      <div className={styles.container}>
+        {/* Back Button */}
+        <button
+          className={styles.backBtn}
+          onClick={() => {
+            navigate(-1);
+            setTimeout(() => {
+              if (location.state?.fromScroll !== undefined) {
+                window.scrollTo({
+                  top: location.state.fromScroll,
+                  behavior: "auto",
+                });
+              }
+            }, 0);
+          }}
+        >
+          <BackArrowIcon className={styles.backIcon} />
+          <span>Back</span>
+        </button>
+
+        <div className={styles.content}>
+          {/* Gallery */}
+          <div className={styles.gallerySection}>
+            <ProductGallery images={product.images} title={product.name} />
+          </div>
+
+          {/* Info */}
+          <div className={styles.infoSection}>
+            {/* Badges */}
+            <div className={styles.badgesContainer}>
+              {isDiscount && (
+                <div className={`${styles.badge} ${styles.badgeDiscount}`}>
+                  <span>{product.discount}</span>
+                  <PercentIcon className={styles.badgeIcon} />
+                </div>
+              )}
+
+              {statusBadge && (
+                <div className={`${styles.badge} ${styles.badgePopular}`}>
+                  {statusBadge.icon}
+                  <span>{statusBadge.label}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Title */}
+            <h1 className={styles.title}>{product.name}</h1>
+
+            {/* Price */}
+            <div className={styles.priceSection}>
+              <div className={styles.priceContainer}>
+                {isDiscount && (
+                  <span className={styles.originalPrice}>{product.price}</span>
+                )}
+                <span className={styles.price}>
+                  {isDiscount ? product.final_price : product.price}
+                </span>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className={styles.actionButtons}>
+              <button
+                className={`${styles.wishlistBtn} ${
+                  isFavorite ? styles.active : ""
+                }`}
+                onClick={handleToggleFavorite}
+                aria-label="Add to wishlist"
+              >
+                <HeartIcon className={styles.actionIcon} filled={isFavorite} />
+              </button>
+
+              <button className={styles.addToCartBtn} onClick={handleAddToCart}>
+                Add to Cart
+              </button>
+            </div>
+
+            {/* Store & Brand */}
+            <div className={styles.storeInfo}>
+              <p>
+                <strong>Store:</strong> {product.store}
+              </p>
+              <p>
+                <strong>Brand:</strong> {product.brand}
+              </p>
+            </div>
+
+            {/* Sizes */}
+            <div className={styles.sizeSelector}>
+              <label className={styles.sizeLabel}>Select Size:</label>
+              <div className={styles.sizeOptions}>
+                {product.sizes.map(({ size, quantity }) => {
+                  const available = quantity > 0;
+
+                  return (
+                    <button
+                      key={size}
+                      className={`${styles.sizeBtn} ${
+                        selectedSize === size ? styles.selected : ""
+                      } ${!available ? styles.disabled : ""}`}
+                      onClick={() => available && setSelectedSize(size)}
+                      disabled={!available}
+                      aria-pressed={selectedSize === size}
+                      aria-disabled={!available}
+                    >
+                      {size}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Quantity */}
+            <div className={styles.quantitySelector}>
+              <label className={styles.quantityLabel}>Quantity:</label>
+              <div className={styles.quantityControls}>
+                <button
+                  className={styles.quantityBtn}
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                  aria-label="Decrease quantity"
+                >
+                  −
+                </button>
+
+                <span className={styles.quantityValue}>{quantity}</span>
+
+                <button
+                  className={styles.quantityBtn}
+                  onClick={() => setQuantity((q) => q + 1)}
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            {/* Description */}
+            <div className={styles.descriptionSection}>
+              <h2 className={styles.descriptionTitle}>Description</h2>
+              <p className={styles.description}>{product.description}</p>
             </div>
           </div>
-
-          <div className="sizes">
-            {product.sizes && product.sizes.map((s) => (
-              <button key={s.name} disabled={!s.available} className={"size-btn " + (s.available ? '':'disabled')}>{s.name}</button>
-            ))}
-          </div>
-
-          <div className="vendor-line">{product.store} • {product.brand}</div>
-          <div className="description">{product.description}</div>
         </div>
       </div>
-    </main>
+    </Layout>
   );
 }

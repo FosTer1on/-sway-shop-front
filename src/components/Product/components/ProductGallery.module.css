@@ -1,0 +1,191 @@
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.mainImageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: hsl(var(--background));
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.mainImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgba(15, 38, 54, 0.8);
+  border: 1px solid hsl(var(--border));
+  color: hsl(var(--foreground));
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.arrow:hover {
+  background-color: rgba(15, 38, 54, 1);
+  border-color: hsl(var(--accent));
+  color: hsl(var(--accent));
+}
+
+.arrow svg {
+  width: 24px;
+  height: 24px;
+}
+
+.prevArrow {
+  left: 16px;
+}
+
+.nextArrow {
+  right: 16px;
+}
+
+.counter {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background-color: rgba(15, 38, 54, 0.9);
+  color: hsl(var(--foreground));
+  padding: 8px 12px;
+  border-radius: 0.375rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+
+.thumbnails {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  overflow-x: auto;
+  padding: 0 0 8px 0;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+
+.thumbnails::-webkit-scrollbar {
+  height: 6px;
+}
+
+.thumbnails::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.thumbnails::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+
+.thumbnails::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+.thumbnail {
+  flex: 0 0 80px;
+  width: 80px;
+  height: 80px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 2px solid hsl(var(--border));
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: hsl(var(--background));
+  padding: 0;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbnail:hover {
+  border-color: hsl(var(--muted-foreground));
+}
+
+.thumbnail.active {
+  border-color: hsl(var(--accent));
+  box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--accent));
+}
+
+@media (max-width: 1023px) {
+  .thumbnails {
+    gap: 0.75rem;
+  }
+
+  .thumbnail {
+    flex: 0 0 70px;
+    width: 70px;
+    height: 70px;
+  }
+
+  .arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .prevArrow {
+    left: 12px;
+  }
+
+  .nextArrow {
+    right: 12px;
+  }
+}
+
+@media (max-width: 767px) {
+  .gallery {
+    gap: 1rem;
+  }
+
+  .arrow {
+    width: 36px;
+    height: 36px;
+    background-color: rgba(15, 38, 54, 0.9);
+  }
+
+  .arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .thumbnails {
+    gap: 0.5rem;
+  }
+
+  .thumbnail {
+    flex: 0 0 60px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .counter {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+}

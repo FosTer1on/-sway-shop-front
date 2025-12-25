@@ -28,7 +28,11 @@ export const ProductCard = ({
   const is_discount = 1 ? discount > 0 : 0;
 
   return (
-    <Link to={`/product/${slug}`} className={styles.card}>
+    <Link
+      to={`/product/${slug}`}
+      state={{ fromScroll: window.scrollY }}
+      className={styles.card}
+    >
       <div className={styles.imageContainer}>
         <img src={image} alt={name} className={styles.image} loading="lazy" />
 
