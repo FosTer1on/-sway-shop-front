@@ -1,12 +1,16 @@
 import Layout from "@/components/NavBar/Layout";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "@/api/auth/auth";
 import styles from "./Auth.module.css";
 
 const PHONE_PREFIX = "+998 ";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const [phone, setPhone] = useState(PHONE_PREFIX);
+  const [phoneDigits, setPhoneDigits] = useState("")
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -22,6 +26,7 @@ export default function Login() {
     }
 
     digits = digits.slice(0, 12); // 998XXXXXXXXX
+    setPhoneDigits(digits)
 
     const part1 = digits.slice(3, 5);
     const part2 = digits.slice(5, 8);
@@ -69,20 +74,36 @@ export default function Login() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) return;
 
     setIsLoading(true);
 
-    console.log("LOGIN DATA:");
-    console.log("Phone:", phone);
-    console.log("Password:", password);
+    try {
+      const res = await login({
+        phone_number: `+${phoneDigits}`, // "998901234567"
+        password,
+      });
+  
+      // если бэк вернул токены
+      if (res.data.access && res.data.refresh) {
+        localStorage.setItem("access_token", res.data.access);
+        localStorage.setItem("refresh_token", res.data.refresh);
 
-    setTimeout(() => {
+        navigate("/", { replace: true });
+      }
+  
+      // пока просто логируем
+    } catch (err) {
+      console.error(
+        "LOGIN ERROR:",
+        err.response?.data || err.message
+      );
+    } finally {
       setIsLoading(false);
-    }, 500);
+    }
   };
 
   return (
