@@ -56,8 +56,7 @@ export default function Product() {
     },
   };
 
-  const statusBadge = statusConfig[product.status];
-
+  
   if (isLoading || !product) {
     return (
       <Layout>
@@ -65,7 +64,8 @@ export default function Product() {
       </Layout>
     );
   }
-
+  
+  const statusBadge = statusConfig[product.status];
   const isDiscount = product.discount > 0;
 
   return (
