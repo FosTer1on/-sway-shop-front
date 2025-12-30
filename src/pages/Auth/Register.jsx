@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 // ^ Components
 import Layout from "@/components/NavBar/Layout";
 // ! Api
-import { register, verifyPhone } from "@/api/auth/auth";
+import { registerAPI, verifyPhoneAPI } from "@/api/auth/auth";
 // & Css
 import styles from "./Auth.module.css";
 
@@ -101,7 +101,7 @@ export default function Register() {
     setIsLoading(true);
 
     try {
-      await register({
+      await registerAPI({
         first_name: firstName,
         last_name: lastName,
         phone_number: `+${phoneDigits}`,
@@ -126,7 +126,7 @@ export default function Register() {
     setIsLoading(true);
   
     try {
-      const res = await verifyPhone({
+      const res = await verifyPhoneAPI({
         phone_number: `+${phoneDigits}`,
         code,
       });

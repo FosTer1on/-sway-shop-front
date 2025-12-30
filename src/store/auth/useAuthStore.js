@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 export const useAuthStore = create((set) => ({
   accessToken: null,
-  isAuth: false,
+  isAuth: !!localStorage.getItem("refresh_token"),
 
   login: (token) => {
     // localStorage.setItem("access_token", token);

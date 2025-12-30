@@ -16,11 +16,14 @@ import styles from "./Product.module.css";
 // ? STORE
 import useProductStore from "@/store/product/useProductStore";
 import { ProductSkeleton } from "@/components/Skeleton/ProductSkeleton";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Product() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { isAuth } = useAuth()
 
   const { product, fetchProductBySlug, isLoading } = useProductStore();
 
@@ -31,8 +34,6 @@ export default function Product() {
   useEffect(() => {
     fetchProductBySlug(slug);
   }, [slug]);
-
-  const isAuth = !!localStorage.getItem("access_token");
 
   const handleAddToCart = () => {
     if (!isAuth) {

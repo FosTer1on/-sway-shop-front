@@ -17,13 +17,13 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:slug" element={<Product />} />
-          
+
           <Route element={<PublicRoute />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Route>
 
-          <Route element={<ProtectedRoute />}>
+          <Route element={<PrivateRoute />}>
             {/* <Route path="/profile" element={<Profile />} /> */}
             {/* <Route path="/cart" element={<Cart />} /> */}
             {/* <Route path="/checkout" element={<Checkout />} /> */}

@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 // ^ Components
 import Layout from "@/components/NavBar/Layout";
 // ! Api
-import { login } from "@/api/auth/auth";
+import { loginAPI } from "@/api/auth/auth";
 // & Css
 import styles from "./Auth.module.css";
 
@@ -98,7 +98,7 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      const res = await login({
+      const res = await loginAPI({
         phone_number: `+${phoneDigits}`, // "998901234567"
         password,
       });
@@ -106,7 +106,7 @@ export default function Login() {
       // если бэк вернул токены
       if (res.data.access && res.data.refresh) {
         login(res.data.access);
-        
+
         localStorage.setItem("refresh_token", res.data.refresh);
 
         navigate(from, { replace: true });
