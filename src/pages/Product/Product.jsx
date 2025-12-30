@@ -32,17 +32,24 @@ export default function Product() {
     fetchProductBySlug(slug);
   }, [slug]);
 
+  const isAuth = !!localStorage.getItem("access_token");
+
   const handleAddToCart = () => {
-    console.log("ADD TO CART:", {
-      product,
-      size: selectedSize,
-      quantity,
-    });
+    if (!isAuth) {
+      navigate("/login", { state: { from: location.pathname } });
+      return;
+    }
+
+    console.log("ADD TO CART", product);
   };
 
   const handleToggleFavorite = () => {
-    setIsFavorite((prev) => !prev);
-    console.log("TOGGLE FAVORITE:", product);
+    if (!isAuth) {
+      navigate("/login");
+      return;
+    }
+
+    console.log("TOGGLE FAVORITE", product);
   };
 
   const statusConfig = {
@@ -56,7 +63,6 @@ export default function Product() {
     },
   };
 
-  
   if (isLoading || !product) {
     return (
       <Layout>
@@ -64,7 +70,7 @@ export default function Product() {
       </Layout>
     );
   }
-  
+
   const statusBadge = statusConfig[product.status];
   const isDiscount = product.discount > 0;
 
