@@ -1,7 +1,13 @@
+// ~ React
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+// ? Hooks
+import { useAuth } from "@/hooks/useAuth";
+// ^ Components
 import Layout from "@/components/NavBar/Layout";
+// ! Api
 import { register, verifyPhone } from "@/api/auth/auth";
+// & Css
 import styles from "./Auth.module.css";
 
 const PHONE_PREFIX = "+998 ";
@@ -9,6 +15,8 @@ const PHONE_PREFIX = "+998 ";
 export default function Register() {
   const navigate = useNavigate();
   const [step, setStep] = useState("register"); // register | verify
+
+  const { isAuth, login } = useAuth();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -21,6 +29,11 @@ export default function Register() {
 
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+
+  if (isAuth) {
+    navigate("/", { replace: true });
+    return null;
+  }
 
   /* =====================
      PHONE FORMAT
@@ -109,25 +122,25 @@ export default function Register() {
   const handleVerify = async (e) => {
     e.preventDefault();
     if (!validateCode()) return;
-
+  
     setIsLoading(true);
-
+  
     try {
       const res = await verifyPhone({
         phone_number: `+${phoneDigits}`,
-        code: code,
+        code,
       });
-
-      localStorage.setItem("access_token", res.data.access);
-      localStorage.setItem("refresh_token", res.data.refresh);
-
-      navigate("/");
+  
+      login(res.data.access);
+  
+      navigate("/", { replace: true });
     } catch (err) {
       console.error("VERIFY ERROR:", err.response?.data || err.message);
     } finally {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <Layout>

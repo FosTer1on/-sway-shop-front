@@ -1,12 +1,12 @@
-// src/routes/PublicRoute.jsx
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
-export default function PublicRoute({ children }) {
-  const isAuth = !!localStorage.getItem("access_token");
+export default function PublicRoute() {
+  const { isAuth } = useAuth();
 
   if (isAuth) {
     return <Navigate to="/" replace />;
   }
 
-  return children;
+  return <Outlet />;
 }

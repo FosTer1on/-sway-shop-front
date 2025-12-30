@@ -17,34 +17,18 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:slug" element={<Product />} />
-          {/* <Route path="/cart" element={<Cart />} /> */}
-          {/* <Route path="/checkout" element={<Checkout />} /> */}
-          <Route
-            path="/login"
-            element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            }
-          />
+          
+          <Route element={<PublicRoute />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
 
-          <Route
-            path="/register"
-            element={
-              <PublicRoute>
-                <Register />
-              </PublicRoute>
-            }
-          />
-          {/* <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            }
-          /> */}
-          {/* <Route path="/wishlist" element={<Wishlist />} /> */}
+          <Route element={<ProtectedRoute />}>
+            {/* <Route path="/profile" element={<Profile />} /> */}
+            {/* <Route path="/cart" element={<Cart />} /> */}
+            {/* <Route path="/checkout" element={<Checkout />} /> */}
+            {/* <Route path="/wishlist" element={<Wishlist />} /> */}
+          </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
