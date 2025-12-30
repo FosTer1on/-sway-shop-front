@@ -1,7 +1,13 @@
-import Layout from "@/components/NavBar/Layout";
+// ~ React
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+// ? Hooks
+import { useAuth } from "@/hooks/useAuth";
+// ^ Components
+import Layout from "@/components/NavBar/Layout";
+// ! Api
 import { login } from "@/api/auth/auth";
+// & Css
 import styles from "./Auth.module.css";
 
 const PHONE_PREFIX = "+998 ";
@@ -12,12 +18,19 @@ export default function Login() {
 
   const from = location.state?.from || "/";
 
+  const { isAuth, login } = useAuth();
+
   const [phone, setPhone] = useState(PHONE_PREFIX);
   const [phoneDigits, setPhoneDigits] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  if (isAuth) {
+    navigate("/", { replace: true });
+    return null;
+  }
 
   const formatPhone = (value) => {
     // убираем всё кроме цифр
@@ -92,7 +105,8 @@ export default function Login() {
 
       // если бэк вернул токены
       if (res.data.access && res.data.refresh) {
-        localStorage.setItem("access_token", res.data.access);
+        login(res.data.access);
+        
         localStorage.setItem("refresh_token", res.data.refresh);
 
         navigate(from, { replace: true });

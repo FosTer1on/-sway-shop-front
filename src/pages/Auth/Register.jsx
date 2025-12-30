@@ -132,6 +132,8 @@ export default function Register() {
       });
   
       login(res.data.access);
+
+      localStorage.setItem("refresh_token", res.data.refresh);
   
       navigate("/", { replace: true });
     } catch (err) {

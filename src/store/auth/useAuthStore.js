@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
 export const useAuthStore = create((set) => ({
-  accessToken: localStorage.getItem("access_token"),
-  isAuth: !!localStorage.getItem("access_token"),
+  accessToken: null,
+  isAuth: false,
 
   login: (token) => {
-    localStorage.setItem("access_token", token);
+    // localStorage.setItem("access_token", token);
     set({
       accessToken: token,
       isAuth: true,
@@ -13,7 +13,7 @@ export const useAuthStore = create((set) => ({
   },
 
   logout: () => {
-    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
     set({
       accessToken: null,
       isAuth: false,
