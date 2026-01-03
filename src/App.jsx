@@ -1,7 +1,11 @@
-import "./global.css";
-
+// ? REACT
+import { useEffect, useState } from "react";
+// ^ Routes
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PublicRoute from "./routes/PublicRoute";
+// ~ Store
+import { useFavoritesStore } from "@/store/favorites/useFavoritesStore";
+import { useAuth } from "@/hooks/useAuth";
 // & PAGES
 import Home from "@pages/Home/Home";
 import NotFound from "@pages/Not Found/NotFound";
@@ -9,8 +13,21 @@ import Product from "@/pages/Product/Product";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import PrivateRoute from "./routes/PrivateRoute";
+// ? Style
+import "./global.css";
+
 
 export default function App() {
+  // const { isAuth } = useAuth();
+
+  // const { fetchFavorites } = useFavoritesStore();
+
+  // useEffect(() => {
+  //   if (isAuth) {
+  //     fetchFavorites();
+  //   }
+  // }, [isAuth]);
+
   return (
     <div>
       <BrowserRouter>

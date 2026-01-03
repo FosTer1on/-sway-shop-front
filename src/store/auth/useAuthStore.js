@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { useFavoritesStore } from "@/store/favorites/useFavoritesStore";
 
 export const useAuthStore = create((set) => ({
   accessToken: null,
@@ -6,6 +7,8 @@ export const useAuthStore = create((set) => ({
 
   login: (token) => {
     // localStorage.setItem("access_token", token);
+    useFavoritesStore.getState().fetchFavorites();
+
     set({
       accessToken: token,
       isAuth: true,
@@ -14,6 +17,9 @@ export const useAuthStore = create((set) => ({
 
   logout: () => {
     localStorage.removeItem("refresh_token");
+
+    useFavoritesStore.getState().resetFavorites();
+
     set({
       accessToken: null,
       isAuth: false,

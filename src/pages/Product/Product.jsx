@@ -14,6 +14,7 @@ import { ProductGallery } from "@/components/Product/components/ProductGallery";
 // ~ STYLES
 import styles from "./Product.module.css";
 // ? STORE
+import { useFavoritesStore } from "@/store/favorites/useFavoritesStore";
 import useProductStore from "@/store/product/useProductStore";
 import { ProductSkeleton } from "@/components/Skeleton/ProductSkeleton";
 import { useAuth } from "@/hooks/useAuth";
@@ -23,17 +24,21 @@ export default function Product() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { isAuth } = useAuth()
+  const { isAuth } = useAuth();
 
   const { product, fetchProductBySlug, isLoading } = useProductStore();
 
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     fetchProductBySlug(slug);
   }, [slug]);
+
+  const { isLoaded, isFavorite, addFavorite, removeFavorite } =
+    useFavoritesStore();
+
+  const favorite = product && isLoaded ? isFavorite(product.slug) : false;
 
   const handleAddToCart = () => {
     if (!isAuth) {
@@ -50,7 +55,15 @@ export default function Product() {
       return;
     }
 
-    console.log("TOGGLE FAVORITE", product);
+    console.log(favorite);
+
+    if (!product) return;
+
+    if (favorite) {
+      removeFavorite(product.slug);
+    } else {
+      addFavorite(product.slug);
+    }
   };
 
   const statusConfig = {
@@ -141,12 +154,12 @@ export default function Product() {
             <div className={styles.actionButtons}>
               <button
                 className={`${styles.wishlistBtn} ${
-                  isFavorite ? styles.active : ""
+                  favorite ? styles.active : ""
                 }`}
                 onClick={handleToggleFavorite}
                 aria-label="Add to wishlist"
               >
-                <HeartIcon className={styles.actionIcon} filled={isFavorite} />
+                <HeartIcon className={styles.actionIcon} filled={favorite} />
               </button>
 
               <button className={styles.addToCartBtn} onClick={handleAddToCart}>

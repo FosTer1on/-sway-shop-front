@@ -1,5 +1,11 @@
-import { Link } from "react-router-dom";
+// & React
+import { Link, useNavigate } from "react-router-dom";
+// ^ Components
 import { HeartIcon, FireIcon, PercentIcon, BestIcon } from "@components/icons";
+// ~ Stores
+import { useFavoritesStore } from "@/store/favorites/useFavoritesStore";
+import { useAuth } from "@/hooks/useAuth";
+// ? Style
 import styles from "./ProductCard.module.css";
 
 const API_URL = "http://127.0.0.1:8000";
@@ -14,10 +20,9 @@ export const ProductCard = ({
   discount,
   is_popular,
   is_best_seller,
-  is_favorite,
-  onAddToCart,
-  onToggleFavorite,
 }) => {
+  const navigate = useNavigate();
+
   const rawImage = images?.[0]?.image || images?.[0];
   const image = rawImage
     ? rawImage.startsWith("http")
@@ -26,6 +31,32 @@ export const ProductCard = ({
     : "";
 
   const is_discount = 1 ? discount > 0 : 0;
+
+  const { isFavorite, addFavorite, removeFavorite, isLoaded, favorites } =
+    useFavoritesStore();
+
+  const { isAuth } = useAuth();
+
+  const is_favorite = isLoaded && slug ? isFavorite(slug) : false;
+
+  console.log(is_favorite, slug, favorites, isLoaded, isFavorite(slug));
+  console.log(isLoaded && slug ? isFavorite(slug) : false);
+
+  const handleToggleFavorite = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!isAuth) {
+      navigate("/login");
+      return;
+    }
+
+    if (is_favorite) {
+      removeFavorite(slug);
+    } else {
+      addFavorite(slug);
+    }
+  };
 
   return (
     <Link
@@ -64,16 +95,13 @@ export const ProductCard = ({
             className={`${styles.actionBtn} ${
               is_favorite ? styles.active : ""
             }`}
-            onClick={(e) => {
-              e.preventDefault();
-              onToggleFavorite?.(id);
-            }}
+            onClick={handleToggleFavorite}
             aria-label="Add to wishlist"
           >
-            <HeartIcon className={styles.actionIcon} />
+            <HeartIcon className={styles.actionIcon} filled={is_favorite} />
           </button>
 
-          <button
+          {/* <button
             className={styles.actionBtn}
             onClick={(e) => {
               e.preventDefault();
@@ -92,7 +120,7 @@ export const ProductCard = ({
               <circle cx="20" cy="21" r="1" />
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
             </svg>
-          </button>
+          </button> */}
         </div>
       </div>
 
