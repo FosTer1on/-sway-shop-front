@@ -20,6 +20,7 @@ export const ProductCard = ({
   discount,
   is_popular,
   is_best_seller,
+  onRemoveFromWishlist
 }) => {
   const navigate = useNavigate();
 
@@ -42,7 +43,7 @@ export const ProductCard = ({
   console.log(is_favorite, slug, favorites, isLoaded, isFavorite(slug));
   console.log(isLoaded && slug ? isFavorite(slug) : false);
 
-  const handleToggleFavorite = (e) => {
+  const handleToggleFavorite = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -53,6 +54,10 @@ export const ProductCard = ({
 
     if (is_favorite) {
       removeFavorite(slug);
+
+      if (onRemoveFromWishlist) {
+        onRemoveFromWishlist();
+      }
     } else {
       addFavorite(slug);
     }

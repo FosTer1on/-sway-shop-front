@@ -15,18 +15,19 @@ import Register from "./pages/Auth/Register";
 import PrivateRoute from "./routes/PrivateRoute";
 // ? Style
 import "./global.css";
+import Wishlist from "./pages/Wishlist/Wishlist";
 
 
 export default function App() {
-  // const { isAuth } = useAuth();
+  const { isAuth } = useAuth();
 
-  // const { fetchFavorites } = useFavoritesStore();
+  const { fetchFavorites } = useFavoritesStore();
 
-  // useEffect(() => {
-  //   if (isAuth) {
-  //     fetchFavorites();
-  //   }
-  // }, [isAuth]);
+  useEffect(() => {
+    if (isAuth) {
+      fetchFavorites();
+    }
+  }, [isAuth]);
 
   return (
     <div>
@@ -44,7 +45,7 @@ export default function App() {
             {/* <Route path="/profile" element={<Profile />} /> */}
             {/* <Route path="/cart" element={<Cart />} /> */}
             {/* <Route path="/checkout" element={<Checkout />} /> */}
-            {/* <Route path="/wishlist" element={<Wishlist />} /> */}
+            <Route path="/wishlist" element={<Wishlist />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
