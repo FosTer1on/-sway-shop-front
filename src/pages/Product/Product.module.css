@@ -268,7 +268,7 @@
 
 .sizeBtn:hover:not(.disabled) {
   border-color: hsl(var(--accent));
-  color: hsl(var(--accent));
+  /* color: hsl(var(--accent)); */
 }
 
 .sizeBtn.selected {

@@ -16,6 +16,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 // ? Style
 import "./global.css";
 import Wishlist from "./pages/Wishlist/Wishlist";
+import Cart from "./pages/Cart/Cart";
 
 
 export default function App() {
@@ -43,7 +44,7 @@ export default function App() {
 
           <Route element={<PrivateRoute />}>
             {/* <Route path="/profile" element={<Profile />} /> */}
-            {/* <Route path="/cart" element={<Cart />} /> */}
+            <Route path="/cart" element={<Cart />} />
             {/* <Route path="/checkout" element={<Checkout />} /> */}
             <Route path="/wishlist" element={<Wishlist />} />
           </Route>

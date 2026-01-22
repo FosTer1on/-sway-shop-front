@@ -18,6 +18,7 @@ import { useFavoritesStore } from "@/store/favorites/useFavoritesStore";
 import useProductStore from "@/store/product/useProductStore";
 import { ProductSkeleton } from "@/components/Skeleton/ProductSkeleton";
 import { useAuth } from "@/hooks/useAuth";
+import { useCartStore } from "@/store/cart/useCartStore";
 
 export default function Product() {
   const { slug } = useParams();
@@ -29,24 +30,47 @@ export default function Product() {
   const { product, fetchProductBySlug, isLoading } = useProductStore();
 
   const [selectedSize, setSelectedSize] = useState(null);
-  const [quantity, setQuantity] = useState(1);
+
+  const { addToCart, isInCart, fetchCart } = useCartStore();
 
   useEffect(() => {
     fetchProductBySlug(slug);
   }, [slug]);
+
+  useEffect(() => {
+    if (isAuth) {
+      fetchCart();
+    }
+  }, [isAuth]);
 
   const { isLoaded, isFavorite, addFavorite, removeFavorite } =
     useFavoritesStore();
 
   const favorite = product && isLoaded ? isFavorite(product.slug) : false;
 
-  const handleAddToCart = () => {
+  const inCart =
+    product && selectedSize ? isInCart(product.slug, selectedSize.id) : false;
+
+  const handleAddToCart = async () => {
     if (!isAuth) {
       navigate("/login", { state: { from: location.pathname } });
       return;
     }
 
-    console.log("ADD TO CART", product);
+    if (!selectedSize) {
+      alert("Выберите размер");
+      return;
+    }
+
+    if (inCart) {
+      navigate("/cart");
+      return;
+    }
+
+    await addToCart({
+      product: product.slug,
+      size: selectedSize.id,
+    });
   };
 
   const handleToggleFavorite = () => {
@@ -54,8 +78,6 @@ export default function Product() {
       navigate("/login");
       return;
     }
-
-    console.log(favorite);
 
     if (!product) return;
 
@@ -162,8 +184,12 @@ export default function Product() {
                 <HeartIcon className={styles.actionIcon} filled={favorite} />
               </button>
 
-              <button className={styles.addToCartBtn} onClick={handleAddToCart}>
-                Add to Cart
+              <button
+                className={styles.addToCartBtn}
+                onClick={handleAddToCart}
+                disabled={!selectedSize}
+              >
+                {inCart ? "Уже в корзине" : "Добавить в корзину"}
               </button>
             </div>
 
@@ -181,48 +207,22 @@ export default function Product() {
             <div className={styles.sizeSelector}>
               <label className={styles.sizeLabel}>Select Size:</label>
               <div className={styles.sizeOptions}>
-                {product.sizes.map(({ size, quantity }) => {
-                  const available = quantity > 0;
-
+                {product.sizes.map(({ size_id, size, quantity }) => {
                   return (
                     <button
-                      key={size}
+                      key={size_id}
                       className={`${styles.sizeBtn} ${
-                        selectedSize === size ? styles.selected : ""
-                      } ${!available ? styles.disabled : ""}`}
-                      onClick={() => available && setSelectedSize(size)}
-                      disabled={!available}
-                      aria-pressed={selectedSize === size}
-                      aria-disabled={!available}
+                        selectedSize?.id === size_id ? styles.selected : ""
+                      } ${quantity === 0 ? styles.disabled : ""}`}
+                      onClick={() =>
+                        quantity > 0 && setSelectedSize({ id: size_id, label: size })
+                      }
+                      disabled={quantity === 0}
                     >
                       {size}
                     </button>
                   );
                 })}
-              </div>
-            </div>
-
-            {/* Quantity */}
-            <div className={styles.quantitySelector}>
-              <label className={styles.quantityLabel}>Quantity:</label>
-              <div className={styles.quantityControls}>
-                <button
-                  className={styles.quantityBtn}
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  aria-label="Decrease quantity"
-                >
-                  −
-                </button>
-
-                <span className={styles.quantityValue}>{quantity}</span>
-
-                <button
-                  className={styles.quantityBtn}
-                  onClick={() => setQuantity((q) => q + 1)}
-                  aria-label="Increase quantity"
-                >
-                  +
-                </button>
               </div>
             </div>
 
