@@ -1,6 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./CartSummary.module.css";
 
 export const CartSummary = ({ summary }) => {
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    navigate("/checkout");
+  };
+
   return (
     <div className={styles.summary}>
       <h2 className={styles.title}>Order Summary</h2>
@@ -24,7 +31,10 @@ export const CartSummary = ({ summary }) => {
         </div>
       </div>
 
-      <button className={styles.checkoutButton}>
+      <button
+        className={styles.checkoutButton}
+        onClick={handleCheckout}
+      >
         Proceed to Checkout
       </button>
     </div>
