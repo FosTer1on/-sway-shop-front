@@ -1,9 +1,12 @@
+import { useOrderStore } from "@/store/order/orderStore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CheckoutForm.module.css";
 
 export const CheckoutForm = () => {
   const navigate = useNavigate();
+
+  const { createOrder, loading } = useOrderStore();
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("+998 ");
@@ -20,25 +23,19 @@ export const CheckoutForm = () => {
   const formatPhone = (value) => {
     const digits = value.replace(/\D/g, "");
 
-    const cleaned = digits.startsWith("998")
-      ? digits.slice(3)
-      : digits;
+    const cleaned = digits.startsWith("998") ? digits.slice(3) : digits;
 
     const limited = cleaned.slice(0, 9);
 
     let formatted = "+998 ";
 
-    if (limited.length > 0)
-      formatted += limited.slice(0, 2);
+    if (limited.length > 0) formatted += limited.slice(0, 2);
 
-    if (limited.length >= 3)
-      formatted += " " + limited.slice(2, 5);
+    if (limited.length >= 3) formatted += " " + limited.slice(2, 5);
 
-    if (limited.length >= 6)
-      formatted += " " + limited.slice(5, 7);
+    if (limited.length >= 6) formatted += " " + limited.slice(5, 7);
 
-    if (limited.length >= 8)
-      formatted += " " + limited.slice(7, 9);
+    if (limited.length >= 8) formatted += " " + limited.slice(7, 9);
 
     return formatted;
   };
@@ -73,26 +70,35 @@ export const CheckoutForm = () => {
     }
 
     if (telegram.length < 6) {
-      newErrors.telegram =
-        "Ник в Telegram должен быть минимум 5 символов";
+      newErrors.telegram = "Ник в Telegram должен быть минимум 5 символов";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validate()) return;
 
-    console.log({
-      name,
-      phone,
-      telegram,
-    });
+    try {
+      await createOrder({
+        full_name: name,
+        phone_number: phone.replace(/\s/g, ""), // убираем пробелы
+        telegram_username: telegram,
+      });
 
-    navigate("/");
+      // console.log({
+      //   name,
+      //   phone,
+      //   telegram,
+      // });
+
+      navigate("/");
+    } catch (err) {
+      console.log("Order error:", err);
+    }
   };
 
   return (
@@ -107,15 +113,11 @@ export const CheckoutForm = () => {
             type="text"
             value={name}
             onChange={handleNameChange}
-            className={`${styles.input} ${
-              errors.name ? styles.error : ""
-            }`}
+            className={`${styles.input} ${errors.name ? styles.error : ""}`}
             placeholder="Введите имя"
           />
           {errors.name && (
-            <span className={styles.errorMessage}>
-              {errors.name}
-            </span>
+            <span className={styles.errorMessage}>{errors.name}</span>
           )}
         </div>
 
@@ -126,14 +128,10 @@ export const CheckoutForm = () => {
             type="tel"
             value={phone}
             onChange={handlePhoneChange}
-            className={`${styles.input} ${
-              errors.phone ? styles.error : ""
-            }`}
+            className={`${styles.input} ${errors.phone ? styles.error : ""}`}
           />
           {errors.phone && (
-            <span className={styles.errorMessage}>
-              {errors.phone}
-            </span>
+            <span className={styles.errorMessage}>{errors.phone}</span>
           )}
         </div>
 
@@ -144,27 +142,26 @@ export const CheckoutForm = () => {
             type="text"
             value={telegram}
             onChange={handleTelegramChange}
-            className={`${styles.input} ${
-              errors.telegram ? styles.error : ""
-            }`}
+            className={`${styles.input} ${errors.telegram ? styles.error : ""}`}
           />
           {errors.telegram && (
-            <span className={styles.errorMessage}>
-              {errors.telegram}
-            </span>
+            <span className={styles.errorMessage}>{errors.telegram}</span>
           )}
         </div>
 
-        <button type="submit" className={styles.submitButton}>
-          Оформить заказ
+        <button
+          type="submit"
+          className={styles.submitButton}
+          disabled={loading}
+        >
+          {loading ? "Оформление..." : "Оформить заказ"}
         </button>
       </form>
 
       <div>
         <p style={{ fontSize: "18px", textAlign: "center" }}>
-          Оставьте ваши контакты чтобы мы могли с вами связаться и
-          подтвердить ваш заказ, предоплата заказа будет составлять
-          50% от заказа
+          Оставьте ваши контакты чтобы мы могли с вами связаться и подтвердить
+          ваш заказ, предоплата заказа будет составлять 50% от заказа
         </p>
       </div>
     </>
