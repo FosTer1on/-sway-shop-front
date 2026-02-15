@@ -40,9 +40,6 @@ export const ProductCard = ({
 
   const is_favorite = isLoaded && slug ? isFavorite(slug) : false;
 
-  console.log(is_favorite, slug, favorites, isLoaded, isFavorite(slug));
-  console.log(isLoaded && slug ? isFavorite(slug) : false);
-
   const handleToggleFavorite = async (e) => {
     e.preventDefault();
     e.stopPropagation();

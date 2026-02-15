@@ -15,13 +15,14 @@ const useProductStore = create((set, get) => ({
   hasMore: true,
 
   filters: {
-    status: [],
-    categories: [],
+    category: "",
+    stores: [],
     brands: [],
-    shops: [],
-    price_from: null,
-    price_to: null,
-    ordering: null,
+    sizes: [],
+    sort: "",
+    discountOnly: false,
+    minPrice: "",
+    maxPrice: "",
   },
 
   /* =====================
@@ -30,26 +31,28 @@ const useProductStore = create((set, get) => ({
 
   // Получить список товаров
   fetchProducts: async ({ reset = false } = {}) => {
-    const { page, filters, products } = get();
-
+    const currentPage = reset ? 1 : get().page;
+    const filters = get().filters;
+    const products = get().products;
+  
     set({ loading: true, error: null });
-
     try {
       const params = {
-        page: reset ? 1 : page,
+        page: currentPage,
         ...filters,
       };
-
+      console.log(params);
       const response = await getProducts(params);
-
       const newProducts = response.data.results;
-
-      set({
-        products: reset ? newProducts : [...products, ...newProducts],
-        page: reset ? 2 : page + 1,
+  
+      set((state) => ({
+        products: reset
+          ? newProducts
+          : [...state.products, ...newProducts],
+        page: currentPage + 1,
         hasMore: Boolean(response.data.next),
         loading: false,
-      });
+      }));
     } catch (err) {
       set({
         error: err?.response?.data?.detail || "Ошибка загрузки товаров",
@@ -57,6 +60,7 @@ const useProductStore = create((set, get) => ({
       });
     }
   },
+  
 
   // Получить один товар
   fetchProductBySlug: async (slug) => {
@@ -81,24 +85,19 @@ const useProductStore = create((set, get) => ({
      FILTERS
   ===================== */
 
-  setFilters: (newFilters) =>
-    set({
-      filters: {
-        ...get().filters,
-        ...newFilters,
-      },
-    }),
+  setFilters: (newFilters) => set({ filters: newFilters }),
 
   resetFilters: () =>
     set({
       filters: {
-        status: [],
-        categories: [],
+        category: "",
+        stores: [],
         brands: [],
-        shops: [],
-        price_from: null,
-        price_to: null,
-        ordering: null,
+        sizes: [],
+        sort: "",
+        discountOnly: false,
+        minPrice: "",
+        maxPrice: "",
       },
     }),
 

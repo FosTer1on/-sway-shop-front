@@ -1,7 +1,26 @@
 import api from "../base/client";
 
-export const getProducts = (params) =>
-  api.get("/catalog/products/", { params });
+import qs from "qs";
 
-export const getProductById = (slug) =>
-  api.get(`/catalog/products/${slug}/`);
+export const getProducts = (params) =>
+  api.get("/catalog/products/", {
+    params: {
+      page: params.page,
+      category: params.category || undefined,
+
+      store: params.stores.length ? filters.stores : undefined,
+      brand: params.brands.length ? filters.brands : undefined,
+      size: params.sizes.length ? filters.sizes : undefined,
+
+      min_price: params.minPrice || undefined,
+      max_price: params.maxPrice || undefined,
+      discount: params.discountOnly ? "true" : undefined,
+
+      order_by: params.sort || undefined,
+    },
+    paramsSerializer: (params) =>
+      qs.stringify(params, { arrayFormat: "repeat" }),
+  });
+
+
+export const getProductById = (slug) => api.get(`/catalog/products/${slug}/`);

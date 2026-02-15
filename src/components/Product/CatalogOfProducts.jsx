@@ -1,12 +1,6 @@
 import { useEffect } from "react";
-
-// COMPONENTS
 import { ProductCard } from "./components/ProductCard";
-
-// STORE
 import useProductStore from "@/store/product/useProductStore";
-
-// CSS
 import styles from "./CatalogOfProducts.module.css";
 
 export const CatalogOfProducts = () => {
@@ -17,43 +11,35 @@ export const CatalogOfProducts = () => {
     hasMore,
     error,
     resetProducts,
+    filters, // 🔥 добавляем
   } = useProductStore();
 
-  // первая загрузка
+  // 🔥 ВОТ ЭТО ГЛАВНОЕ
   useEffect(() => {
     resetProducts();
     fetchProducts({ reset: true });
-  }, []);
+  }, [filters]);
 
   return (
     <div className={styles.container}>
-      {/* GRID */}
       <div className={styles.grid}>
         {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            {...product}
-          />
+          <ProductCard key={product.id} {...product} />
         ))}
 
-        {/* skeleton / loader */}
         {loading && products.length === 0 && (
           <p className={styles.loading}>Loading products...</p>
         )}
 
-        {error && (
-          <p className={styles.error}>{error}</p>
-        )}
+        {error && <p className={styles.error}>{error}</p>}
       </div>
 
-      {/* LOAD MORE */}
       {hasMore && (
         <div className={styles.loadMoreContainer}>
           <button
             className={styles.loadMoreBtn}
             onClick={() => fetchProducts()}
             disabled={loading}
-            aria-busy={loading}
           >
             {loading ? "Loading..." : "Load More Products"}
           </button>
