@@ -213,6 +213,9 @@
 
 /* Store Info */
 .storeInfo {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
   padding: 1rem;
   background-color: hsl(var(--background));
   border-radius: 0.5rem;
@@ -221,12 +224,12 @@
 
 .storeInfo p {
   margin: 0.5rem 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: hsl(var(--muted-foreground));
 }
 
-.storeInfo p:first-child {
-  margin-top: 0;
+.storeInfo p:last-child {
+  margin-left: 20px;
 }
 
 .storeInfo strong {

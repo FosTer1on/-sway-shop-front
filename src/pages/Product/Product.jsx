@@ -148,13 +148,6 @@ export default function Product() {
                   <PercentIcon className={styles.badgeIcon} />
                 </div>
               )}
-
-              {statusBadge && (
-                <div className={`${styles.badge} ${styles.badgePopular}`}>
-                  {statusBadge.icon}
-                  <span>{statusBadge.label}</span>
-                </div>
-              )}
             </div>
 
             {/* Title */}
@@ -196,10 +189,10 @@ export default function Product() {
             {/* Store & Brand */}
             <div className={styles.storeInfo}>
               <p>
-                <strong>Store:</strong> {product.store}
+                <strong>Store:</strong> {product.store.name}
               </p>
               <p>
-                <strong>Brand:</strong> {product.brand}
+                <strong>Brand:</strong> {product.brand.name}
               </p>
             </div>
 
