@@ -1,3 +1,4 @@
+import i18n from "@/i18n";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import axios from "axios";
 
@@ -23,6 +24,13 @@ api.interceptors.request.use(
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
+
+    const currentLang = i18n.language;
+
+    config.params = {
+      ...config.params,
+      lang: currentLang,
+    };
 
     return config;
   },

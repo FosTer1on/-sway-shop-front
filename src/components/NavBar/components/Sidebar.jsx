@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
 import {
   HomeIcon,
   ProfileIcon,
@@ -7,10 +8,21 @@ import {
   LanguageIcon,
 } from "@components/icons";
 import styles from "./Sidebar.module.css";
-
+import { useTranslation } from "react-i18next";
 
 export default function Sidebar() {
   const location = useLocation();
+
+  const { i18n, t } = useTranslation();
+
+  const currentLanguage = i18n.language;
+
+  const toggleLanguage = () => {
+    const newLang = currentLanguage === "ru" ? "uz" : "ru";
+    i18n.changeLanguage(newLang);
+    localStorage.setItem("lang", newLang);
+    toast.success(t("lang_change"));
+  };
 
   const isActive = (path) => location.pathname === path;
 
@@ -27,7 +39,9 @@ export default function Sidebar() {
 
         <Link
           to="/profile"
-          className={`${styles.navItem} ${isActive("/profile") ? styles.active : ""}`}
+          className={`${styles.navItem} ${
+            isActive("/profile") ? styles.active : ""
+          }`}
           title="Profile"
         >
           <ProfileIcon className={styles.icon} />
@@ -35,12 +49,14 @@ export default function Sidebar() {
 
         <Link
           to="/wishlist"
-          className={`${styles.navItem} ${isActive("/wishlist") ? styles.active : ""}`}
+          className={`${styles.navItem} ${
+            isActive("/wishlist") ? styles.active : ""
+          }`}
           title="Wishlist"
         >
           <HeartIcon className={styles.icon} />
 
-            <span className={styles.badge}>2</span>
+          <span className={styles.badge}>2</span>
 
           {/* {wishlistCount > 0 && (
             <span className={styles.badge}>{wishlistCount}</span>
@@ -49,7 +65,9 @@ export default function Sidebar() {
 
         <Link
           to="/cart"
-          className={`${styles.navItem} ${isActive("/cart") ? styles.active : ""}`}
+          className={`${styles.navItem} ${
+            isActive("/cart") ? styles.active : ""
+          }`}
           title="Cart"
         >
           <CartIcon className={styles.icon} />
@@ -59,14 +77,25 @@ export default function Sidebar() {
 
         <button
           className={styles.navItem}
-          // onClick={() => onLanguageChange?.(currentLanguage === "ru" ? "uz" : "ru")}
+          onClick={toggleLanguage}
           title="Language"
           aria-label="Toggle language"
         >
-          <LanguageIcon className={styles.icon} />
-          <span className={styles.langLabel}>
-            {/* {currentLanguage.toUpperCase()} */}RU
-          </span>
+          {currentLanguage === "ru" ? (
+            <>
+              <LanguageIcon className={styles.icon} />
+              <span className={styles.langLabel}>
+                RU
+              </span>
+            </>
+          ) : (
+            <>
+              <LanguageIcon className={styles.icon} />
+              <span className={styles.langLabel}>
+                UZ
+              </span>
+            </>
+          )}
         </button>
       </nav>
     </aside>

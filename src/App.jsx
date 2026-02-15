@@ -18,7 +18,8 @@ import "./global.css";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
-
+import { Toaster } from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 export default function App() {
   const { isAuth } = useAuth();
@@ -34,6 +35,16 @@ export default function App() {
   return (
     <div>
       <BrowserRouter>
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            duration: 2000,
+            style: {
+              padding: "12px",
+              fontSize: "16px"
+            },
+          }}
+        />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:slug" element={<Product />} />

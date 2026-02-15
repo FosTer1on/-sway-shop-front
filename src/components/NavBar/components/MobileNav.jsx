@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
 // ^ COMPONENTS
 import {
   HomeIcon,
@@ -9,9 +10,21 @@ import {
 } from "@components/icons";
 // ? CSS
 import styles from "./MobileNav.module.css";
+import { useTranslation } from "react-i18next";
 
 const MobileNav = () => {
   const location = useLocation();
+
+  const { i18n, t } = useTranslation();
+
+  const currentLanguage = i18n.language;
+
+  const toggleLanguage = () => {
+    const newLang = currentLanguage === "ru" ? "uz" : "ru";
+    i18n.changeLanguage(newLang);
+    localStorage.setItem("lang", newLang);
+    toast.success(t("lang_change"));
+  };
 
   const isActive = (path) => location.pathname === path;
 
@@ -41,13 +54,13 @@ const MobileNav = () => {
 
       <button
         className={styles.navItem}
-        // onClick={() =>
-        //   onLanguageChange?.(currentLanguage === "ru" ? "uz" : "ru")
-        // }
+        onClick={toggleLanguage}
         title="Language"
         aria-label="Toggle language"
       >
-        <LanguageIcon className={styles.icon} />
+        <span className={styles.lang}>
+          {currentLanguage.toUpperCase()}
+        </span>
       </button>
 
       <Link

@@ -58,6 +58,11 @@
   stroke-width: 2;
 }
 
+.lang{
+  font-size: 18px;
+  font-weight: 600;
+}
+
 .badge {
   position: absolute;
   top: 5px;
