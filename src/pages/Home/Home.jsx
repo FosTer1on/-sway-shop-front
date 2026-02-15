@@ -5,7 +5,6 @@ import { CatalogOfProducts } from "@components/Product/CatalogOfProducts";
 import { FilterBar } from "@/components/FilterBar/FilterBar";
 
 import styles from "./Home.module.css";
-import { useFilterStore } from "@/store/filter/filterStore";
 
 export default function Home() {
   

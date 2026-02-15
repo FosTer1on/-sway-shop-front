@@ -8,9 +8,9 @@ export const getProducts = (params) =>
       page: params.page,
       category: params.category || undefined,
 
-      store: params.stores.length ? filters.stores : undefined,
-      brand: params.brands.length ? filters.brands : undefined,
-      size: params.sizes.length ? filters.sizes : undefined,
+      store: params.stores.length ? params.stores : undefined,
+      brand: params.brands.length ? params.brands : undefined,
+      size: params.sizes.length ? params.sizes : undefined,
 
       min_price: params.minPrice || undefined,
       max_price: params.maxPrice || undefined,

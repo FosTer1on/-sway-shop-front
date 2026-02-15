@@ -1,4 +1,3 @@
-import { useFilterStore } from "@/store/filter/filterStore";
 import { useState, useEffect } from "react";
 import { CloseIcon, MenuIcon } from "../icons";
 import {
