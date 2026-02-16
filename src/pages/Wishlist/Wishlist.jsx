@@ -17,8 +17,11 @@ import { useFavoritesStore } from "@/store/favorites/useFavoritesStore";
 
 // STYLE
 import styles from "./Wishlist.module.css";
+import { useTranslation } from "react-i18next";
 
 export default function Wishlist() {
+  const { i18n, t } = useTranslation();
+
   const { isAuth } = useAuth();
   const { removeFavorite } = useFavoritesStore();
 
@@ -50,7 +53,7 @@ export default function Wishlist() {
     };
 
     loadFavorites();
-  }, [isAuth]);
+  }, [isAuth, i18n.language]);
 
 
   const handleRemove = async (slug) => {

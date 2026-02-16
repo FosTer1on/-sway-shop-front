@@ -11,9 +11,14 @@ import {
 // ? CSS
 import styles from "./MobileNav.module.css";
 import { useTranslation } from "react-i18next";
+import { useFavoritesStore } from "@/store/favorites/useFavoritesStore";
+import { useCartStore } from "@/store/cart/useCartStore";
 
 const MobileNav = () => {
   const location = useLocation();
+
+  const favoritesCount = useFavoritesStore((state) => state.favorites.length);
+  const cartCount = useCartStore((state) => state.items.length);
 
   const { i18n, t } = useTranslation();
 
@@ -38,6 +43,15 @@ const MobileNav = () => {
         <HomeIcon className={styles.icon} />
       </Link>
 
+      <button
+        className={styles.navItem}
+        onClick={toggleLanguage}
+        title="Language"
+        aria-label="Toggle language"
+      >
+        <span className={styles.lang}>{currentLanguage.toUpperCase()}</span>
+      </button>
+
       <Link
         to="/wishlist"
         className={`${styles.navItem} ${
@@ -46,22 +60,12 @@ const MobileNav = () => {
         title="Wishlist"
       >
         <HeartIcon className={styles.icon} />
-        <span className={styles.badge}>3</span>
-        {/* {wishlistCount > 0 && (
-          <span className={styles.badge}>{wishlistCount}</span>
-        )} */}
+        {favoritesCount > 0 ? (
+          <span className={styles.badge}>{favoritesCount}</span>
+        ) : (
+          ""
+        )}
       </Link>
-
-      <button
-        className={styles.navItem}
-        onClick={toggleLanguage}
-        title="Language"
-        aria-label="Toggle language"
-      >
-        <span className={styles.lang}>
-          {currentLanguage.toUpperCase()}
-        </span>
-      </button>
 
       <Link
         to="/cart"
@@ -71,18 +75,7 @@ const MobileNav = () => {
         title="Cart"
       >
         <CartIcon className={styles.icon} />
-        <span className={styles.badge}>2</span>
-        {/* {cartCount > 0 && <span className={styles.badge}>{cartCount}</span>} */}
-      </Link>
-
-      <Link
-        to="/profile"
-        className={`${styles.navItem} ${
-          isActive("/profile") ? styles.active : ""
-        }`}
-        title="Profile"
-      >
-        <ProfileIcon className={styles.icon} />
+        {cartCount > 0 ? <span className={styles.badge}>{cartCount}</span> : ""}
       </Link>
     </nav>
   );

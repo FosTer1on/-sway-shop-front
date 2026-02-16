@@ -12,9 +12,11 @@ import { useCartStore } from "@/store/cart/useCartStore";
 
 // ? Style
 import styles from "./Cart.module.css";
+import { useTranslation } from "react-i18next";
 
 export default function Cart() {
   const navigate = useNavigate();
+  const { i18n, t } = useTranslation();
 
   const {
     items,
@@ -26,7 +28,7 @@ export default function Cart() {
 
   useEffect(() => {
     fetchCart();
-  }, []);
+  }, [i18n.language]);
 
   return (
     <Layout>

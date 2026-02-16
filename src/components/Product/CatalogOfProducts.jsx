@@ -2,8 +2,11 @@ import { useEffect } from "react";
 import { ProductCard } from "./components/ProductCard";
 import useProductStore from "@/store/product/useProductStore";
 import styles from "./CatalogOfProducts.module.css";
+import { useTranslation } from "react-i18next";
 
 export const CatalogOfProducts = () => {
+  const { i18n, t } = useTranslation();
+
   const {
     products,
     fetchProducts,
@@ -18,7 +21,7 @@ export const CatalogOfProducts = () => {
   useEffect(() => {
     resetProducts();
     fetchProducts({ reset: true });
-  }, [filters]);
+  }, [filters, i18n.language]);
 
   return (
     <div className={styles.container}>

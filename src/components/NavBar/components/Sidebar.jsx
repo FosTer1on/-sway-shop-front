@@ -9,9 +9,17 @@ import {
 } from "@components/icons";
 import styles from "./Sidebar.module.css";
 import { useTranslation } from "react-i18next";
+import { useFavoritesStore } from "@/store/favorites/useFavoritesStore";
+import { useCartStore } from "@/store/cart/useCartStore";
 
 export default function Sidebar() {
   const location = useLocation();
+
+  const favoritesCount = useFavoritesStore((state) => state.favorites.length);
+  const cartCount = useCartStore(
+    (state) => state.items.length
+  );
+  
 
   const { i18n, t } = useTranslation();
 
@@ -38,16 +46,6 @@ export default function Sidebar() {
         </Link>
 
         <Link
-          to="/profile"
-          className={`${styles.navItem} ${
-            isActive("/profile") ? styles.active : ""
-          }`}
-          title="Profile"
-        >
-          <ProfileIcon className={styles.icon} />
-        </Link>
-
-        <Link
           to="/wishlist"
           className={`${styles.navItem} ${
             isActive("/wishlist") ? styles.active : ""
@@ -55,12 +53,7 @@ export default function Sidebar() {
           title="Wishlist"
         >
           <HeartIcon className={styles.icon} />
-
-          <span className={styles.badge}>2</span>
-
-          {/* {wishlistCount > 0 && (
-            <span className={styles.badge}>{wishlistCount}</span>
-          )} */}
+          {favoritesCount > 0 ? <span className={styles.badge}>{favoritesCount}</span> : ""}
         </Link>
 
         <Link
@@ -71,8 +64,7 @@ export default function Sidebar() {
           title="Cart"
         >
           <CartIcon className={styles.icon} />
-          <span className={styles.badge}>1</span>
-          {/* {cartCount > 0 && <span className={styles.badge}>{cartCount}</span>} */}
+          {cartCount > 0 ? <span className={styles.badge}>{cartCount}</span> : ""}
         </Link>
 
         <button

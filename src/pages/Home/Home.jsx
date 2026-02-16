@@ -34,11 +34,6 @@ export default function Home() {
           onToggle={toggleFilter}
         />
 
-        {/* Results Info */}
-        <div className={styles.resultsInfo}>
-          <p>Showing 1 of 1 products</p>
-        </div>
-
         {/* Product Grid */}
         <CatalogOfProducts />
       </div>
