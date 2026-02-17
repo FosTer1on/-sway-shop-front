@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 // ^ Components
 import Layout from "@/components/NavBar/Layout";
 // ! Api
-import { registerAPI, verifyPhoneAPI } from "@/api/auth/auth";
+import { registerAPI } from "@/api/auth/auth";
 // & Css
 import styles from "./Auth.module.css";
 
@@ -14,18 +14,15 @@ const PHONE_PREFIX = "+998 ";
 
 export default function Register() {
   const navigate = useNavigate();
-  const [step, setStep] = useState("register"); // register | verify
 
   const { isAuth, login } = useAuth();
 
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
 
   const [phone, setPhone] = useState(PHONE_PREFIX);
   const [phoneDigits, setPhoneDigits] = useState("");
 
   const [password, setPassword] = useState("");
-  const [code, setCode] = useState("");
 
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -74,21 +71,12 @@ export default function Register() {
     const err = {};
 
     if (!firstName.trim()) err.firstName = "Введите имя";
-    if (!lastName.trim()) err.lastName = "Введите фамилию";
     if (phoneDigits.length !== 12) err.phone = "Введите корректный номер";
     if (!password || password.length < 6)
       err.password = "Пароль минимум 6 символов";
 
     setErrors(err);
     return Object.keys(err).length === 0;
-  };
-
-  const validateCode = () => {
-    if (!code.trim()) {
-      setErrors({ code: "Введите код подтверждения" });
-      return false;
-    }
-    return true;
   };
 
   /* =====================
@@ -101,14 +89,18 @@ export default function Register() {
     setIsLoading(true);
 
     try {
-      await registerAPI({
+      const res = await registerAPI({
         first_name: firstName,
-        last_name: lastName,
         phone_number: `+${phoneDigits}`,
         password,
       });
 
-      setStep("verify");
+      // логиним сразу
+      login(res.data.access);
+
+      localStorage.setItem("refresh_token", res.data.refresh);
+
+      navigate("/", { replace: true });
     } catch (err) {
       console.error("REGISTER ERROR:", err.response?.data || err.message);
     } finally {
@@ -116,95 +108,44 @@ export default function Register() {
     }
   };
 
-  /* =====================
-     SUBMIT VERIFY
-  ====================== */
-  const handleVerify = async (e) => {
-    e.preventDefault();
-    if (!validateCode()) return;
-  
-    setIsLoading(true);
-  
-    try {
-      const res = await verifyPhoneAPI({
-        phone_number: `+${phoneDigits}`,
-        code,
-      });
-  
-      login(res.data.access);
-
-      localStorage.setItem("refresh_token", res.data.refresh);
-  
-      navigate("/", { replace: true });
-    } catch (err) {
-      console.error("VERIFY ERROR:", err.response?.data || err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  
-
   return (
     <Layout>
       <div className={styles.container}>
         <div className={styles.card}>
           <div className={styles.header}>
-            <h1 className={styles.title}>
-              {step === "register" ? "Регистрация" : "Подтверждение номера"}
-            </h1>
+            <h1 className={styles.title}>Регистрация</h1>
           </div>
 
-          {step === "register" ? (
-            <form onSubmit={handleRegister} className={styles.form}>
-              <div className={styles.halfRow}>
-                <input
-                  placeholder="Имя"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  className={styles.input}
-                />
-                <input
-                  placeholder="Фамилия"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  className={styles.input}
-                />
-              </div>
-
+          <form onSubmit={handleRegister} className={styles.form}>
+            <div className={styles.halfRow}>
               <input
-                type="tel"
-                value={phone}
-                onChange={handlePhoneChange}
-                className={styles.input}
-                placeholder="+998 (__) ___-__-__"
-              />
-
-              <input
-                type="password"
-                placeholder="Пароль"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Имя"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 className={styles.input}
               />
+            </div>
 
-              <button className={styles.submitButton} disabled={isLoading}>
-                {isLoading ? "Отправка..." : "Зарегистрироваться"}
-              </button>
-            </form>
-          ) : (
-            <form onSubmit={handleVerify} className={styles.form}>
-              <input
-                placeholder="Код подтверждения"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                className={styles.input}
-              />
+            <input
+              type="tel"
+              value={phone}
+              onChange={handlePhoneChange}
+              className={styles.input}
+              placeholder="+998 (__) ___-__-__"
+            />
 
-              <button className={styles.submitButton} disabled={isLoading}>
-                {isLoading ? "Проверка..." : "Подтвердить"}
-              </button>
-            </form>
-          )}
+            <input
+              type="password"
+              placeholder="Пароль"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={styles.input}
+            />
+
+            <button className={styles.submitButton} disabled={isLoading}>
+              {isLoading ? "Отправка..." : "Зарегистрироваться"}
+            </button>
+          </form>
 
           <div className={styles.footer}>
             <p>
