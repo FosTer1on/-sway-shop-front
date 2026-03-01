@@ -7,6 +7,7 @@ import { useFavoritesStore } from "@/store/favorites/useFavoritesStore";
 import { useAuth } from "@/hooks/useAuth";
 // ? Style
 import styles from "./ProductCard.module.css";
+import { useTranslation } from "react-i18next";
 
 const API_URL = "http://127.0.0.1:8000";
 
@@ -22,6 +23,8 @@ export const ProductCard = ({
   is_best_seller,
   onRemoveFromWishlist
 }) => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
 
   const rawImage = images?.[0]?.image || images?.[0];

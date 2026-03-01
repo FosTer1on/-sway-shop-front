@@ -9,8 +9,11 @@ import {
 
 import styles from "./FilterBar.module.css";
 import useProductStore from "@/store/product/useProductStore";
+import { useTranslation } from "react-i18next";
 
 export const FilterBar = ({ isOpen, onToggle }) => {
+  const { t } = useTranslation();
+
   const { filters, setFilters } = useProductStore();
 
   const [categories, setCategories] = useState([]);
@@ -100,12 +103,12 @@ export const FilterBar = ({ isOpen, onToggle }) => {
         aria-label="Toggle filters"
       >
         <MenuIcon className={styles.toggleIcon} />
-        <span>Filters</span>
+        <span>{t("filters")}</span>
       </button>
 
       <div className={`${styles.filterBar} ${isOpen ? styles.open : ""}`}>
         <div className={styles.header}>
-          <h3>Filters</h3>
+          <h3>{t("filters")}</h3>
           <button
             className={styles.closeBtn}
             onClick={onToggle}
@@ -118,7 +121,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
         <div className={styles.content}>
           {/* Category */}
           <div className={styles.filterGroup}>
-            <label className={styles.groupTitle}>Category</label>
+            <label className={styles.groupTitle}>{t("category")}</label>
             <select
               className={styles.select}
               value={filters.category}
@@ -129,7 +132,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                 })
               }
             >
-              <option value="">Выберите категорию</option>
+              <option value="">{t("choose_category")}</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.slug}>
                   {cat.name}
@@ -140,7 +143,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
 
           {/* Stores - MULTI BUTTONS */}
           <div className={styles.filterGroup}>
-            <label className={styles.groupTitle}>Stores</label>
+            <label className={styles.groupTitle}>{t("stores")}</label>
             <div className={styles.options}>
               {stores.map((store) => (
                 <>
@@ -163,7 +166,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
 
           {/* Brands - MULTI BUTTONS */}
           <div className={styles.filterGroup}>
-            <label className={styles.groupTitle}>Brands</label>
+            <label className={styles.groupTitle}>{t("brands")}</label>
             <div className={styles.options}>
               {brands.map((brand) => (
                   <button
@@ -186,7 +189,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
           {/* Sizes - зависят от категории */}
           {availableSizes.length > 0 && (
             <div className={styles.filterGroup}>
-              <label className={styles.groupTitle}>Sizes</label>{" "}
+              <label className={styles.groupTitle}>{t("sizes")}</label>{" "}
               <div className={styles.options}>
                 {availableSizes.map((size) => (
                   <button
@@ -206,7 +209,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
 
           {/* Sort */}
           <div className={styles.filterGroup}>
-            <label className={styles.groupTitle}>Sort</label>
+            <label className={styles.groupTitle}>{t("sort")}</label>
             <select
               className={styles.select}
               value={filters.sort}
@@ -217,9 +220,9 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                 })
               }
             >
-              <option value="">Выберите сортировку</option>
-              <option value="price_desc">От дорогих к дешевым</option>
-              <option value="price_asc">От дешевых к дорогим</option>
+              <option value="">{t("choose_sort")}</option>
+              <option value="price_desc">{t("desc")}</option>
+              <option value="price_asc">{t("asc")}</option>
             </select>
           </div>
 
@@ -236,13 +239,13 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                   })
                 }
               />
-              <span>Только со скидкой</span>
+              <span>{t("sale_only")}</span>
             </label>
           </div>
 
           {/* Price Range */}
           <div className={styles.filterGroup}>
-            <label className={styles.groupTitle}>Price Range</label>
+            <label className={styles.groupTitle}>{t("price_range")}</label>
             <div className={styles.priceInputs}>
               <input
                 type="number"
@@ -273,7 +276,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
           </div>
 
           <button className={styles.resetBtn} onClick={handleReset}>
-            Reset Filters
+          {t("reset_filters")}
           </button>
         </div>
       </div>

@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 export default function Home() {
   const { t } = useTranslation();
-  
+
   // 🔹 состояние открытия мобильного фильтра
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -23,16 +23,11 @@ export default function Home() {
         {/* Header */}
         <div className={styles.header}>
           <h1 className={styles.title}>{t("catalog")}</h1>
-          <p className={styles.subtitle}>
-            Explore our collection of quality clothing items
-          </p>
+          <p className={styles.subtitle}>{t("explore")}</p>
         </div>
 
         {/* Filter Bar */}
-        <FilterBar
-          isOpen={isFilterOpen}
-          onToggle={toggleFilter}
-        />
+        <FilterBar isOpen={isFilterOpen} onToggle={toggleFilter} />
 
         {/* Product Grid */}
         <CatalogOfProducts />

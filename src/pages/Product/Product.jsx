@@ -19,8 +19,11 @@ import useProductStore from "@/store/product/useProductStore";
 import { ProductSkeleton } from "@/components/Skeleton/ProductSkeleton";
 import { useAuth } from "@/hooks/useAuth";
 import { useCartStore } from "@/store/cart/useCartStore";
+import { useTranslation } from "react-i18next";
 
 export default function Product() {
+  const { t } = useTranslation();
+
   const { slug } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -58,7 +61,7 @@ export default function Product() {
     }
 
     if (!selectedSize) {
-      alert("Выберите размер");
+      alert(t("choose_size"));
       return;
     }
 
@@ -129,7 +132,7 @@ export default function Product() {
           }}
         >
           <BackArrowIcon className={styles.backIcon} />
-          <span>Back</span>
+          <span>{t("back")}</span>
         </button>
 
         <div className={styles.content}>
@@ -182,7 +185,7 @@ export default function Product() {
                 onClick={handleAddToCart}
                 disabled={!selectedSize}
               >
-                {inCart ? "Уже в корзине" : "Добавить в корзину"}
+                {inCart ? `${t("almost_in_cart")}` : `${t("add_to_cart")}`}
               </button>
             </div>
 
@@ -198,7 +201,7 @@ export default function Product() {
 
             {/* Sizes */}
             <div className={styles.sizeSelector}>
-              <label className={styles.sizeLabel}>Select Size:</label>
+              <label className={styles.sizeLabel}>{t("select_size")}</label>
               <div className={styles.sizeOptions}>
                 {product.sizes.map(({ size_id, size, quantity }) => {
                   return (
@@ -221,7 +224,7 @@ export default function Product() {
 
             {/* Description */}
             <div className={styles.descriptionSection}>
-              <h2 className={styles.descriptionTitle}>Description</h2>
+              <h2 className={styles.descriptionTitle}>{t("description")}</h2>
               <p className={styles.description}>{product.description}</p>
             </div>
           </div>

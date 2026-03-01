@@ -9,10 +9,13 @@ import Layout from "@/components/NavBar/Layout";
 import { registerAPI } from "@/api/auth/auth";
 // & Css
 import styles from "./Auth.module.css";
+import { useTranslation } from "react-i18next";
 
 const PHONE_PREFIX = "+998 ";
 
 export default function Register() {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
 
   const { isAuth, login } = useAuth();
@@ -70,10 +73,10 @@ export default function Register() {
   const validateRegister = () => {
     const err = {};
 
-    if (!firstName.trim()) err.firstName = "Введите имя";
-    if (phoneDigits.length !== 12) err.phone = "Введите корректный номер";
+    if (!firstName.trim()) err.firstName = `${t("type_name")}`;
+    if (phoneDigits.length !== 12) err.phone = `${t("type_tel")}`;
     if (!password || password.length < 6)
-      err.password = "Пароль минимум 6 символов";
+      err.password = `${t("password_length")}`;
 
     setErrors(err);
     return Object.keys(err).length === 0;
@@ -113,13 +116,13 @@ export default function Register() {
       <div className={styles.container}>
         <div className={styles.card}>
           <div className={styles.header}>
-            <h1 className={styles.title}>Регистрация</h1>
+            <h1 className={styles.title}>{t("register")}</h1>
           </div>
 
           <form onSubmit={handleRegister} className={styles.form}>
             <div className={styles.halfRow}>
               <input
-                placeholder="Имя"
+                placeholder={t("name")}
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 className={styles.input}
@@ -136,22 +139,22 @@ export default function Register() {
 
             <input
               type="password"
-              placeholder="Пароль"
+              placeholder={t("password_inp")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={styles.input}
             />
 
             <button className={styles.submitButton} disabled={isLoading}>
-              {isLoading ? "Отправка..." : "Зарегистрироваться"}
+              {isLoading ? `${t("sending")}` : `${t("registrater")}`}
             </button>
           </form>
 
           <div className={styles.footer}>
             <p>
-              Уже есть аккаунт?{" "}
+            {t("have_account")}{" "}
               <Link to="/login" className={styles.link}>
-                Войти
+              {t("login")}
               </Link>
             </p>
           </div>

@@ -2,8 +2,6 @@ import { useState } from "react";
 import styles from "./ProductGallery.module.css";
 
 
-const API_URL = "http://127.0.0.1:8000";
-
 export const ProductGallery = ({ images, title }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 

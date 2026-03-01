@@ -9,10 +9,13 @@ import Layout from "@/components/NavBar/Layout";
 import { loginAPI } from "@/api/auth/auth";
 // & Css
 import styles from "./Auth.module.css";
+import { useTranslation } from "react-i18next";
 
 const PHONE_PREFIX = "+998 ";
 
 export default function Login() {
+  const { t } = useTranslation();
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -77,13 +80,13 @@ export default function Login() {
     const newErrors = {};
 
     if (phone.length < 12) {
-      newErrors.phone = "Enter a valid phone number";
+      newErrors.phone = `${t("tel_error")}`;
     }
 
     if (!password) {
-      newErrors.password = "Password is required";
+      newErrors.password = `${t("password_required")}`;
     } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+      newErrors.password = `${t("password_length")}`;
     }
 
     setErrors(newErrors);
@@ -125,14 +128,14 @@ export default function Login() {
       <div className={styles.container}>
         <div className={styles.card}>
           <div className={styles.header}>
-            <h1 className={styles.title}>Sign In</h1>
-            <p className={styles.subtitle}>Welcome back to our store</p>
+            <h1 className={styles.title}>{t("login")}</h1>
+            <p className={styles.subtitle}>{t("welcome_back")}</p>
           </div>
 
           <form onSubmit={handleSubmit} className={styles.form}>
             {/* PHONE */}
             <div className={styles.formGroup}>
-              <label className={styles.label}>Phone Number *</label>
+              <label className={styles.label}>{t("phone_number")}</label>
               <input
                 type="tel"
                 value={phone}
@@ -150,7 +153,7 @@ export default function Login() {
 
             {/* PASSWORD */}
             <div className={styles.formGroup}>
-              <label className={styles.label}>Password *</label>
+              <label className={styles.label}>{t("password")}</label>
               <div className={styles.passwordContainer}>
                 <input
                   type={showPassword ? "text" : "password"}
@@ -167,18 +170,12 @@ export default function Login() {
                   onClick={() => setShowPassword(!showPassword)}
                   className={styles.togglePassword}
                 >
-                  {showPassword ? "Hide" : "Show"}
+                  {showPassword ? `${t("hide")}` : `${t("show")}`}
                 </button>
               </div>
               {errors.password && (
                 <span className={styles.errorMessage}>{errors.password}</span>
               )}
-            </div>
-
-            <div className={styles.rememberForgot}>
-              <Link to="#" className={styles.forgotLink}>
-                Forgot password?
-              </Link>
             </div>
 
             <button
@@ -192,9 +189,9 @@ export default function Login() {
 
           <div className={styles.footer}>
             <p className={styles.footerText}>
-              Don't have an account?{" "}
+            {t("no_account")}{" "}
               <Link to="/register" className={styles.link}>
-                Sign up
+              {t("register")}
               </Link>
             </p>
           </div>

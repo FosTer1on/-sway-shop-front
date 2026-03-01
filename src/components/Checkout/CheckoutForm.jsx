@@ -1,9 +1,12 @@
 import { useOrderStore } from "@/store/order/orderStore";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import styles from "./CheckoutForm.module.css";
 
 export const CheckoutForm = () => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
 
   const { createOrder, loading } = useOrderStore();
@@ -61,16 +64,16 @@ export const CheckoutForm = () => {
     const newErrors = {};
 
     if (name.trim().length < 3) {
-      newErrors.name = "Имя должно содержать минимум 3 буквы";
+      newErrors.name = `${t("name_error")}`;
     }
 
     const digits = phone.replace(/\D/g, "");
     if (digits.length !== 12) {
-      newErrors.phone = "Введите корректный номер телефона";
+      newErrors.phone = `${t("tel_error")}`;
     }
 
     if (telegram.length < 6) {
-      newErrors.telegram = "Ник в Telegram должен быть минимум 5 символов";
+      newErrors.telegram = `${t("tg_error")}`;
     }
 
     setErrors(newErrors);
@@ -85,15 +88,9 @@ export const CheckoutForm = () => {
     try {
       await createOrder({
         full_name: name,
-        phone_number: phone.replace(/\s/g, ""), // убираем пробелы
+        phone_number: phone.replace(/\s/g, ""),
         telegram_username: telegram,
       });
-
-      // console.log({
-      //   name,
-      //   phone,
-      //   telegram,
-      // });
 
       navigate("/");
     } catch (err) {
@@ -104,17 +101,16 @@ export const CheckoutForm = () => {
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h2 className={styles.title}>Контактные данные</h2>
+        <h2 className={styles.title}>{t("contact_info")}</h2>
 
         {/* 👤 Имя */}
         <div className={styles.formGroup}>
-          <label className={styles.label}>Ваше имя *</label>
+          <label className={styles.label}>{t("your_name")}</label>
           <input
             type="text"
             value={name}
             onChange={handleNameChange}
             className={`${styles.input} ${errors.name ? styles.error : ""}`}
-            placeholder="Введите имя"
           />
           {errors.name && (
             <span className={styles.errorMessage}>{errors.name}</span>
@@ -123,7 +119,7 @@ export const CheckoutForm = () => {
 
         {/* 📱 Телефон */}
         <div className={styles.formGroup}>
-          <label className={styles.label}>Номер телефона *</label>
+          <label className={styles.label}>{t("phone_number")}</label>
           <input
             type="tel"
             value={phone}
@@ -137,7 +133,7 @@ export const CheckoutForm = () => {
 
         {/* 💬 Telegram */}
         <div className={styles.formGroup}>
-          <label className={styles.label}>Telegram ник *</label>
+          <label className={styles.label}>{t("tg_nick")}</label>
           <input
             type="text"
             value={telegram}
@@ -154,14 +150,13 @@ export const CheckoutForm = () => {
           className={styles.submitButton}
           disabled={loading}
         >
-          {loading ? "Оформление..." : "Оформить заказ"}
+          {loading ? `${t("ordering")}` : `${t("make_order")}`}
         </button>
       </form>
 
       <div>
         <p style={{ fontSize: "18px", textAlign: "center" }}>
-          Оставьте ваши контакты чтобы мы могли с вами связаться и подтвердить
-          ваш заказ, предоплата заказа будет составлять 50% от заказа
+          {t("checkout_text")}
         </p>
       </div>
     </>

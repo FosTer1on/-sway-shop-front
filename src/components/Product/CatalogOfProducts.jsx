@@ -31,7 +31,7 @@ export const CatalogOfProducts = () => {
         ))}
 
         {loading && products.length === 0 && (
-          <p className={styles.loading}>Loading products...</p>
+          <p className={styles.loading}>{t("loading_products")}</p>
         )}
 
         {error && <p className={styles.error}>{error}</p>}
@@ -44,7 +44,7 @@ export const CatalogOfProducts = () => {
             onClick={() => fetchProducts()}
             disabled={loading}
           >
-            {loading ? "Loading..." : "Load More Products"}
+            {loading ? `${t("loading")}` : `${t("load_more_products")}`}
           </button>
         </div>
       )}

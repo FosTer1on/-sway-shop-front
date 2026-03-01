@@ -5,8 +5,11 @@ import { Link } from "react-router-dom";
 import Layout from "../../components/NavBar/Layout";
 // ? CSS
 import styles from "./NotFound.module.css";
+import { useTranslation } from "react-i18next";
 
 const NotFound = () => {
+  const { t } = useTranslation();
+
   const location = useLocation();
 
   useEffect(() => {
@@ -21,12 +24,12 @@ const NotFound = () => {
       <div className={styles.container}>
         <div className={styles.content}>
           <h1 className={styles.errorCode}>404</h1>
-          <h2 className={styles.title}>Page Not Found</h2>
+          <h2 className={styles.title}>{t("page_not_found")}</h2>
           <p className={styles.message}>
-            Sorry, the page you're looking for doesn't exist or has been moved.
+          {t("page_not_found_text")}
           </p>
           <Link to="/" className={styles.homeLink}>
-            Return to Home
+          {t("return_to_home")}
           </Link>
         </div>
       </div>

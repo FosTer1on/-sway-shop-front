@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { CloseIcon } from "@components/icons";
 import styles from "./CartItem.module.css";
+import { useTranslation } from "react-i18next";
 
 const API_URL = "http://127.0.0.1:8000";
 
@@ -18,6 +19,8 @@ export const CartItem = ({
   onRemove,
   onClick,
 }) => {
+  const { t } = useTranslation();
+
   const rawImage = images?.[0]?.image || images?.[0];
   const image = rawImage
     ? rawImage.startsWith("http")
@@ -49,7 +52,7 @@ export const CartItem = ({
 
         <div className={styles.footer}>
           <div>
-            <p className={styles.priceLabel}>Price per item</p>
+            <p className={styles.priceLabel}>{t("price_per_item")}</p>
             <p>
               <span className={styles.old_price}>{item_price}</span>
               {item_discount_price}
@@ -71,7 +74,7 @@ export const CartItem = ({
           </div>
 
           <div>
-            <p className={styles.lineTotalLabel}>Line total</p>
+            <p className={styles.lineTotalLabel}>{t("item_sum")}</p>
             <p>{total_price}</p>
           </div>
         </div>

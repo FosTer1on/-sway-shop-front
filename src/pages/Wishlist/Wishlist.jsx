@@ -72,12 +72,12 @@ export default function Wishlist() {
         <div className={styles.container}>
           <div className={styles.emptyState}>
             <p className={styles.emptyIcon}>♡</p>
-            <h2 className={styles.emptyTitle}>Your wishlist is empty</h2>
+            <h2 className={styles.emptyTitle}>{t("wishlist_empty")}</h2>
             <p className={styles.emptySubtext}>
-              Start adding items to save them for later
+            {t("wishlist_text")}
             </p>
             <Link to="/" className={styles.continueButton}>
-              Continue Shopping
+            {t("continue")}
             </Link>
           </div>
         </div>
@@ -89,7 +89,7 @@ export default function Wishlist() {
     <Layout>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h1 className={styles.title}>My Wishlist</h1>
+          <h1 className={styles.title}>{t("my_wishlist")}</h1>
           <p className={styles.subtitle}>
             {items.length} {items.length === 1 ? "item" : "items"}
           </p>

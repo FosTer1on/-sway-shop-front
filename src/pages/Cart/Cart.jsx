@@ -33,7 +33,7 @@ export default function Cart() {
   return (
     <Layout>
       <div className={styles.container}>
-        <h1>Shopping Cart</h1>
+        <h1>{t("cart")}</h1>
 
         {items.length > 0 ? (
           <div className={styles.content}>
@@ -66,7 +66,7 @@ export default function Cart() {
             <CartSummary summary={summary} />
           </div>
         ) : (
-          <p>Cart is empty</p>
+          <p>{t("cart_empty")}</p>
         )}
       </div>
     </Layout>
