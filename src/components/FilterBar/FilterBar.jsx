@@ -143,16 +143,20 @@ export const FilterBar = ({ isOpen, onToggle }) => {
             <label className={styles.groupTitle}>Stores</label>
             <div className={styles.options}>
               {stores.map((store) => (
-                <button
-                  key={store.id}
-                  type="button"
-                  className={`${styles.multiBtn} ${
-                    filters.stores.includes(store.slug) ? styles.activeBtn : ""
-                  }`}
-                  onClick={() => toggleArrayValue("stores", store.slug)}
-                >
-                  {store.name}
-                </button>
+                <>
+                  <button
+                    key={store.id}
+                    type="button"
+                    className={`${styles.multiBtn} ${
+                      filters.stores.includes(store.slug)
+                        ? styles.activeBtn
+                        : ""
+                    }`}
+                    onClick={() => toggleArrayValue("stores", store.slug)}
+                  >
+                    {store.name}
+                  </button>
+                </>
               ))}
             </div>
           </div>
@@ -162,16 +166,19 @@ export const FilterBar = ({ isOpen, onToggle }) => {
             <label className={styles.groupTitle}>Brands</label>
             <div className={styles.options}>
               {brands.map((brand) => (
-                <button
-                  key={brand.id}
-                  type="button"
-                  className={`${styles.multiBtn} ${
-                    filters.brands.includes(brand.slug) ? styles.activeBtn : ""
-                  }`}
-                  onClick={() => toggleArrayValue("brands", brand.slug)}
-                >
-                  {brand.name}
-                </button>
+                  <button
+                    key={brand.id}
+                    type="button"
+                    className={`${styles.multiBtn} ${
+                      filters.brands.includes(brand.slug)
+                        ? styles.activeBtn
+                        : ""
+                    }`}
+                    onClick={() => toggleArrayValue("brands", brand.slug)}
+                  >
+                    <img src={brand.icon_url} className={styles.brand_icon} alt="Brand icon" />
+                    {/* {brand.name} */}
+                  </button>
               ))}
             </div>
           </div>

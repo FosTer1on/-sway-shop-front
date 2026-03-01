@@ -263,7 +263,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 14px;
+  padding: 6px;
   border: 1px solid hsl(var(--border));
   border-radius: 999px;
   background: transparent;
@@ -281,4 +281,9 @@
   background: hsl(var(--accent));
   color: white;
   border-color: hsl(var(--accent));
+}
+
+.brand_icon{
+  width: 50px;
+  height: auto;
 }
