@@ -22,7 +22,7 @@ import { useCartStore } from "@/store/cart/useCartStore";
 import { useTranslation } from "react-i18next";
 
 export default function Product() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ export default function Product() {
 
   useEffect(() => {
     fetchProductBySlug(slug);
-  }, [slug]);
+  }, [slug, i18n]);
 
   useEffect(() => {
     if (isAuth) {
@@ -192,10 +192,10 @@ export default function Product() {
             {/* Store & Brand */}
             <div className={styles.storeInfo}>
               <p>
-                <strong>Store:</strong> {product.store.name}
+                <strong>{t("store")}</strong> {product.store.name}
               </p>
               <p>
-                <strong>Brand:</strong> {product.brand.name}
+                <strong>{t("brand")}</strong> {product.brand.name}
               </p>
             </div>
 

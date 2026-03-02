@@ -12,6 +12,7 @@ export const CartItem = ({
   item_price,
   item_discount_price,
   total_price,
+  is_discount,
   size,
   quantity,
   onIncrease,
@@ -21,13 +22,6 @@ export const CartItem = ({
 }) => {
   const { t } = useTranslation();
 
-  const rawImage = images?.[0]?.image || images?.[0];
-  const image = rawImage
-    ? rawImage.startsWith("http")
-      ? rawImage
-      : `${API_URL}${rawImage}`
-    : "";
-
   return (
     <div className={styles.item}>
       <div
@@ -35,14 +29,14 @@ export const CartItem = ({
         onClick={onClick}
         style={{ cursor: "pointer" }}
       >
-        <img src={image} alt={name} className={styles.image} />
+        <img src={images[0]?.image_url} alt={name} className={styles.image} />
       </div>
 
       <div className={styles.content}>
         <div className={styles.header}>
           <div onClick={onClick}>
             <h3 className={styles.title}>{name}</h3>
-            <p className={styles.size}>Size: {size}</p>
+            <p className={styles.size}>{t("size")} {size}</p>
           </div>
 
           <button onClick={onRemove} className={styles.removeButton}>
@@ -54,8 +48,16 @@ export const CartItem = ({
           <div>
             <p className={styles.priceLabel}>{t("price_per_item")}</p>
             <p>
-              <span className={styles.old_price}>{item_price}</span>
-              {item_discount_price}
+              {is_discount ? (
+                <>
+                  <span className={styles.old_price}>{item_price}</span>
+                  <span className={styles.discount_price}>
+                    {item_discount_price}
+                  </span>
+                </>
+              ) : (
+                <span>{item_price}</span>
+              )}
             </p>
           </div>
 
@@ -70,7 +72,9 @@ export const CartItem = ({
 
             <span className={styles.quantity}>{quantity}</span>
 
-            <button onClick={onIncrease} className={styles.quantityButton}>+</button>
+            <button onClick={onIncrease} className={styles.quantityButton}>
+              +
+            </button>
           </div>
 
           <div>

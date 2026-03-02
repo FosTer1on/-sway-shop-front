@@ -27,13 +27,6 @@ export const ProductCard = ({
 
   const navigate = useNavigate();
 
-  const rawImage = images?.[0]?.image || images?.[0];
-  const image = rawImage
-    ? rawImage.startsWith("http")
-      ? rawImage
-      : `${API_URL}${rawImage}`
-    : "";
-
   const is_discount = 1 ? discount > 0 : 0;
 
   const { isFavorite, addFavorite, removeFavorite, isLoaded, favorites } =
@@ -70,7 +63,7 @@ export const ProductCard = ({
       className={styles.card}
     >
       <div className={styles.imageContainer}>
-        <img src={image} alt={name} className={styles.image} loading="lazy" />
+        <img src={images[0].image_url} alt={name} className={styles.image} loading="lazy" />
 
         {/* ===== BADGES (TOP LEFT) ===== */}
         <div className={styles.badgesContainer}>
@@ -105,27 +98,6 @@ export const ProductCard = ({
           >
             <HeartIcon className={styles.actionIcon} filled={is_favorite} />
           </button>
-
-          {/* <button
-            className={styles.actionBtn}
-            onClick={(e) => {
-              e.preventDefault();
-              onAddToCart?.(id);
-            }}
-            aria-label="Add to cart"
-          >
-            <svg
-              className={styles.actionIcon}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="9" cy="21" r="1" />
-              <circle cx="20" cy="21" r="1" />
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-            </svg>
-          </button> */}
         </div>
       </div>
 

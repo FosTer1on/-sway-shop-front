@@ -5,12 +5,6 @@ import styles from "./ProductGallery.module.css";
 export const ProductGallery = ({ images, title }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const normalizeImage = (img) => {
-    const raw = img?.image || img;
-    if (!raw) return "";
-    return raw.startsWith("http") ? raw : `${API_URL}${raw}`;
-  };
-
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
@@ -31,7 +25,7 @@ export const ProductGallery = ({ images, title }) => {
     <div className={styles.gallery}>
       <div className={styles.mainImageContainer}>
         <img
-          src={normalizeImage(images[currentIndex])}
+          src={images[currentIndex].image_url}
           alt={`${title} - Image ${currentIndex + 1}`}
           className={styles.mainImage}
         />
@@ -86,7 +80,7 @@ export const ProductGallery = ({ images, title }) => {
               onClick={() => goToSlide(index)}
               aria-label={`View image ${index + 1}`}
             >
-              <img src={normalizeImage(img)} alt={`Thumbnail ${index + 1}`} />
+              <img src={img.image_url} alt={`Thumbnail ${index + 1}`} />
             </button>
           ))}
         </div>

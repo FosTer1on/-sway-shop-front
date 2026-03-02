@@ -9,6 +9,7 @@
   "category": "Kategoriya",
   "sort": "Saralash",
   "sizes": "O'lchamlari",
+  "size": "O'lcham",
   "choose_sort": "Sortirovkani tanlang",
   "asc": "Arzondan qimmatgacha",
   "desc": "Qimmatdan arzongacha",
@@ -67,5 +68,8 @@
   "wishlist_text": "Keyinroq saqlash uchun elementlarni qo'shishni boshlang",
   "continue": "Xarid qilishni davom eting",
   "my_wishlist": "Mening xohishlarim ro'yxati",
-  "explore": "Sifatli kiyim-kechak buyumlari kolleksiyamizni ko'rib chiqing"
+  "explore": "Sifatli kiyim-kechak buyumlari kolleksiyamizni ko'rib chiqing",
+  "store": "Do'kon:",
+  "brand": "Brend:",
+  "no_products": "Mahsulotlar yo'q"
 }

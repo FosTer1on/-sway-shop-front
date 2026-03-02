@@ -12,7 +12,7 @@ import useProductStore from "@/store/product/useProductStore";
 import { useTranslation } from "react-i18next";
 
 export const FilterBar = ({ isOpen, onToggle }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const { filters, setFilters } = useProductStore();
 
@@ -40,7 +40,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
     };
 
     fetchFilters();
-  }, []);
+  }, [i18n]);
 
   useEffect(() => {
     if (!filters.category) {
