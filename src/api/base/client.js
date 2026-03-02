@@ -2,7 +2,7 @@ import i18n from "@/i18n";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import axios from "axios";
 
-const API_URL = "https://sway-shop-backend.onrender.com/api";
+const API_URL =  import.meta.env.VITE_API_URL;
 
 /* =======================
    Основной axios instance

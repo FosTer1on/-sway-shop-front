@@ -183,7 +183,7 @@ export default function Login() {
               className={styles.submitButton}
               disabled={isLoading}
             >
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? `${t("logining")}` : `${t("login")}`}
             </button>
           </form>
 
