@@ -41,7 +41,6 @@ const useProductStore = create((set, get) => ({
         page: currentPage,
         ...filters,
       };
-      console.log(params);
       const response = await getProducts(params);
       const newProducts = response.data.results;
   

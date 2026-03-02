@@ -8,11 +8,6 @@ export const fetchCartRequest = () => {
 
 // Добавить товар в корзину
 export const addToCartRequest = ({ product, size, quantity }) => {
-  console.log({
-    product,
-    size,
-    quantity,
-  });
   return api.post("/cart/add/", {
     product,
     size,
