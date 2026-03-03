@@ -5,6 +5,8 @@ import {
   deleteCartItemRequest,
   addToCartRequest,
 } from "@/api/cart/cart";
+import toast from "react-hot-toast";
+import i18n from "@/i18n";
 
 export const useCartStore = create((set, get) => ({
   items: [],
@@ -43,19 +45,37 @@ export const useCartStore = create((set, get) => ({
   },
 
   updateItemQuantity: async (itemId, quantity) => {
-    await updateCartItemRequest(itemId, quantity);
-
-    // 🔥 ВСЕГДА перезапрашиваем корзину
-    const { data } = await fetchCartRequest();
-
-    set({
-      items: data.items || [],
-      summary: {
-        items_total_price: data.items_total_price,
-        items_total_quantity: data.items_total_quantity,
-        total_with_service: data.total_with_service,
-      },
-    });
+    try {
+      await updateCartItemRequest(itemId, quantity);
+  
+      toast.success(i18n.t("change_amount"));
+  
+      // перезапрашиваем корзину
+      const { data } = await fetchCartRequest();
+  
+      set({
+        items: data.items || [],
+        summary: {
+          items_total_price: data.items_total_price,
+          items_total_quantity: data.items_total_quantity,
+          total_with_service: data.total_with_service,
+        },
+      });
+    } catch (err) {
+      // 400 — показываем текст от сервера
+      const status = err?.response?.status;
+  
+      if (status === 400) {
+        const msg =
+          err?.response?.data?.detail || i18n.t("max_amount_reached");
+        toast.error(msg);
+        return;
+      }
+  
+      // остальные ошибки
+      toast.error(i18n.t("something_went_wrong"));
+      throw err; // чтобы не скрывать баги
+    }
   },
 
   removeItem: async (itemId) => {

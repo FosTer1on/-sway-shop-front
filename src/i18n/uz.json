@@ -29,7 +29,7 @@
   "ordering": "Rasmiylashtirilvotdi...",
   "make_order": "Buyurtma bering",
   "checkout_text": "Siz bilan bog'lanishimiz va buyurtmangizni tasdiqlashimiz uchun iltimos, aloqa ma'lumotlaringizni qoldiring. Buyurtma uchun oldindan to'lov buyurtma summasining 50% ni tashkil qiladi.",
-  "price_per_item": "Har bir buyum uchun narx",
+  "price_per_item": "1 dona buyum narxi",
   "item_sum": "Tovarni miqdori",
   "to_checkout": "Ro'yxatdan o'chirilishda davom etish",
   "order_summary": "Jami",
@@ -72,5 +72,11 @@
   "explore": "Sifatli kiyim-kechak buyumlari kolleksiyamizni ko'rib chiqing",
   "store": "Do'kon:",
   "brand": "Brend:",
-  "no_products": "Mahsulotlar yo'q"
+  "no_products": "Mahsulotlar yo'q",
+  "delete_favorite": "Mahsulot sizning sevimlilaringizdan olib tashlandi.",
+  "add_to_favorite": "Mahsulot sizning sevimlilaringizga qo'shildi.",
+  "added_to_cart": "Mahsulot savatga qo'shildi",
+  "change_amount": "Mahsulot miqdori o'zgartirildi.",
+  "max_amount_reached": "Bu mahsulotning maksimal qiymati",
+  "something_went_wrong": "Nimadir noto'g'ri ketdi, iltimos, qayta urinib ko'ring."
 }

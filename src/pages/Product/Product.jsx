@@ -20,6 +20,7 @@ import { ProductSkeleton } from "@/components/Skeleton/ProductSkeleton";
 import { useAuth } from "@/hooks/useAuth";
 import { useCartStore } from "@/store/cart/useCartStore";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
 
 export default function Product() {
   const { t, i18n } = useTranslation();
@@ -61,7 +62,8 @@ export default function Product() {
     }
 
     if (!selectedSize) {
-      alert(t("choose_size"));
+      toast.error(t("choose_size"));
+      console.log("Select size");
       return;
     }
 
@@ -74,6 +76,7 @@ export default function Product() {
       product: product.slug,
       size: selectedSize.id,
     });
+    toast.success(t("added_to_cart"));
   };
 
   const handleToggleFavorite = () => {
@@ -86,8 +89,10 @@ export default function Product() {
 
     if (favorite) {
       removeFavorite(product.slug);
+      toast.success(t("delete_favorite"));
     } else {
       addFavorite(product.slug);
+      toast.success(t("add_to_favorite"));
     }
   };
 

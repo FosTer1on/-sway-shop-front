@@ -1,5 +1,5 @@
 // ~ React
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 // ? Hooks
 import { useAuth } from "@/hooks/useAuth";
@@ -30,10 +30,11 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  if (isAuth) {
-    navigate("/", { replace: true });
-    return null;
-  }
+  useEffect(() => {
+    if (isAuth) navigate("/", { replace: true });
+  }, [isAuth, navigate]);
+
+  if (isAuth) return null;
 
   const formatPhone = (value) => {
     // убираем всё кроме цифр
@@ -102,20 +103,22 @@ export default function Login() {
 
     try {
       const res = await loginAPI({
-        phone_number: `+${phoneDigits}`, // "998901234567"
+        phone_number: `+${phoneDigits}`,
         password,
       });
 
-      // если бэк вернул токены
-      if (res.data.access && res.data.refresh) {
-        login(res.data.access);
+      const { access, refresh } = res.data || {};
 
-        localStorage.setItem("refresh_token", res.data.refresh);
-
+      if (refresh) localStorage.setItem("refresh_token", refresh);
+      if (access) {
+        // login теперь сам кладёт access_token в localStorage
+        login(access);
         navigate(from, { replace: true });
+        return;
       }
 
-      // пока просто логируем
+      // если бэк не вернул токены — считаем ошибкой
+      console.error("LOGIN ERROR: tokens not returned", res.data);
     } catch (err) {
       console.error("LOGIN ERROR:", err.response?.data || err.message);
     } finally {
@@ -189,9 +192,9 @@ export default function Login() {
 
           <div className={styles.footer}>
             <p className={styles.footerText}>
-            {t("no_account")}{" "}
+              {t("no_account")}{" "}
               <Link to="/register" className={styles.link}>
-              {t("register")}
+                {t("register")}
               </Link>
             </p>
           </div>

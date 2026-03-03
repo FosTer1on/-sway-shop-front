@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 // ? Style
 import styles from "./ProductCard.module.css";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
 
 const API_URL = "http://127.0.0.1:8000";
 
@@ -51,8 +52,10 @@ export const ProductCard = ({
       if (onRemoveFromWishlist) {
         onRemoveFromWishlist();
       }
+      toast.success(t("delete_favorite"));
     } else {
       addFavorite(slug);
+      toast.success(t("add_to_favorite"));
     }
   };
 

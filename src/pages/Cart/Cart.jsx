@@ -49,7 +49,7 @@ export default function Cart() {
                   total_price={item.total_price}
                   size={item.size}
                   quantity={item.quantity}
-                  is_discount={item.discount > 0 ? True : False}
+                  is_discount={item.discount > 0}
                   onIncrease={() =>
                     updateItemQuantity(item.id, item.quantity + 1)
                   }

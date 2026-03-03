@@ -33,7 +33,6 @@ export default function App() {
   }, [isAuth]);
 
   return (
-    <div>
       <BrowserRouter>
         <Toaster
           position="top-center"
@@ -64,6 +63,5 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </div>
   );
 }

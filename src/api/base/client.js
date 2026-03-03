@@ -4,9 +4,6 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-/* =======================
-   Основной axios instance
-======================= */
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -14,15 +11,15 @@ const api = axios.create({
   },
 });
 
-/* =======================
-   Request interceptor
-======================= */
 api.interceptors.request.use(
   (config) => {
     const { accessToken } = useAuthStore.getState();
 
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+    // fallback на localStorage (на всякий случай)
+    const token = accessToken || localStorage.getItem("access_token");
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
     const currentLang = i18n.language;
@@ -37,40 +34,25 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-/* =======================
-   Refresh logic helpers
-======================= */
 let isRefreshing = false;
 let failedQueue = [];
 
 const processQueue = (error, token = null) => {
   failedQueue.forEach((promise) => {
-    if (error) {
-      promise.reject(error);
-    } else {
-      promise.resolve(token);
-    }
+    if (error) promise.reject(error);
+    else promise.resolve(token);
   });
-
   failedQueue = [];
 };
 
-/* =======================
-   Response interceptor
-======================= */
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // если нет ответа (например, сеть)
-    if (!error.response) {
-      return Promise.reject(error);
-    }
+    if (!error.response) return Promise.reject(error);
 
-    // access token протух
     if (error.response.status === 401 && !originalRequest._retry) {
-      // если уже идет refresh — ставим запрос в очередь
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({
@@ -88,7 +70,6 @@ api.interceptors.response.use(
 
       const refreshToken = localStorage.getItem("refresh_token");
 
-      // если refresh вообще нет
       if (!refreshToken) {
         localStorage.clear();
         window.location.href = "/login";
@@ -102,6 +83,7 @@ api.interceptors.response.use(
 
         const newAccessToken = response.data.access;
 
+        // login теперь сохраняет access_token в localStorage
         useAuthStore.getState().login(newAccessToken);
 
         api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
@@ -113,6 +95,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         processQueue(refreshError, null);
         localStorage.removeItem("refresh_token");
+        localStorage.removeItem("access_token");
         useAuthStore.getState().logout();
         window.location.href = "/login";
         return Promise.reject(refreshError);
