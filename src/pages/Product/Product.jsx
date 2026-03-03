@@ -35,7 +35,7 @@ export default function Product() {
 
   const [selectedSize, setSelectedSize] = useState(null);
 
-  const { addToCart, isInCart, fetchCart } = useCartStore();
+  const { addToCart, isInCart, fetchCart, loading } = useCartStore();
 
   useEffect(() => {
     fetchProductBySlug(slug);
@@ -63,7 +63,6 @@ export default function Product() {
 
     if (!selectedSize) {
       toast.error(t("choose_size"));
-      console.log("Select size");
       return;
     }
 
@@ -188,7 +187,7 @@ export default function Product() {
               <button
                 className={styles.addToCartBtn}
                 onClick={handleAddToCart}
-                disabled={!selectedSize}
+                disabled={!!loading}
               >
                 {inCart ? `${t("almost_in_cart")}` : `${t("add_to_cart")}`}
               </button>
