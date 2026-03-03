@@ -40,7 +40,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
     };
 
     fetchFilters();
-  }, [i18n]);
+  }, [i18n.language]);
 
   useEffect(() => {
     if (!filters.category) {
@@ -146,7 +146,6 @@ export const FilterBar = ({ isOpen, onToggle }) => {
             <label className={styles.groupTitle}>{t("stores")}</label>
             <div className={styles.options}>
               {stores.map((store) => (
-                <>
                   <button
                     key={store.id}
                     type="button"
@@ -159,7 +158,6 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                   >
                     {store.name}
                   </button>
-                </>
               ))}
             </div>
           </div>

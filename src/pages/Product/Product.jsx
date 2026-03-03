@@ -38,7 +38,7 @@ export default function Product() {
 
   useEffect(() => {
     fetchProductBySlug(slug);
-  }, [slug, i18n]);
+  }, [slug, i18n.language]);
 
   useEffect(() => {
     if (isAuth) {
