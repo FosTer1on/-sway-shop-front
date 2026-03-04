@@ -20,7 +20,6 @@ export default function Home() {
   return (
     <Layout>
       <div className={styles.container}>
-        <a href="/fam">asdasdasd</a>
         {/* Header */}
         <div className={styles.header}>
           <h1 className={styles.title}>Sway Shop</h1>
