@@ -20,6 +20,7 @@ import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import { Toaster } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import Special from "./pages/Special/Special";
 
 export default function App() {
   const { isAuth } = useAuth();
@@ -45,6 +46,7 @@ export default function App() {
           }}
         />
         <Routes>
+          <Route path="/family" element={<Special />} />
           <Route path="/" element={<Home />} />
           <Route path="/product/:slug" element={<Product />} />
 

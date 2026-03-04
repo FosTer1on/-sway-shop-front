@@ -1,0 +1,28 @@
+.special_page{
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 100px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    text-align: center;
+}
+
+.special_block{
+    width: 90%;
+
+    padding: 0 25px;
+
+    color: #fff;
+}
+
+.special_block h1{
+    color: gray;
+}
+
+.special_page p {
+    margin-top: 50px;
+}

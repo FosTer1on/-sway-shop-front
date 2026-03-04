@@ -22,7 +22,7 @@ export default function Home() {
       <div className={styles.container}>
         {/* Header */}
         <div className={styles.header}>
-          <h1 className={styles.title}>{t("catalog")}</h1>
+          <h1 className={styles.title}>Sway Shop</h1>
           <p className={styles.subtitle}>{t("explore")}</p>
         </div>
 

@@ -9,7 +9,9 @@ const Layout = ({ children }) => {
   return (
     <div className={styles.layout}>
       <Sidebar />
-      <main className={styles.main}>{children}</main>
+      <main className={styles.main}>
+        {children}
+      </main>
       <MobileNav />
     </div>
   );
