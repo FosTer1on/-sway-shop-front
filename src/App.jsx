@@ -46,9 +46,9 @@ export default function App() {
           }}
         />
         <Routes>
-          <Route path="/family" element={<Special />} />
           <Route path="/" element={<Home />} />
           <Route path="/product/:slug" element={<Product />} />
+          <Route path="/fam" element={<Special />} />
 
           <Route element={<PublicRoute />}>
             <Route path="/login" element={<Login />} />
