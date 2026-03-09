@@ -22,7 +22,7 @@ export const ProductCard = ({
   discount,
   is_popular,
   is_best_seller,
-  onRemoveFromWishlist
+  onRemoveFromWishlist,
 }) => {
   const { t } = useTranslation();
 
@@ -66,7 +66,22 @@ export const ProductCard = ({
       className={styles.card}
     >
       <div className={styles.imageContainer}>
-        <img src={images[0].image_url} alt={name} className={styles.image} loading="lazy" />
+        <img
+          src={images[0].image_url}
+          alt={name}
+          className={styles.image}
+          loading="lazy"
+          decoding="async"
+          onError={(e) => {
+            const img = e.currentTarget;
+            if (!img.dataset.retried) {
+              img.dataset.retried = "true";
+              setTimeout(() => {
+                img.src = `${images[0]?.image_url}?retry=${Date.now()}`;
+              }, 300);
+            }
+          }}
+        />
 
         {/* ===== BADGES (TOP LEFT) ===== */}
         <div className={styles.badgesContainer}>

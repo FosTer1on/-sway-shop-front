@@ -78,5 +78,8 @@
   "added_to_cart": "Mahsulot savatga qo'shildi",
   "change_amount": "Mahsulot miqdori o'zgartirildi.",
   "max_amount_reached": "Bu mahsulotning maksimal qiymati",
-  "something_went_wrong": "Nimadir noto'g'ri ketdi, iltimos, qayta urinib ko'ring."
+  "something_went_wrong": "Nimadir noto'g'ri ketdi, iltimos, qayta urinib ko'ring.",
+  "password_error": "Parol kamida 6 ta belgidan iborat bo'lishi kerak.",
+  "user_created": "Ushbu telefon raqamiga ega foydalanuvchi allaqachon mavjud.",
+  "login_fail": "Noto'g'ri telefon raqami yoki parol"
 }

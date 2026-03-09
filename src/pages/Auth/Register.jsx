@@ -10,6 +10,7 @@ import { registerAPI } from "@/api/auth/auth";
 // & Css
 import styles from "./Auth.module.css";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
 
 const PHONE_PREFIX = "+998 ";
 
@@ -71,15 +72,20 @@ export default function Register() {
      VALIDATION
   ====================== */
   const validateRegister = () => {
-    const err = {};
+    if (!firstName.trim()) {
+      toast.error(t("name_error"));
+      return false;
+    }
+    if (phoneDigits.length !== 12) {
+      toast.error(t("tel_error"));
+      return false;
+    }
+    if (!password || password.length < 6) {
+      toast.error(t("password_error"));
+      return false;
+    }
 
-    if (!firstName.trim()) err.firstName = `${t("type_name")}`;
-    if (phoneDigits.length !== 12) err.phone = `${t("type_tel")}`;
-    if (!password || password.length < 6)
-      err.password = `${t("password_length")}`;
-
-    setErrors(err);
-    return Object.keys(err).length === 0;
+    return true;
   };
 
   /* =====================
@@ -106,6 +112,7 @@ export default function Register() {
       navigate("/", { replace: true });
     } catch (err) {
       console.error("REGISTER ERROR:", err.response?.data || err.message);
+      toast.error(t("user_created"));
     } finally {
       setIsLoading(false);
     }
@@ -120,14 +127,12 @@ export default function Register() {
           </div>
 
           <form onSubmit={handleRegister} className={styles.form}>
-            <div className={styles.halfRow}>
-              <input
-                placeholder={t("name")}
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className={styles.input}
-              />
-            </div>
+            <input
+              placeholder={t("name")}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className={styles.input}
+            />
 
             <input
               type="tel"
@@ -152,9 +157,9 @@ export default function Register() {
 
           <div className={styles.footer}>
             <p>
-            {t("have_account")}{" "}
+              {t("have_account")}{" "}
               <Link to="/login" className={styles.link}>
-              {t("login")}
+                {t("login")}
               </Link>
             </p>
           </div>

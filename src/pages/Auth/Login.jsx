@@ -10,6 +10,7 @@ import { loginAPI } from "@/api/auth/auth";
 // & Css
 import styles from "./Auth.module.css";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
 
 const PHONE_PREFIX = "+998 ";
 
@@ -121,6 +122,7 @@ export default function Login() {
       console.error("LOGIN ERROR: tokens not returned", res.data);
     } catch (err) {
       console.error("LOGIN ERROR:", err.response?.data || err.message);
+      toast.error(t("login_fail"))
     } finally {
       setIsLoading(false);
     }
