@@ -5,7 +5,7 @@ export default function PrivateRoute() {
   const { isAuth } = useAuth();
 
   if (!isAuth) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/register" replace />;
   }
 
   return <Outlet />;

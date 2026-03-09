@@ -28,6 +28,7 @@ export const ProductGallery = ({ images, title }) => {
           src={images[currentIndex].image_url}
           alt={`${title} - Image ${currentIndex + 1}`}
           className={styles.mainImage}
+          loading="lazy"
         />
 
         {images.length > 1 && (
@@ -80,7 +81,7 @@ export const ProductGallery = ({ images, title }) => {
               onClick={() => goToSlide(index)}
               aria-label={`View image ${index + 1}`}
             >
-              <img src={img.image_url} alt={`Thumbnail ${index + 1}`} />
+              <img src={img.image_url} alt={`Thumbnail ${index + 1}`} loading="lazy" />
             </button>
           ))}
         </div>

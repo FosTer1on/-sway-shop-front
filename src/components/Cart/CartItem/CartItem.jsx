@@ -27,7 +27,7 @@ export const CartItem = ({
         onClick={onClick}
         style={{ cursor: "pointer" }}
       >
-        <img src={images[0]?.image_url} alt={name} className={styles.image} />
+        <img src={images[0]?.image_url} alt={name} className={styles.image} loading="lazy" />
       </div>
 
       <div className={styles.content}>

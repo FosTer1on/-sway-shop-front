@@ -177,7 +177,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                     }`}
                     onClick={() => toggleArrayValue("brands", brand.slug)}
                   >
-                    <img src={brand.icon_url} className={styles.brand_icon} alt="Brand icon" />
+                    <img src={brand.icon_url} className={styles.brand_icon} loading="lazy" alt="Brand icon" />
                     {/* {brand.name} */}
                   </button>
               ))}
