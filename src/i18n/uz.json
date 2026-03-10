@@ -81,5 +81,6 @@
   "something_went_wrong": "Nimadir noto'g'ri ketdi, iltimos, qayta urinib ko'ring.",
   "password_error": "Parol kamida 6 ta belgidan iborat bo'lishi kerak.",
   "user_created": "Ushbu telefon raqamiga ega foydalanuvchi allaqachon mavjud.",
-  "login_fail": "Noto'g'ri telefon raqami yoki parol"
+  "login_fail": "Noto'g'ri telefon raqami yoki parol",
+  "sum": "so'm"
 }

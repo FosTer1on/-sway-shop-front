@@ -164,10 +164,10 @@ export default function Product() {
             <div className={styles.priceSection}>
               <div className={styles.priceContainer}>
                 {isDiscount && (
-                  <span className={styles.originalPrice}>{product.price}</span>
+                  <span className={styles.originalPrice}>{product.price} {t("sum")}</span>
                 )}
                 <span className={styles.price}>
-                  {isDiscount ? product.final_price : product.price}
+                  {isDiscount ? product.final_price : product.price} {t("sum")}
                 </span>
               </div>
             </div>

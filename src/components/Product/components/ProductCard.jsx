@@ -127,10 +127,10 @@ export const ProductCard = ({
           {is_discount ? (
             <>
               <span className={styles.originalPrice}>{price}</span>
-              <span className={styles.price}>{final_price}</span>
+              <span className={styles.price}>{final_price} {t("sum")}</span>
             </>
           ) : (
-            <span className={styles.price}>{price}</span>
+            <span className={styles.price}>{price} {t("sum")}</span>
           )}
         </div>
       </div>
