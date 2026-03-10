@@ -146,18 +146,16 @@ export const FilterBar = ({ isOpen, onToggle }) => {
             <label className={styles.groupTitle}>{t("stores")}</label>
             <div className={styles.options}>
               {stores.map((store) => (
-                  <button
-                    key={store.id}
-                    type="button"
-                    className={`${styles.multiBtn} ${
-                      filters.stores.includes(store.slug)
-                        ? styles.activeBtn
-                        : ""
-                    }`}
-                    onClick={() => toggleArrayValue("stores", store.slug)}
-                  >
-                    {store.name}
-                  </button>
+                <button
+                  key={store.id}
+                  type="button"
+                  className={`${styles.multiBtn} ${
+                    filters.stores.includes(store.slug) ? styles.activeBtn : ""
+                  }`}
+                  onClick={() => toggleArrayValue("stores", store.slug)}
+                >
+                  {store.name}
+                </button>
               ))}
             </div>
           </div>
@@ -167,19 +165,34 @@ export const FilterBar = ({ isOpen, onToggle }) => {
             <label className={styles.groupTitle}>{t("brands")}</label>
             <div className={styles.options}>
               {brands.map((brand) => (
-                  <button
-                    key={brand.id}
-                    type="button"
-                    className={`${styles.multiBtn} ${
-                      filters.brands.includes(brand.slug)
-                        ? styles.activeBtn
-                        : ""
-                    }`}
-                    onClick={() => toggleArrayValue("brands", brand.slug)}
-                  >
-                    <img src={brand.icon_url} className={styles.brand_icon} loading="lazy" alt="Brand icon" />
-                    {/* {brand.name} */}
-                  </button>
+                <button
+                  key={brand.id}
+                  type="button"
+                  className={`${styles.multiBtn} ${
+                    filters.brands.includes(brand.slug) ? styles.activeBtn : ""
+                  }`}
+                  onClick={() => toggleArrayValue("brands", brand.slug)}
+                >
+                  <img
+                    src={brand.icon_url}
+                    className={styles.brand_icon}
+                    loading="lazy"
+                    alt="Brand icon"
+                    decoding="async"
+                    onError={(e) => {
+                      const img = e.currentTarget;
+                      if (!img.dataset.retried) {
+                        img.dataset.retried = "true";
+                        setTimeout(() => {
+                          img.src = `${
+                            images[0]?.image_url
+                          }?retry=${Date.now()}`;
+                        }, 300);
+                      }
+                    }}
+                  />
+                  {/* {brand.name} */}
+                </button>
               ))}
             </div>
           </div>
@@ -274,7 +287,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
           </div>
 
           <button className={styles.resetBtn} onClick={handleReset}>
-          {t("reset_filters")}
+            {t("reset_filters")}
           </button>
         </div>
       </div>

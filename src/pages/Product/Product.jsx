@@ -57,7 +57,7 @@ export default function Product() {
 
   const handleAddToCart = async () => {
     if (!isAuth) {
-      navigate("/login", { state: { from: location.pathname } });
+      navigate("/register", { state: { from: location.pathname } });
       return;
     }
 
@@ -80,7 +80,7 @@ export default function Product() {
 
   const handleToggleFavorite = () => {
     if (!isAuth) {
-      navigate("/login");
+      navigate("/register");
       return;
     }
 

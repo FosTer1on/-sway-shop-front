@@ -42,7 +42,7 @@ export const ProductCard = ({
     e.stopPropagation();
 
     if (!isAuth) {
-      navigate("/login");
+      navigate("/register");
       return;
     }
 
