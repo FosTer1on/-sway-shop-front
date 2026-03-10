@@ -79,7 +79,7 @@ export const CartItem = ({
 
         <div className={styles.lineTotal}>
           <p className={styles.lineTotalLabel}>{t("item_sum")}</p>
-          <p>{total_price}</p>
+          <p>{total_price} {t("sum")}</p>
         </div>
       </div>
     </div>
