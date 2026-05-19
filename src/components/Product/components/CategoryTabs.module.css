@@ -1,0 +1,130 @@
+.tabsContainer {
+  display: flex;
+  width: 100%;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.tabsScroll {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 0.5rem;
+}
+
+/* Hide scrollbar for cleaner look */
+.tabsScroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tabsScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tabsScroll::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 2px;
+}
+
+.tabsScroll::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--accent));
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  height: 48px;
+  padding: 0 1rem;
+  border: 1.5px solid hsl(var(--border));
+  border-radius: 0.75rem;
+  background-color: rgba(15, 38, 54, 0.6);
+  backdrop-filter: blur(8px);
+  color: hsl(var(--muted-foreground));
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tab:hover {
+  border-color: hsl(var(--accent));
+  background-color: rgba(45, 212, 191, 0.08);
+  color: hsl(var(--accent));
+  box-shadow: 0 0 12px rgba(45, 212, 191, 0.2),
+    inset 0 0 8px rgba(45, 212, 191, 0.1);
+}
+
+.tab.active {
+  border-color: hsl(var(--accent));
+  background: linear-gradient(
+    135deg,
+    rgba(45, 212, 191, 0.15) 0%,
+    rgba(45, 212, 191, 0.05) 100%
+  );
+  color: hsl(var(--accent));
+  box-shadow: 0 0 20px rgba(45, 212, 191, 0.4),
+    inset 0 0 12px rgba(45, 212, 191, 0.15), 0 0 40px rgba(45, 212, 191, 0.2);
+  font-weight: 600;
+}
+
+.tab.active:hover {
+  box-shadow: 0 0 30px rgba(45, 212, 191, 0.6),
+    inset 0 0 16px rgba(45, 212, 191, 0.2), 0 0 50px rgba(45, 212, 191, 0.3);
+}
+
+.tabLabel {
+  display: inline-block;
+  font-size: 1rem;
+}
+
+/* Mobile styles */
+@media (max-width: 1023px) {
+  .tabsContainer {
+    padding: 0 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tabsScroll {
+    gap: 0.5rem;
+  }
+
+  .tab {
+    min-width: 44px;
+    height: 44px;
+    padding: 0 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .tabLabel {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .tabsContainer {
+    padding: 0 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .tabsScroll {
+    gap: 0.4rem;
+  }
+
+  .tab {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 0.6rem;
+    font-size: 0.85rem;
+    border-radius: 0.5rem;
+  }
+
+  .tabLabel {
+    font-size: 0.85rem;
+  }
+}

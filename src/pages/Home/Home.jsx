@@ -6,6 +6,7 @@ import { FilterBar } from "@/components/FilterBar/FilterBar";
 
 import styles from "./Home.module.css";
 import { useTranslation } from "react-i18next";
+import CategoryTabs from "@/components/Product/components/CategoryTabs";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -28,6 +29,8 @@ export default function Home() {
 
         {/* Filter Bar */}
         <FilterBar isOpen={isFilterOpen} onToggle={toggleFilter} />
+
+        <CategoryTabs />
 
         {/* Product Grid */}
         <CatalogOfProducts />
