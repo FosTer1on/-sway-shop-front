@@ -10,6 +10,7 @@ import {
 import styles from "./FilterBar.module.css";
 import useProductStore from "@/store/product/useProductStore";
 import { useTranslation } from "react-i18next";
+import { buildMediaUrl } from "@/utils/media";
 
 export const FilterBar = ({ isOpen, onToggle }) => {
   const { t, i18n } = useTranslation();
@@ -174,7 +175,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                   onClick={() => toggleArrayValue("brands", brand.slug)}
                 >
                   <img
-                    src={brand.icon_url}
+                    src={buildMediaUrl(brand.icon_url)}
                     className={styles.brand_icon}
                     loading="lazy"
                     alt="Brand icon"
@@ -185,7 +186,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                         img.dataset.retried = "true";
                         setTimeout(() => {
                           img.src = `${
-                            images[0]?.image_url
+                            buildMediaUrl(images[0]?.image_url)
                           }?retry=${Date.now()}`;
                         }, 300);
                       }

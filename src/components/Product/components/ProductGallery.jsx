@@ -1,3 +1,4 @@
+import { buildMediaUrl } from "@/utils/media";
 import { useState } from "react";
 import styles from "./ProductGallery.module.css";
 
@@ -25,7 +26,7 @@ export const ProductGallery = ({ images, title }) => {
     <div className={styles.gallery}>
       <div className={styles.mainImageContainer}>
         <img
-          src={images[currentIndex].image_url}
+          src={buildMediaUrl(images[currentIndex].image_url)}
           alt={`${title} - Image ${currentIndex + 1}`}
           className={styles.mainImage}
           loading="lazy"
@@ -81,7 +82,7 @@ export const ProductGallery = ({ images, title }) => {
               onClick={() => goToSlide(index)}
               aria-label={`View image ${index + 1}`}
             >
-              <img src={img.image_url} alt={`Thumbnail ${index + 1}`} loading="lazy" />
+              <img src={buildMediaUrl(img.image_url)} alt={`Thumbnail ${index + 1}`} loading="lazy" />
             </button>
           ))}
         </div>

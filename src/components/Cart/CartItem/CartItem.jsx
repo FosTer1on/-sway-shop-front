@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { CloseIcon } from "@components/icons";
 import styles from "./CartItem.module.css";
 import { useTranslation } from "react-i18next";
+import { buildMediaUrl } from "@/utils/media";
 
 export const CartItem = ({
   id,
@@ -27,7 +28,7 @@ export const CartItem = ({
         onClick={onClick}
         style={{ cursor: "pointer" }}
       >
-        <img src={images[0]?.image_url} alt={name} className={styles.image} loading="lazy" />
+        <img src={buildMediaUrl(images[0]?.image_url)} alt={name} className={styles.image} loading="lazy" />
       </div>
 
       <div className={styles.content}>

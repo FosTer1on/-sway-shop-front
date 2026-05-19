@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 import styles from "./ProductCard.module.css";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
+import { buildMediaUrl } from "@/utils/media";
 
 const API_URL = "http://127.0.0.1:8000";
 
@@ -67,7 +68,7 @@ export const ProductCard = ({
     >
       <div className={styles.imageContainer}>
         <img
-          src={images[0].image_url}
+          src={buildMediaUrl(images[0].image_url)}
           alt={name}
           className={styles.image}
           loading="lazy"
@@ -77,7 +78,7 @@ export const ProductCard = ({
             if (!img.dataset.retried) {
               img.dataset.retried = "true";
               setTimeout(() => {
-                img.src = `${images[0]?.image_url}?retry=${Date.now()}`;
+                img.src = `${buildMediaUrl(images[0]?.image_url)}?retry=${Date.now()}`;
               }, 300);
             }
           }}
