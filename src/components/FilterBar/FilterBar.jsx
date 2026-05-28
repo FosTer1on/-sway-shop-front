@@ -11,9 +11,11 @@ import styles from "./FilterBar.module.css";
 import useProductStore from "@/store/product/useProductStore";
 import { useTranslation } from "react-i18next";
 import { buildMediaUrl } from "@/utils/media";
+import { useSearchParams } from "react-router-dom";
 
 export const FilterBar = ({ isOpen, onToggle }) => {
   const { t, i18n } = useTranslation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { filters, setFilters } = useProductStore();
 
@@ -21,6 +23,68 @@ export const FilterBar = ({ isOpen, onToggle }) => {
   const [stores, setStores] = useState([]);
   const [brands, setBrands] = useState([]);
   const [availableSizes, setAvailableSizes] = useState([]);
+
+
+  // Вспомогательная функция для фильтрации чтобы менять URL страницы
+  const updateFilters = (newFilters) => {
+    const updatedFilters = {
+      ...filters,
+      ...newFilters,
+    };
+  
+    const params = new URLSearchParams(searchParams);
+  
+    const setParam = (key, value) => {
+      if (value) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+    };
+  
+    const setArrayParam = (key, values) => {
+      params.delete(key);
+  
+      if (values.length) {
+        values.forEach((value) => params.append(key, value));
+      }
+    };
+  
+    setParam("category", updatedFilters.category);
+    setParam("region", updatedFilters.region);
+    setParam("sort", updatedFilters.sort);
+    setParam("min_price", updatedFilters.minPrice);
+    setParam("max_price", updatedFilters.maxPrice);
+  
+    if (updatedFilters.discountOnly) {
+      params.set("discount", "true");
+    } else {
+      params.delete("discount");
+    }
+  
+    setArrayParam("store", updatedFilters.stores);
+    setArrayParam("brand", updatedFilters.brands);
+    setArrayParam("size", updatedFilters.sizes);
+  
+    setSearchParams(params);
+    setFilters(updatedFilters);
+  };
+
+  useEffect(() => {
+    const filtersFromUrl = {
+      region: searchParams.get("region") || "",
+      category: searchParams.get("category") || "",
+      stores: searchParams.getAll("store"),
+      brands: searchParams.getAll("brand"),
+      sizes: searchParams.getAll("size"),
+      sort: searchParams.get("sort") || "",
+      discountOnly: searchParams.get("discount") === "true",
+      minPrice: searchParams.get("min_price") || "",
+      maxPrice: searchParams.get("max_price") || "",
+    };
+  
+    setFilters(filtersFromUrl);
+  }, []);
 
   // 🔹 при выборе категории меняем размеры
   useEffect(() => {
@@ -54,9 +118,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
         const response = await getSizesByCategory(filters.category);
         setAvailableSizes(response.data);
 
-        // очищаем старые размеры
-        setFilters({
-          ...filters,
+        updateFilters({
           sizes: [],
         });
       } catch (error) {
@@ -70,19 +132,18 @@ export const FilterBar = ({ isOpen, onToggle }) => {
   // 🔹 универсальный toggle для multi-select
   const toggleArrayValue = (key, value) => {
     const exists = filters[key].includes(value);
-
+  
     const updated = exists
       ? filters[key].filter((v) => v !== value)
       : [...filters[key], value];
-
-    setFilters({
-      ...filters,
+  
+    updateFilters({
       [key]: updated,
     });
   };
 
   const handleReset = () => {
-    setFilters({
+    updateFilters({
       category: "",
       stores: [],
       brands: [],
@@ -92,6 +153,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
       minPrice: "",
       maxPrice: "",
     });
+  
     setAvailableSizes([]);
   };
 
@@ -127,9 +189,9 @@ export const FilterBar = ({ isOpen, onToggle }) => {
               className={styles.select}
               value={filters.category}
               onChange={(e) =>
-                setFilters({
-                  ...filters,
+                updateFilters({
                   category: e.target.value,
+                  sizes: [],
                 })
               }
             >
@@ -208,9 +270,9 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                     key={size.id}
                     type="button"
                     className={`${styles.multiBtn} ${
-                      filters.sizes.includes(size.id) ? styles.activeBtn : ""
+                      filters.sizes.includes(String(size.id)) ? styles.activeBtn : ""
                     }`}
-                    onClick={() => toggleArrayValue("sizes", size.id)}
+                    onClick={() => toggleArrayValue("sizes", String(size.id))}
                   >
                     {size.name}
                   </button>
@@ -226,8 +288,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
               className={styles.select}
               value={filters.sort}
               onChange={(e) =>
-                setFilters({
-                  ...filters,
+                updateFilters({
                   sort: e.target.value,
                 })
               }
@@ -245,8 +306,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                 type="checkbox"
                 checked={filters.discountOnly}
                 onChange={() =>
-                  setFilters({
-                    ...filters,
+                  updateFilters({
                     discountOnly: !filters.discountOnly,
                   })
                 }
@@ -265,8 +325,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                 className={styles.input}
                 value={filters.minPrice}
                 onChange={(e) =>
-                  setFilters({
-                    ...filters,
+                  updateFilters({
                     minPrice: e.target.value,
                   })
                 }
@@ -278,8 +337,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                 className={styles.input}
                 value={filters.maxPrice}
                 onChange={(e) =>
-                  setFilters({
-                    ...filters,
+                  updateFilters({
                     maxPrice: e.target.value,
                   })
                 }

@@ -13,13 +13,11 @@ export const CatalogOfProducts = () => {
     loading,
     hasMore,
     error,
-    resetProducts,
-    filters, // 🔥 добавляем
+    filters, 
   } = useProductStore();
 
-  // 🔥 ВОТ ЭТО ГЛАВНОЕ
+
   useEffect(() => {
-    resetProducts();
     fetchProducts({ reset: true });
   }, [filters, i18n.language]);
 

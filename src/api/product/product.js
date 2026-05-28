@@ -17,6 +17,7 @@ export const getProducts = (params) =>
       discount: params.discountOnly ? "true" : undefined,
 
       order_by: params.sort || undefined,
+      region: params.region || undefined,
     },
     paramsSerializer: (params) =>
       qs.stringify(params, { arrayFormat: "repeat" }),

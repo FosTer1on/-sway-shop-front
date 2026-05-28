@@ -1,10 +1,19 @@
 import { create } from "zustand";
 import { getProductById, getProducts } from "@/api/product/product";
 
+const initialFilters = {
+  category: "",
+  region: "",
+  stores: [],
+  brands: [],
+  sizes: [],
+  sort: "",
+  discountOnly: false,
+  minPrice: "",
+  maxPrice: "",
+};
+
 const useProductStore = create((set, get) => ({
-  /* =====================
-     STATE
-  ===================== */
   products: [],
   product: null,
 
@@ -14,40 +23,29 @@ const useProductStore = create((set, get) => ({
   page: 1,
   hasMore: true,
 
-  filters: {
-    category: "",
-    stores: [],
-    brands: [],
-    sizes: [],
-    sort: "",
-    discountOnly: false,
-    minPrice: "",
-    maxPrice: "",
-  },
+  filters: initialFilters,
 
-  /* =====================
-     ACTIONS
-  ===================== */
-
-  // Получить список товаров
-  fetchProducts: async ({ reset = false } = {}) => {
+  fetchProducts: async ({ reset = false, overrideFilters = {} } = {}) => {
     const currentPage = reset ? 1 : get().page;
-    const filters = get().filters;
-    const products = get().products;
-  
+
+    const filters = {
+      ...get().filters,
+      ...overrideFilters,
+    };
+
     set({ loading: true, error: null });
+
     try {
       const params = {
         page: currentPage,
         ...filters,
       };
+
       const response = await getProducts(params);
-      const newProducts = response.data.results;
-  
+      const newProducts = response.data.results || [];
+
       set((state) => ({
-        products: reset
-          ? newProducts
-          : [...state.products, ...newProducts],
+        products: reset ? newProducts : [...state.products, ...newProducts],
         page: currentPage + 1,
         hasMore: Boolean(response.data.next),
         loading: false,
@@ -59,9 +57,7 @@ const useProductStore = create((set, get) => ({
       });
     }
   },
-  
 
-  // Получить один товар
   fetchProductBySlug: async (slug) => {
     set({ loading: true, error: null });
 
@@ -80,29 +76,18 @@ const useProductStore = create((set, get) => ({
     }
   },
 
-  /* =====================
-     FILTERS
-  ===================== */
-
-  setFilters: (newFilters) => set({ filters: newFilters }),
+  setFilters: (newFilters) =>
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        ...newFilters,
+      },
+    })),
 
   resetFilters: () =>
     set({
-      filters: {
-        category: "",
-        stores: [],
-        brands: [],
-        sizes: [],
-        sort: "",
-        discountOnly: false,
-        minPrice: "",
-        maxPrice: "",
-      },
+      filters: { ...initialFilters },
     }),
-
-  /* =====================
-     RESET
-  ===================== */
 
   resetProducts: () =>
     set({
