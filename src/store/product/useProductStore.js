@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getProductById, getProducts } from "@/api/product/product";
+import { getProductById, getProducts, getOutfits } from "@/api/product/product";
 
 const initialFilters = {
   category: "",
@@ -24,6 +24,9 @@ const useProductStore = create((set, get) => ({
   hasMore: true,
 
   filters: initialFilters,
+
+  activeCatalog: "products",
+  outfits: [],
 
   fetchProducts: async ({ reset = false, overrideFilters = {} } = {}) => {
     const currentPage = reset ? 1 : get().page;
@@ -76,6 +79,39 @@ const useProductStore = create((set, get) => ({
     }
   },
 
+  fetchOutfits: async ({ reset = false, overrideFilters = {} } = {}) => {
+    const currentPage = reset ? 1 : get().page;
+
+    const filters = {
+      ...get().filters,
+      ...overrideFilters,
+    };
+
+    set({ loading: true, error: null });
+
+    try {
+      const params = {
+        page: currentPage,
+        ...filters,
+      };
+
+      const response = await getOutfits(params);
+      const newOutfits = response.data.results || [];
+
+      set((state) => ({
+        outfits: reset ? newOutfits : [...state.outfits, ...newOutfits],
+        page: currentPage + 1,
+        hasMore: Boolean(response.data.next),
+        loading: false,
+      }));
+    } catch (err) {
+      set({
+        error: err?.response?.data?.detail || "Ошибка загрузки луков",
+        loading: false,
+      });
+    }
+  },
+
   setFilters: (newFilters) =>
     set((state) => ({
       filters: {
@@ -83,6 +119,11 @@ const useProductStore = create((set, get) => ({
         ...newFilters,
       },
     })),
+
+  setActiveCatalog: (catalog) =>
+    set({
+      activeCatalog: catalog,
+    }),
 
   resetFilters: () =>
     set({
@@ -92,6 +133,7 @@ const useProductStore = create((set, get) => ({
   resetProducts: () =>
     set({
       products: [],
+      outfits: [],
       page: 1,
       hasMore: true,
     }),

@@ -23,5 +23,17 @@ export const getProducts = (params) =>
       qs.stringify(params, { arrayFormat: "repeat" }),
   });
 
-
 export const getProductById = (slug) => api.get(`/catalog/products/${slug}/`);
+
+export const getOutfits = (params) =>
+  api.get("/catalog/outfits/", {
+    params: {
+      page: params.page,
+      min_price: params.minPrice || undefined,
+      max_price: params.maxPrice || undefined,
+      discount: params.discountOnly ? "true" : undefined,
+      order_by: params.sort || undefined,
+    },
+    paramsSerializer: (params) =>
+      qs.stringify(params, { arrayFormat: "repeat" }),
+  });

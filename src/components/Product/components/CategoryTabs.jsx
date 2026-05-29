@@ -15,24 +15,42 @@ const CATEGORY_TABS = [
 
 const CategoryTabs = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { filters, setFilters } = useProductStore();
+  const { filters, setFilters, activeCatalog, setActiveCatalog } =
+    useProductStore();
 
-  const activeTab = filters.region || "all";
+  const activeTab =
+    activeCatalog === "outfits" ? "outfits" : filters.region || "all";
 
   useEffect(() => {
+    const tabFromUrl = searchParams.get("tab");
     const regionFromUrl = searchParams.get("region") || "";
 
-    if (regionFromUrl !== filters.region) {
+    if (tabFromUrl === "outfits") {
+      setActiveCatalog("outfits");
+      setFilters({ region: "" });
+    } else {
+      setActiveCatalog("products");
       setFilters({ region: regionFromUrl });
     }
   }, []);
 
   const handleTabClick = (tabId) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+
+    if (tabId === "outfits") {
+      newSearchParams.set("tab", "outfits");
+      newSearchParams.delete("region");
+
+      setSearchParams(newSearchParams);
+      setActiveCatalog("outfits");
+      setFilters({ region: "" });
+
+      return;
+    }
+
     const region = tabId === "all" ? "" : tabId;
 
-    if (filters.region === region) return;
-
-    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.delete("tab");
 
     if (region) {
       newSearchParams.set("region", region);
@@ -41,6 +59,7 @@ const CategoryTabs = () => {
     }
 
     setSearchParams(newSearchParams);
+    setActiveCatalog("products");
     setFilters({ region });
   };
 

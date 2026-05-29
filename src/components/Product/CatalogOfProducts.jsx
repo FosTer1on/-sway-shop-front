@@ -3,30 +3,39 @@ import { ProductCard } from "./components/ProductCard";
 import useProductStore from "@/store/product/useProductStore";
 import styles from "./CatalogOfProducts.module.css";
 import { useTranslation } from "react-i18next";
+import { OutfitCard } from "./components/OutfitCard";
 
 export const CatalogOfProducts = () => {
   const { i18n, t } = useTranslation();
 
   const {
     products,
+    outfits,
+    activeCatalog,
     fetchProducts,
+    fetchOutfits,
     loading,
     hasMore,
     error,
-    filters, 
+    filters,
   } = useProductStore();
 
-
   useEffect(() => {
-    fetchProducts({ reset: true });
-  }, [filters, i18n.language]);
+    if (activeCatalog === "outfits") {
+      fetchOutfits({ reset: true });
+    } else {
+      fetchProducts({ reset: true });
+    }
+  }, [filters, activeCatalog, i18n.language]);
 
   return (
     <div className={styles.container}>
       <div className={styles.grid}>
-        {products.map((product) => (
-          <ProductCard key={product.id} {...product} />
-        ))}
+        {activeCatalog === "outfits"
+          ? outfits.map((outfit) => <OutfitCard key={outfit.id} {...outfit} />)
+          : products.map((product) => (
+              <ProductCard key={product.id} {...product} />
+            ))}
 
         {loading && products.length === 0 && (
           <p className={styles.loading}>{t("loading_products")}</p>
@@ -43,7 +52,9 @@ export const CatalogOfProducts = () => {
         <div className={styles.loadMoreContainer}>
           <button
             className={styles.loadMoreBtn}
-            onClick={() => fetchProducts()}
+            onClick={() =>
+              activeCatalog === "outfits" ? fetchOutfits() : fetchProducts()
+            }
             disabled={loading}
           >
             {loading ? `${t("loading")}` : `${t("load_more_products")}`}
