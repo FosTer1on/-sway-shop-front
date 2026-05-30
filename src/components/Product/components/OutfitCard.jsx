@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./ProductCard.module.css";
 import { useTranslation } from "react-i18next";
 import { buildMediaUrl } from "@/utils/media";
 import { PercentIcon } from "@/components/icons";
+import { buildTelegramOrderUrl } from "@/utils/telegram";
 
 export const OutfitCard = ({
   slug,
@@ -15,10 +16,14 @@ export const OutfitCard = ({
 }) => {
   const { t } = useTranslation();
 
+  const navigate = useNavigate();
+
+  const telegramOrderUrl = buildTelegramOrderUrl(slug);
+
   const isDiscount = discount > 0;
 
   return (
-    <Link to={`/outfit/${slug}`} className={styles.card}>
+    <div className={styles.card} onClick={() => navigate(`/outfit/${slug}`)}>
       <div className={styles.imageContainer}>
         <img
           src={buildMediaUrl(image)}
@@ -55,7 +60,16 @@ export const OutfitCard = ({
             </span>
           )}
         </div>
+        <a
+          href={telegramOrderUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.telegramOrderBtn}
+          onClick={(e) => e.stopPropagation()}
+        >
+          Заказать в 1 клик Telegram
+        </a>
       </div>
-    </Link>
+    </div>
   );
 };

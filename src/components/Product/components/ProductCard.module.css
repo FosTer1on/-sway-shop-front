@@ -216,3 +216,32 @@
     /* Optimize for mobile */
   }
 }
+
+.telegramOrderBtn {
+  /* width: 100%; */
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 0.5rem;
+  background-color: #229ed9;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.telegramOrderBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 767px) {
+  .telegramOrderBtn {
+    padding: 9px 10px;
+    font-size: 0.78rem;
+    margin-top: 8px;
+  }
+}

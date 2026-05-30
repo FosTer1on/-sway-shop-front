@@ -10,6 +10,7 @@ import styles from "./ProductCard.module.css";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { buildMediaUrl } from "@/utils/media";
+import { buildTelegramOrderUrl } from "@/utils/telegram";
 
 const API_URL = "http://127.0.0.1:8000";
 
@@ -28,6 +29,8 @@ export const ProductCard = ({
   const { t } = useTranslation();
 
   const navigate = useNavigate();
+
+  const telegramOrderUrl = buildTelegramOrderUrl(slug);
 
   const is_discount = 1 ? discount > 0 : 0;
 
@@ -61,10 +64,13 @@ export const ProductCard = ({
   };
 
   return (
-    <Link
-      to={`/product/${slug}`}
-      state={{ fromScroll: window.scrollY }}
+    <div
       className={styles.card}
+      onClick={() =>
+        navigate(`/product/${slug}`, {
+          state: { fromScroll: window.scrollY },
+        })
+      }
     >
       <div className={styles.imageContainer}>
         <img
@@ -78,7 +84,9 @@ export const ProductCard = ({
             if (!img.dataset.retried) {
               img.dataset.retried = "true";
               setTimeout(() => {
-                img.src = `${buildMediaUrl(images[0]?.image_url)}?retry=${Date.now()}`;
+                img.src = `${buildMediaUrl(
+                  images[0]?.image_url
+                )}?retry=${Date.now()}`;
               }, 300);
             }
           }}
@@ -128,13 +136,26 @@ export const ProductCard = ({
           {is_discount ? (
             <>
               <span className={styles.originalPrice}>{price}</span>
-              <span className={styles.price}>{final_price} {t("sum")}</span>
+              <span className={styles.price}>
+                {final_price} {t("sum")}
+              </span>
             </>
           ) : (
-            <span className={styles.price}>{price} {t("sum")}</span>
+            <span className={styles.price}>
+              {price} {t("sum")}
+            </span>
           )}
         </div>
+        <a
+          href={telegramOrderUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.telegramOrderBtn}
+          onClick={(e) => e.stopPropagation()}
+        >
+          Заказать в 1 клик Telegram
+        </a>
       </div>
-    </Link>
+    </div>
   );
 };
