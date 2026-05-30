@@ -21,6 +21,7 @@ import Checkout from "./pages/Checkout/Checkout";
 import { Toaster } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import Special from "./pages/Special/Special";
+import Outfit from "./pages/Outfit/Outfit";
 
 export default function App() {
   const { isAuth } = useAuth();
@@ -48,6 +49,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:slug" element={<Product />} />
+          <Route path="/outfit/:slug" element={<Outfit />} />
           <Route path="/fam" element={<Special />} />
 
           <Route element={<PublicRoute />}>

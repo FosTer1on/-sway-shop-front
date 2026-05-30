@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getProductById, getProducts, getOutfits } from "@/api/product/product";
+import { getProductById, getProducts, getOutfits, getOutfitBySlug } from "@/api/product/product";
 
 const initialFilters = {
   category: "",
@@ -26,7 +26,9 @@ const useProductStore = create((set, get) => ({
   filters: initialFilters,
 
   activeCatalog: "products",
+
   outfits: [],
+  outfit: null,
 
   fetchProducts: async ({ reset = false, overrideFilters = {} } = {}) => {
     const currentPage = reset ? 1 : get().page;
@@ -107,6 +109,24 @@ const useProductStore = create((set, get) => ({
     } catch (err) {
       set({
         error: err?.response?.data?.detail || "Ошибка загрузки луков",
+        loading: false,
+      });
+    }
+  },
+
+  fetchOutfitBySlug: async (slug) => {
+    set({ loading: true, error: null });
+  
+    try {
+      const response = await getOutfitBySlug(slug);
+  
+      set({
+        outfit: response.data,
+        loading: false,
+      });
+    } catch (err) {
+      set({
+        error: "Лук не найден",
         loading: false,
       });
     }

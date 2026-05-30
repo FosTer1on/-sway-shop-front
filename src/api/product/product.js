@@ -37,3 +37,5 @@ export const getOutfits = (params) =>
     paramsSerializer: (params) =>
       qs.stringify(params, { arrayFormat: "repeat" }),
   });
+
+export const getOutfitBySlug = (slug) => api.get(`/catalog/outfits/${slug}/`);
