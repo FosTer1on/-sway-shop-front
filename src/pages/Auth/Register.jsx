@@ -28,6 +28,8 @@ export default function Register() {
 
   const [password, setPassword] = useState("");
 
+  const [gender, setGender] = useState("");
+
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -84,6 +86,10 @@ export default function Register() {
       toast.error(t("password_error"));
       return false;
     }
+    if (!gender) {
+      toast.error(t("choose_gender"));
+      return false;
+    }
 
     return true;
   };
@@ -102,6 +108,7 @@ export default function Register() {
         first_name: firstName,
         phone_number: `+${phoneDigits}`,
         password,
+        gender,
       });
 
       // логиним сразу
@@ -149,6 +156,28 @@ export default function Register() {
               onChange={(e) => setPassword(e.target.value)}
               className={styles.input}
             />
+
+            <div className={styles.genderSwitch}>
+              <button
+                type="button"
+                className={`${styles.genderButtonMale} ${
+                  gender === "male" ? styles.genderButtonActiveMale : ""
+                }`}
+                onClick={() => setGender("male")}
+              >
+                Мужской
+              </button>
+
+              <button
+                type="button"
+                className={`${styles.genderButtonFemale} ${
+                  gender === "female" ? styles.genderButtonActiveFemale : ""
+                }`}
+                onClick={() => setGender("female")}
+              >
+                Женский
+              </button>
+            </div>
 
             <button className={styles.submitButton} disabled={isLoading}>
               {isLoading ? `${t("sending")}` : `${t("registrater")}`}

@@ -82,5 +82,6 @@
   "password_error": "Parol kamida 6 ta belgidan iborat bo'lishi kerak.",
   "user_created": "Ushbu telefon raqamiga ega foydalanuvchi allaqachon mavjud.",
   "login_fail": "Noto'g'ri telefon raqami yoki parol",
-  "sum": "so'm"
+  "sum": "so'm",
+  "choose_gender": "Jinsni tanlang"
 }
