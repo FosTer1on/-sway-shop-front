@@ -18,6 +18,7 @@ export const getProducts = (params) =>
 
       order_by: params.sort || undefined,
       region: params.region || undefined,
+      gender: params.gender || undefined,
     },
     paramsSerializer: (params) =>
       qs.stringify(params, { arrayFormat: "repeat" }),
@@ -33,6 +34,7 @@ export const getOutfits = (params) =>
       max_price: params.maxPrice || undefined,
       discount: params.discountOnly ? "true" : undefined,
       order_by: params.sort || undefined,
+      gender: params.gender || undefined,
     },
     paramsSerializer: (params) =>
       qs.stringify(params, { arrayFormat: "repeat" }),

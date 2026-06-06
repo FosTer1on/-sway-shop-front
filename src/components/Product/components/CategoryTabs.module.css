@@ -1,20 +1,26 @@
 .tabsContainer {
-  display: flex;
   width: 100%;
   margin-bottom: 2rem;
   padding: 0 1rem;
 }
 
+.tabsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
 .tabsScroll {
   display: flex;
   gap: 0.75rem;
-  width: 100%;
   overflow-x: auto;
   scroll-behavior: smooth;
   padding-bottom: 0.5rem;
 }
 
-/* Hide scrollbar for cleaner look */
 .tabsScroll::-webkit-scrollbar {
   height: 4px;
 }
@@ -47,7 +53,7 @@
   font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -56,8 +62,6 @@
   border-color: hsl(var(--accent));
   background-color: rgba(45, 212, 191, 0.08);
   color: hsl(var(--accent));
-  box-shadow: 0 0 12px rgba(45, 212, 191, 0.2),
-    inset 0 0 8px rgba(45, 212, 191, 0.1);
 }
 
 .tab.active {
@@ -69,13 +73,8 @@
   );
   color: hsl(var(--accent));
   box-shadow: 0 0 20px rgba(45, 212, 191, 0.4),
-    inset 0 0 12px rgba(45, 212, 191, 0.15), 0 0 40px rgba(45, 212, 191, 0.2);
+    inset 0 0 12px rgba(45, 212, 191, 0.15);
   font-weight: 600;
-}
-
-.tab.active:hover {
-  box-shadow: 0 0 30px rgba(45, 212, 191, 0.6),
-    inset 0 0 16px rgba(45, 212, 191, 0.2), 0 0 50px rgba(45, 212, 191, 0.3);
 }
 
 .tabLabel {
@@ -83,15 +82,68 @@
   font-size: 1rem;
 }
 
-/* Mobile styles */
+/* Gender */
+.genderTabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  min-width: 360px;
+  height: 48px;
+  border: 1.5px solid hsl(var(--border));
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background-color: rgba(15, 38, 54, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.genderTab {
+  border: none;
+  border-right: 1.5px solid hsl(var(--border));
+  background: transparent;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.genderTab:last-child {
+  border-right: none;
+}
+
+.genderTab:hover {
+  color: hsl(var(--accent));
+  background-color: rgba(45, 212, 191, 0.08);
+}
+
+.genderActive {
+  color: hsl(var(--accent));
+  background: linear-gradient(
+    135deg,
+    rgba(45, 212, 191, 0.15) 0%,
+    rgba(45, 212, 191, 0.05) 100%
+  );
+  box-shadow: inset 0 0 12px rgba(45, 212, 191, 0.15);
+}
+
+/* Tablet */
 @media (max-width: 1023px) {
   .tabsContainer {
     padding: 0 0.75rem;
     margin-bottom: 1.5rem;
   }
 
+  .tabsRow {
+    gap: 0.75rem;
+  }
+
   .tabsScroll {
+    width: 100%;
     gap: 0.5rem;
+  }
+
+  .genderTabs {
+    width: 100%;
+    min-width: 0;
   }
 
   .tab {
@@ -101,11 +153,13 @@
     font-size: 0.9rem;
   }
 
-  .tabLabel {
+  .tabLabel,
+  .genderTab {
     font-size: 0.9rem;
   }
 }
 
+/* Mobile */
 @media (max-width: 640px) {
   .tabsContainer {
     padding: 0 0.5rem;
@@ -124,7 +178,13 @@
     border-radius: 0.5rem;
   }
 
-  .tabLabel {
+  .genderTabs {
+    height: 42px;
+    border-radius: 0.5rem;
+  }
+
+  .tabLabel,
+  .genderTab {
     font-size: 0.85rem;
   }
 }

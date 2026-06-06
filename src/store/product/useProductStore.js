@@ -4,6 +4,7 @@ import { getProductById, getProducts, getOutfits, getOutfitBySlug } from "@/api/
 const initialFilters = {
   category: "",
   region: "",
+  gender: "",
   stores: [],
   brands: [],
   sizes: [],

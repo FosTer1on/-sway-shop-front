@@ -37,13 +37,18 @@ export const CatalogOfProducts = () => {
               <ProductCard key={product.id} {...product} />
             ))}
 
-        {loading && products.length === 0 && (
-          <p className={styles.loading}>{t("loading_products")}</p>
-        )}
+        {loading &&
+          (activeCatalog === "outfits"
+            ? outfits.length === 0
+            : products.length === 0) && (
+            <p className={styles.loading}>{t("loading_products")}</p>
+          )}
 
-        {!loading && products.length === 0 && !error && (
-          <p className={styles.empty}>{t("no_products")}</p>
-        )}
+        {!loading &&
+          (activeCatalog === "outfits"
+            ? outfits.length === 0
+            : products.length === 0) &&
+          !error && <p className={styles.empty}>{t("no_products")}</p>}
 
         {error && <p className={styles.error}>{error}</p>}
       </div>
