@@ -158,12 +158,18 @@
   gap: 1rem;
 }
 
+.forgotPasswordWrapper {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: -0.5rem;
+}
+
 .forgotLink {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: hsl(var(--accent));
   text-decoration: none;
+  font-weight: 600;
   transition: all 0.2s ease;
-  white-space: nowrap;
 }
 
 .forgotLink:hover {

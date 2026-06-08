@@ -90,5 +90,18 @@
   "days": "дней",
   "size_warning": "*Товары из Китая могут маломерить. Перед заказом проверьте размер.",
   "price_info": "*В цену уже включены товар, карго, авиаперевозка и доставка до дома.",
-  "size_table": "Таблица размеров"
+  "size_table": "Таблица размеров",
+  "forgot_password": "Забыли пароль?",
+  "confirm_password_required": "Повторите пароль",
+  "passwords_not_match": "Пароли не совпадают",
+  "password_changed": "Пароль успешно изменён",
+  "password_reset_fail": "Не удалось изменить пароль",
+  "password_recovery": "Восстановление пароля",
+  "password_recovery_subtitle": "Введите номер телефона и новый пароль",
+  "new_password": "Новый пароль",
+  "confirm_password": "Повторите пароль",
+  "saving": "Сохраняем...",
+  "change_password": "Изменить пароль",
+  "back_to_login": "Вернуться ко входу",
+  "info_error": "Некорректные данные"
 }

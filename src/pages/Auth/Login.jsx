@@ -122,7 +122,7 @@ export default function Login() {
       console.error("LOGIN ERROR: tokens not returned", res.data);
     } catch (err) {
       console.error("LOGIN ERROR:", err.response?.data || err.message);
-      toast.error(t("login_fail"))
+      toast.error(t("login_fail"));
     } finally {
       setIsLoading(false);
     }
@@ -181,6 +181,12 @@ export default function Login() {
               {errors.password && (
                 <span className={styles.errorMessage}>{errors.password}</span>
               )}
+            </div>
+
+            <div className={styles.forgotPasswordWrapper}>
+              <Link to="/forgot-password" className={styles.forgotLink}>
+                {t("forgot_password")}
+              </Link>
             </div>
 
             <button

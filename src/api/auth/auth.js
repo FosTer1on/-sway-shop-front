@@ -21,3 +21,6 @@ export const verifyPhoneAPI = (data) => {
   return api.post("/user/verify/", data);
 };
 
+export const passwordResetAPI = (data) => {
+  return api.post("/user/password-reset/", data);
+};

@@ -90,5 +90,17 @@
   "days": "kungacha",
   "size_warning": "*Xitoydan keltirilgan mahsulotlar kichik bo'lishi mumkin. Buyurtma berishdan oldin o'lchamini tekshiring.",
   "price_info": "*Narxga allaqachon tovarlar, yuk, havo transporti va uyga yetkazib berish kiradi.",
-  "size_table": "Hajm jadvali"
+  "size_table": "Hajm jadvali",
+  "forgot_password": "Parolingiz esdan chiqdimi?",
+  "confirm_password_required": "Parolni qayta kiriting",
+  "passwords_not_match": "Parollar mos kelmayapti",
+  "password_changed": "Parol muvaffaqiyatli o'zgartirildi",
+  "password_reset_fail": "Parolni o'zgartirib bo'lmadi",
+  "password_recovery": "Parolni tiklash",
+  "password_recovery_subtitle": "Telefon raqamingizni va yangi parolingizni kiriting",
+  "new_password": "Yangi parol",
+  "confirm_password": "Parolni qayta kiriting",
+  "saving": "Saqlanmoqda...",
+  "change_password": "Parolni o'zgartirish",
+  "back_to_login": "Noto'g'ri ma'lumotlar"
 }

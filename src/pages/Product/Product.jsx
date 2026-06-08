@@ -258,9 +258,7 @@ export default function Product() {
           product.size_chart?.rows?.length > 0 && (
             <div className={styles.sizeChartSection}>
               <div className={styles.sizeChartHeader}>
-                <h2 className={styles.sizeChartTitle}>
-                {t("size_table")}
-                </h2>
+                <h2 className={styles.sizeChartTitle}>{t("size_table")}</h2>
               </div>
 
               <div className={styles.sizeChartScroll}>

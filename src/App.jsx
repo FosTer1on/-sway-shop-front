@@ -22,6 +22,7 @@ import { Toaster } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import Special from "./pages/Special/Special";
 import Outfit from "./pages/Outfit/Outfit";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
 
 export default function App() {
   const { isAuth } = useAuth();
@@ -55,6 +56,7 @@ export default function App() {
           <Route element={<PublicRoute />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
           </Route>
 
           <Route element={<PrivateRoute />}>
