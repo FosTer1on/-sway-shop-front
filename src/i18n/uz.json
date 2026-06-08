@@ -89,5 +89,6 @@
   "until": "",
   "days": "kungacha",
   "size_warning": "*Xitoydan keltirilgan mahsulotlar kichik bo'lishi mumkin. Buyurtma berishdan oldin o'lchamini tekshiring.",
-  "price_info": "*Narxga allaqachon tovarlar, yuk, havo transporti va uyga yetkazib berish kiradi."
+  "price_info": "*Narxga allaqachon tovarlar, yuk, havo transporti va uyga yetkazib berish kiradi.",
+  "size_table": "Hajm jadvali"
 }

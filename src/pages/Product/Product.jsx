@@ -252,6 +252,42 @@ export default function Product() {
             </div>
           </div>
         </div>
+
+        {/* Size Table */}
+        {product.size_chart?.columns?.length > 0 &&
+          product.size_chart?.rows?.length > 0 && (
+            <div className={styles.sizeChartSection}>
+              <div className={styles.sizeChartHeader}>
+                <h2 className={styles.sizeChartTitle}>
+                {t("size_table")}
+                </h2>
+              </div>
+
+              <div className={styles.sizeChartScroll}>
+                <table className={styles.sizeChartTable}>
+                  <thead>
+                    <tr>
+                      {product.size_chart.columns.map((column, index) => (
+                        <th key={`${column}-${index}`}>{column}</th>
+                      ))}
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {product.size_chart.rows.map((row, rowIndex) => (
+                      <tr key={rowIndex}>
+                        {product.size_chart.columns.map((_, cellIndex) => (
+                          <td key={`${rowIndex}-${cellIndex}`}>
+                            {row?.[cellIndex] || "—"}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
       </div>
     </Layout>
   );

@@ -375,6 +375,78 @@
   color: hsl(var(--muted-foreground));
 }
 
+.sizeChartSection {
+  grid-column: 1 / -1;
+  /* width: 100%; */
+  margin-top: 1rem;
+  padding: 1.25rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.75rem;
+  background-color: hsl(var(--background));
+}
+
+.sizeChartHeader {
+  margin-bottom: 1rem;
+}
+
+.sizeChartTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: hsl(var(--foreground));
+}
+
+.sizeChartNote {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: hsl(var(--muted-foreground));
+}
+
+.sizeChartScroll {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 0.65rem;
+  border: 1px solid hsl(var(--border));
+}
+
+.sizeChartTable {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  background-color: hsl(var(--card));
+}
+
+.sizeChartTable th,
+.sizeChartTable td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid hsl(var(--border));
+  border-right: 1px solid hsl(var(--border));
+  text-align: center;
+  white-space: nowrap;
+}
+
+.sizeChartTable th {
+  color: hsl(var(--foreground));
+  font-size: 0.9rem;
+  font-weight: 800;
+  background-color: rgba(45, 212, 191, 0.08);
+}
+
+.sizeChartTable td {
+  color: hsl(var(--muted-foreground));
+  font-size: 0.9rem;
+}
+
+.sizeChartTable th:last-child,
+.sizeChartTable td:last-child {
+  border-right: none;
+}
+
+.sizeChartTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
 /* Responsive Design */
 @media (max-width: 1023px) {
   .container {
@@ -401,6 +473,10 @@
 
   .wishlistBtn {
     flex: 1;
+  }
+
+  .sizeChartSection {
+    padding: 1rem;
   }
 }
 
@@ -443,6 +519,29 @@
   
   .priceNote,
   .sizeWarning {
+    font-size: 0.82rem;
+  }
+
+  .sizeChartSection {
+    margin-top: 0.5rem;
+    padding: 0.85rem;
+  }
+  
+  .sizeChartTitle {
+    font-size: 1.05rem;
+  }
+  
+  .sizeChartNote {
+    font-size: 0.82rem;
+  }
+  
+  .sizeChartTable {
+    min-width: 480px;
+  }
+  
+  .sizeChartTable th,
+  .sizeChartTable td {
+    padding: 0.75rem 0.85rem;
     font-size: 0.82rem;
   }
 }
