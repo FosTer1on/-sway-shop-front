@@ -137,6 +137,13 @@
   gap: 1rem;
 }
 
+.priceNote {
+  margin: 0.75rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: hsl(var(--muted-foreground));
+}
+
 .originalPrice {
   font-size: 0.95rem;
   color: hsl(var(--muted-foreground));
@@ -214,8 +221,9 @@
 /* Store Info */
 .storeInfo {
   display: flex;
-  /* justify-content: center; */
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
   padding: 1rem;
   background-color: hsl(var(--background));
   border-radius: 0.5rem;
@@ -223,13 +231,9 @@
 }
 
 .storeInfo p {
-  margin: 0.5rem 0;
+  margin: 0;
   font-size: 1rem;
   color: hsl(var(--muted-foreground));
-}
-
-.storeInfo p:last-child {
-  margin-left: 20px;
 }
 
 .storeInfo strong {
@@ -353,6 +357,17 @@
   color: hsl(var(--foreground));
 }
 
+.sizeWarning {
+  margin: 0 0 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  background-color: rgba(45, 212, 191, 0.06);
+  color: hsl(var(--muted-foreground));
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
 .description {
   margin: 0;
   font-size: 0.95rem;
@@ -418,5 +433,16 @@
   .sizeBtn {
     flex: 1;
     min-width: 44px;
+  }
+
+  .storeInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .priceNote,
+  .sizeWarning {
+    font-size: 0.82rem;
   }
 }

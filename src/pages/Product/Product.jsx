@@ -164,12 +164,19 @@ export default function Product() {
             <div className={styles.priceSection}>
               <div className={styles.priceContainer}>
                 {isDiscount && (
-                  <span className={styles.originalPrice}>{product.price} {t("sum")}</span>
+                  <span className={styles.originalPrice}>
+                    {product.price} {t("sum")}
+                  </span>
                 )}
                 <span className={styles.price}>
                   {isDiscount ? product.final_price : product.price} {t("sum")}
                 </span>
               </div>
+
+              <p className={styles.priceNote}>
+                *В цену уже включены товар, карго, авиаперевозка и доставка до
+                дома.
+              </p>
             </div>
 
             {/* Actions */}
@@ -196,10 +203,15 @@ export default function Product() {
             {/* Store & Brand */}
             <div className={styles.storeInfo}>
               <p>
-                <strong>{t("store")}</strong> {product.store.name}
+                <strong>{t("store")}</strong> {product.store?.name || "—"}
               </p>
+
               <p>
-                <strong>{t("brand")}</strong> {product.brand.name}
+                <strong>{t("brand")}</strong> {product.brand?.name || "—"}
+              </p>
+
+              <p>
+                <strong>Пол:</strong> {product.gender_display || "—"}
               </p>
             </div>
 
@@ -215,7 +227,8 @@ export default function Product() {
                         selectedSize?.id === size_id ? styles.selected : ""
                       } ${quantity === 0 ? styles.disabled : ""}`}
                       onClick={() =>
-                        quantity > 0 && setSelectedSize({ id: size_id, label: size })
+                        quantity > 0 &&
+                        setSelectedSize({ id: size_id, label: size })
                       }
                       disabled={quantity === 0}
                     >
@@ -228,6 +241,13 @@ export default function Product() {
 
             {/* Description */}
             <div className={styles.descriptionSection}>
+              {product.region === "Китай" && (
+                <p className={styles.sizeWarning}>
+                  *Товары из Китая могут маломерить. Перед заказом проверьте
+                  размер.
+                </p>
+              )}
+
               <h2 className={styles.descriptionTitle}>{t("description")}</h2>
               <p className={styles.description}>{product.description}</p>
             </div>
