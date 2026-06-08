@@ -173,10 +173,7 @@ export default function Product() {
                 </span>
               </div>
 
-              <p className={styles.priceNote}>
-                *В цену уже включены товар, карго, авиаперевозка и доставка до
-                дома.
-              </p>
+              <p className={styles.priceNote}>{t("price_info")}</p>
             </div>
 
             {/* Actions */}
@@ -211,7 +208,12 @@ export default function Product() {
               </p>
 
               <p>
-                <strong>Пол:</strong> {product.gender_display || "—"}
+                <strong>{t("gender")}</strong> {product.gender_display || "—"}
+              </p>
+
+              <p>
+                <strong>{t("delivery_time")}</strong> {t("until")}{" "}
+                {product.delivery_time || "—"} {t("days")}
               </p>
             </div>
 
@@ -242,10 +244,7 @@ export default function Product() {
             {/* Description */}
             <div className={styles.descriptionSection}>
               {product.region === "Китай" && (
-                <p className={styles.sizeWarning}>
-                  *Товары из Китая могут маломерить. Перед заказом проверьте
-                  размер.
-                </p>
+                <p className={styles.sizeWarning}>{t("size_warning")}</p>
               )}
 
               <h2 className={styles.descriptionTitle}>{t("description")}</h2>

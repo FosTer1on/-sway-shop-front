@@ -83,5 +83,11 @@
   "user_created": "Ushbu telefon raqamiga ega foydalanuvchi allaqachon mavjud.",
   "login_fail": "Noto'g'ri telefon raqami yoki parol",
   "sum": "so'm",
-  "choose_gender": "Jinsni tanlang"
+  "choose_gender": "Jinsni tanlang",
+  "gender": "Jins:",
+  "delivery_time": "Yetkazib berish vaqti:",
+  "until": "",
+  "days": "kungacha",
+  "size_warning": "*Xitoydan keltirilgan mahsulotlar kichik bo'lishi mumkin. Buyurtma berishdan oldin o'lchamini tekshiring.",
+  "price_info": "*Narxga allaqachon tovarlar, yuk, havo transporti va uyga yetkazib berish kiradi."
 }
