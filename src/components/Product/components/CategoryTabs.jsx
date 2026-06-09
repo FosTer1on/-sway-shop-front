@@ -2,24 +2,26 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import useProductStore from "@/store/product/useProductStore";
 import styles from "./CategoryTabs.module.css";
+import { useTranslation } from "react-i18next";
+import { ChinaFlag } from "@/components/icons/Flags/ChinaFlag";
+import { EuropeFlag } from "@/components/icons/Flags/EuropeFlag";
+import { RussiaFlag } from "@/components/icons/Flags/Russia";
+import { UzbekistanFlag } from "@/components/icons/Flags/Uzbekistan";
+import { UsaFlag } from "@/components/icons/Flags/UsaFlag";
 
 const CATEGORY_TABS = [
-  { id: "all", label: "All" },
-  { id: "usa", label: "US" },
-  { id: "china", label: "CN" },
-  { id: "europe", label: "EU" },
-  { id: "russia", label: "RU" },
-  { id: "uzbekistan", label: "UZ" },
-  { id: "outfits", label: "Outfits" },
+  { id: "usa", label: <UsaFlag /> },
+  { id: "china", label: <ChinaFlag /> },
+  { id: "europe", label: <EuropeFlag /> },
+  { id: "russia", label: <RussiaFlag /> },
+  { id: "uzbekistan", label: <UzbekistanFlag /> },
 ];
 
-const GENDER_TABS = [
-  { id: "female", label: "Женское" },
-  { id: "all", label: "Все" },
-  { id: "male", label: "Мужское" },
-];
+const GENDER_TABS = [{ id: "female" }, { id: "all" }, { id: "male" }];
 
 const CategoryTabs = () => {
+  const { t } = useTranslation();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { filters, setFilters, activeCatalog, setActiveCatalog } =
@@ -92,6 +94,14 @@ const CategoryTabs = () => {
     <div className={styles.tabsContainer}>
       <div className={styles.tabsRow}>
         <div className={styles.tabsScroll}>
+          <button
+            className={`${styles.tab} ${
+              activeTab === "all" ? styles.active : ""
+            }`}
+            onClick={() => handleTabClick("all")}
+          >
+            {t("all")}
+          </button>
           {CATEGORY_TABS.map((tab) => (
             <button
               key={tab.id}
@@ -100,9 +110,17 @@ const CategoryTabs = () => {
                 activeTab === tab.id ? styles.active : ""
               }`}
             >
-              <span className={styles.tabLabel}>{tab.label}</span>
+              {tab.label}
             </button>
           ))}
+          <button
+            className={`${styles.tab} ${
+              activeTab === "outfits" ? styles.active : ""
+            }`}
+            onClick={() => handleTabClick("outfits")}
+          >
+            {t("outfits")}
+          </button>
         </div>
 
         <div className={styles.genderTabs}>
@@ -115,7 +133,7 @@ const CategoryTabs = () => {
                 activeGender === tab.id ? styles.genderActive : ""
               }`}
             >
-              {tab.label}
+              {t(`${tab.id}`)}
             </button>
           ))}
         </div>

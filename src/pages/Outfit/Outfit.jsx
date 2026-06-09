@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import Layout from "@/components/NavBar/Layout";
-import { BackArrowIcon, PercentIcon } from "@/components/icons";
+import { BackArrowIcon, PercentIcon, TelegramIcon } from "@/components/icons";
 import { ProductGallery } from "@/components/Product/components/ProductGallery";
 import { ProductSkeleton } from "@/components/Skeleton/ProductSkeleton";
 import useProductStore from "@/store/product/useProductStore";
@@ -85,7 +85,8 @@ export default function Outfit() {
               rel="noopener noreferrer"
               className={styles.telegramOrderBtn}
             >
-              Заказать в 1 клик Telegram
+              <TelegramIcon className={styles.tg_icon} />
+              <span> {t("one_click")}</span>
             </a>
 
             <div className={styles.descriptionSection}>

@@ -88,7 +88,7 @@
   "delivery_time": "Yetkazib berish vaqti:",
   "until": "",
   "days": "kungacha",
-  "size_warning": "*Xitoydan keltirilgan mahsulotlar kichik bo'lishi mumkin. Buyurtma berishdan oldin o'lchamini tekshiring.",
+  "size_warning": "*Buyurtma berishdan oldin o'lchamini tekshiring.",
   "price_info": "*Narxga allaqachon tovarlar, yuk, havo transporti va uyga yetkazib berish kiradi.",
   "size_table": "Hajm jadvali",
   "forgot_password": "Parolingiz esdan chiqdimi?",
@@ -102,5 +102,15 @@
   "confirm_password": "Parolni qayta kiriting",
   "saving": "Saqlanmoqda...",
   "change_password": "Parolni o'zgartirish",
-  "back_to_login": "Noto'g'ri ma'lumotlar"
+  "back_to_login": "Noto'g'ri ma'lumotlar",
+  "one_click": "Tez buyurtma berish",
+  "all": "Hammaga",
+  "female": "Ayollarga",
+  "male": "Erkaklarga",
+  "country": "Mamlakat",
+  "china": "Xitoy",
+  "usa": "AQSh",
+  "europe": "Yevropa",
+  "russia": "Rossiya",
+  "uzbekistan": "O'zbekiston"
 }

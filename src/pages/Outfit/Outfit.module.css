@@ -360,6 +360,90 @@
   color: hsl(var(--muted-foreground));
 }
 
+.telegramOrderBtn {
+  /* width: 100%; */
+  padding: 14px 20px;
+  border-radius: 0.5rem;
+  background-color: #229ed9;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+}
+
+.telegramOrderBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.tg_icon{
+  width: 18px;
+  height: 18px;
+}
+
+.outfitProductsSection {
+  margin-top: 2rem;
+}
+
+.outfitProductsTitle {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  color: hsl(var(--foreground));
+}
+
+.outfitProductsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.outfitProductItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 16px;
+  border-radius: 0.75rem;
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+.outfitProductItem:hover {
+  border-color: hsl(var(--accent));
+  transform: translateY(-2px);
+}
+
+.outfitProductImage {
+  width: 90px;
+  height: 90px;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.outfitProductInfo h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: hsl(var(--foreground));
+}
+
+.outfitProductInfo p {
+  margin: 0;
+  font-weight: 700;
+  color: hsl(var(--accent));
+}
+
+
+
 /* Responsive Design */
 @media (max-width: 1023px) {
   .container {
@@ -419,81 +503,7 @@
     flex: 1;
     min-width: 44px;
   }
-}
 
-.telegramOrderBtn {
-  /* width: 100%; */
-  padding: 14px 20px;
-  border-radius: 0.5rem;
-  background-color: #229ed9;
-  color: #fff;
-  text-align: center;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 700;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.telegramOrderBtn:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
-}
-
-.outfitProductsSection {
-  margin-top: 2rem;
-}
-
-.outfitProductsTitle {
-  margin-bottom: 1rem;
-  font-size: 1.4rem;
-  color: hsl(var(--foreground));
-}
-
-.outfitProductsList {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.outfitProductItem {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 16px;
-  border-radius: 0.75rem;
-  background-color: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.2s ease;
-}
-
-.outfitProductItem:hover {
-  border-color: hsl(var(--accent));
-  transform: translateY(-2px);
-}
-
-.outfitProductImage {
-  width: 90px;
-  height: 90px;
-  border-radius: 0.5rem;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.outfitProductInfo h3 {
-  margin: 0 0 8px;
-  font-size: 1rem;
-  color: hsl(var(--foreground));
-}
-
-.outfitProductInfo p {
-  margin: 0;
-  font-weight: 700;
-  color: hsl(var(--accent));
-}
-
-@media (max-width: 767px) {
   .telegramOrderBtn {
     padding: 12px 16px;
     font-size: 0.9rem;
@@ -508,3 +518,4 @@
     height: 72px;
   }
 }
+

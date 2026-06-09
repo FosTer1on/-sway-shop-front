@@ -8,7 +8,9 @@ export { FireIcon } from './FireIcon';
 export { PercentIcon } from './PercentIcon';
 export { BestIcon } from './BestIcon';
 export { LanguageIcon } from './LanguageIcon';
-export { RuFlag } from './RuFlag';
-export { UzFlag } from './UzFlag';
 export { MenuIcon } from './MenuIcon';
 export { CloseIcon } from './CloseIcon';
+export { TelegramIcon } from './TelegramIcon'
+export { InstagramIcon } from './InstagramIcon'
+export { TikTokIcon } from './TikTokIcon'
+export { PhoneIcon } from './PhoneIcon'

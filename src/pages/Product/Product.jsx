@@ -9,6 +9,7 @@ import {
   FireIcon,
   PercentIcon,
   BestIcon,
+  TelegramIcon,
 } from "@components/icons";
 import { ProductGallery } from "@/components/Product/components/ProductGallery";
 // ~ STYLES
@@ -21,6 +22,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useCartStore } from "@/store/cart/useCartStore";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
+import { buildTelegramOrderUrl } from "@/utils/telegram";
 
 export default function Product() {
   const { t, i18n } = useTranslation();
@@ -117,6 +119,8 @@ export default function Product() {
   const statusBadge = statusConfig[product.status];
   const isDiscount = product.discount > 0;
 
+  const telegramOrderUrl = buildTelegramOrderUrl(product.slug);
+
   return (
     <Layout>
       <div className={styles.container}>
@@ -197,10 +201,20 @@ export default function Product() {
               </button>
             </div>
 
+            <a
+              href={telegramOrderUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.telegramOrderBtn}
+            >
+              <TelegramIcon className={styles.tg_icon} />
+              <span> {t("one_click")}</span>
+            </a>
+
             {/* Store & Brand */}
             <div className={styles.storeInfo}>
               <p>
-                <strong>{t("store")}</strong> {product.store?.name || "—"}
+                <strong>{t("country")}</strong> {t(`${product?.region || "—"}`)}
               </p>
 
               <p>
@@ -208,7 +222,7 @@ export default function Product() {
               </p>
 
               <p>
-                <strong>{t("gender")}</strong> {product.gender_display || "—"}
+                <strong>{t("gender")}</strong> {t(`${product?.gender || "Unisex"}`)}
               </p>
 
               <p>

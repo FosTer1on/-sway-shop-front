@@ -231,11 +231,21 @@
   border: none;
   cursor: pointer;
   transition: opacity 0.2s ease, transform 0.2s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
 }
 
 .telegramOrderBtn:hover {
   opacity: 0.9;
   transform: translateY(-1px);
+}
+
+.tg_icon{
+  width: 18px;
+  height: 18px;
 }
 
 @media (max-width: 767px) {

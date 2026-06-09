@@ -218,6 +218,34 @@
   transform: translateY(0);
 }
 
+.telegramOrderBtn {
+  /* width: 100%; */
+  padding: 14px 20px;
+  border-radius: 0.5rem;
+  background-color: #229ed9;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+}
+
+.telegramOrderBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.tg_icon{
+  width: 18px;
+  height: 18px;
+}
+
 /* Store Info */
 .storeInfo {
   display: flex;
@@ -509,6 +537,11 @@
   .sizeBtn {
     flex: 1;
     min-width: 44px;
+  }
+
+  .telegramOrderBtn {
+    padding: 12px 16px;
+    font-size: 0.9rem;
   }
 
   .storeInfo {

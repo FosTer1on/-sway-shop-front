@@ -1,7 +1,7 @@
 // & React
 import { Link, useNavigate } from "react-router-dom";
 // ^ Components
-import { HeartIcon, FireIcon, PercentIcon, BestIcon } from "@components/icons";
+import { HeartIcon, FireIcon, PercentIcon, BestIcon, TelegramIcon } from "@components/icons";
 // ~ Stores
 import { useFavoritesStore } from "@/store/favorites/useFavoritesStore";
 import { useAuth } from "@/hooks/useAuth";
@@ -153,7 +153,8 @@ export const ProductCard = ({
           className={styles.telegramOrderBtn}
           onClick={(e) => e.stopPropagation()}
         >
-          Заказать в 1 клик Telegram
+          <TelegramIcon className={styles.tg_icon} />
+          <span> {t("one_click")}</span>
         </a>
       </div>
     </div>

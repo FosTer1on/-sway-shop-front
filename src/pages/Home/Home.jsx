@@ -7,6 +7,7 @@ import { FilterBar } from "@/components/FilterBar/FilterBar";
 import styles from "./Home.module.css";
 import { useTranslation } from "react-i18next";
 import CategoryTabs from "@/components/Product/components/CategoryTabs";
+import { InstagramIcon, PhoneIcon, TelegramIcon, TikTokIcon } from "@/components/icons";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -23,7 +24,50 @@ export default function Home() {
       <div className={styles.container}>
         {/* Header */}
         <div className={styles.header}>
-          <h1 className={styles.title}>Sway Shop</h1>
+          <div className={styles.headerTop}>
+            <h1 className={styles.title}>Sway Shop</h1>
+
+            <div className={styles.socialLinks}>
+              <a
+                href="https://instagram.com/YOUR_INSTAGRAM"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.socialButton}
+                aria-label="Instagram"
+              >
+                <TelegramIcon className={styles.socialIcon} />
+              </a>
+
+              <a
+                href="https://instagram.com/YOUR_INSTAGRAM"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.socialButton}
+                aria-label="Instagram"
+              >
+                <InstagramIcon className={styles.socialIcon} />
+              </a>
+
+              <a
+                href="https://www.tiktok.com/@YOUR_TIKTOK"
+                target="_blank"
+                rel="noreferrer"
+                className={styles.socialButton}
+                aria-label="TikTok"
+              >
+                <TikTokIcon className={styles.socialIcon} />
+              </a>
+
+              <a
+                href="tel:+998901234567"
+                className={styles.socialButton}
+                aria-label="Phone"
+              >
+                <PhoneIcon className={styles.socialIcon} />
+              </a>
+            </div>
+          </div>
+
           <p className={styles.subtitle}>{t("explore")}</p>
         </div>
 

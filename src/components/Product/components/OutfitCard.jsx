@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./ProductCard.module.css";
 import { useTranslation } from "react-i18next";
 import { buildMediaUrl } from "@/utils/media";
-import { PercentIcon } from "@/components/icons";
+import { PercentIcon, TelegramIcon } from "@/components/icons";
 import { buildTelegramOrderUrl } from "@/utils/telegram";
 
 export const OutfitCard = ({
@@ -67,7 +67,8 @@ export const OutfitCard = ({
           className={styles.telegramOrderBtn}
           onClick={(e) => e.stopPropagation()}
         >
-          Заказать в 1 клик Telegram
+          <TelegramIcon className={styles.tg_icon} />
+          <span> {t("one_click")}</span>
         </a>
       </div>
     </div>
