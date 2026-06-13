@@ -13,9 +13,16 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
+    const requestId = crypto.randomUUID();
+
+    config.headers["X-Request-ID"] = requestId;
+    config.metadata = {
+      startTime: performance.now(),
+      requestId,
+    };
+
     const { accessToken } = useAuthStore.getState();
 
-    // fallback на localStorage (на всякий случай)
     const token = accessToken || localStorage.getItem("access_token");
 
     if (token) {
@@ -46,9 +53,44 @@ const processQueue = (error, token = null) => {
 };
 
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    const duration = Math.round(
+      performance.now() - response.config.metadata.startTime
+    );
+
+    const requestId = response.config.metadata.requestId;
+
+    if (import.meta.env.DEV) {
+      console.log("[api_success]", {
+        request_id: requestId,
+        method: response.config.method?.toUpperCase(),
+        url: response.config.url,
+        status: response.status,
+        duration_ms: duration,
+        duration_sec: `${(duration / 1000).toFixed(2)}s`,
+      });
+    }
+
+    return response;
+  },
+
   async (error) => {
     const originalRequest = error.config;
+
+    const duration = originalRequest?.metadata?.startTime
+      ? Math.round(performance.now() - originalRequest.metadata.startTime)
+      : null;
+
+    if (import.meta.env.DEV) {
+      console.error("[api_error]", {
+        method: originalRequest?.method?.toUpperCase(),
+        url: originalRequest?.url,
+        status: error.response?.status,
+        duration_ms: duration,
+        duration_sec: duration ? `${(duration / 1000).toFixed(2)}s` : null,
+        message: error.message,
+      });
+    }
 
     if (!error.response) return Promise.reject(error);
 
@@ -83,7 +125,6 @@ api.interceptors.response.use(
 
         const newAccessToken = response.data.access;
 
-        // login теперь сохраняет access_token в localStorage
         useAuthStore.getState().login(newAccessToken);
 
         api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
