@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import useProductStore from "@/store/product/useProductStore";
 
 import Layout from "@components/NavBar/Layout";
 import { CatalogOfProducts } from "@components/Product/CatalogOfProducts";
@@ -7,13 +10,27 @@ import { FilterBar } from "@/components/FilterBar/FilterBar";
 import styles from "./Home.module.css";
 import { useTranslation } from "react-i18next";
 import CategoryTabs from "@/components/Product/components/CategoryTabs";
-import { InstagramIcon, PhoneIcon, TelegramIcon, TikTokIcon } from "@/components/icons";
+import {
+  InstagramIcon,
+  PhoneIcon,
+  TelegramIcon,
+  TikTokIcon,
+} from "@/components/icons";
 
 export default function Home() {
   const { t } = useTranslation();
 
   // 🔹 состояние открытия мобильного фильтра
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const [searchParams] = useSearchParams();
+  const initFiltersFromUrl = useProductStore(
+    (state) => state.initFiltersFromUrl
+  );
+
+  useEffect(() => {
+    initFiltersFromUrl(searchParams);
+  }, []);
 
   const toggleFilter = () => {
     setIsFilterOpen((prev) => !prev);

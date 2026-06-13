@@ -70,22 +70,6 @@ export const FilterBar = ({ isOpen, onToggle }) => {
     setFilters(updatedFilters);
   };
 
-  useEffect(() => {
-    const filtersFromUrl = {
-      region: searchParams.get("region") || "",
-      category: searchParams.get("category") || "",
-      stores: searchParams.getAll("store"),
-      brands: searchParams.getAll("brand"),
-      sizes: searchParams.getAll("size"),
-      sort: searchParams.get("sort") || "",
-      discountOnly: searchParams.get("discount") === "true",
-      minPrice: searchParams.get("min_price") || "",
-      maxPrice: searchParams.get("max_price") || "",
-    };
-  
-    setFilters(filtersFromUrl);
-  }, []);
-
   // 🔹 при выборе категории меняем размеры
   useEffect(() => {
     const fetchFilters = async () => {

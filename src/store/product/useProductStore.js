@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import { getProductById, getProducts, getOutfits, getOutfitBySlug } from "@/api/product/product";
+import {
+  getProductById,
+  getProducts,
+  getOutfits,
+  getOutfitBySlug,
+} from "@/api/product/product";
 
 const initialFilters = {
   category: "",
@@ -25,6 +30,7 @@ const useProductStore = create((set, get) => ({
   hasMore: true,
 
   filters: initialFilters,
+  filtersInitialized: false,
 
   activeCatalog: "products",
 
@@ -117,10 +123,10 @@ const useProductStore = create((set, get) => ({
 
   fetchOutfitBySlug: async (slug) => {
     set({ loading: true, error: null });
-  
+
     try {
       const response = await getOutfitBySlug(slug);
-  
+
       set({
         outfit: response.data,
         loading: false,
@@ -140,6 +146,30 @@ const useProductStore = create((set, get) => ({
         ...newFilters,
       },
     })),
+
+  initFiltersFromUrl: (searchParams) => {
+    const tabFromUrl = searchParams.get("tab");
+    const genderFromUrl = searchParams.get("gender") || "";
+
+    const filtersFromUrl = {
+      region: tabFromUrl === "outfits" ? "" : searchParams.get("region") || "",
+      gender: genderFromUrl,
+      category: searchParams.get("category") || "",
+      stores: searchParams.getAll("store"),
+      brands: searchParams.getAll("brand"),
+      sizes: searchParams.getAll("size"),
+      sort: searchParams.get("sort") || "",
+      discountOnly: searchParams.get("discount") === "true",
+      minPrice: searchParams.get("min_price") || "",
+      maxPrice: searchParams.get("max_price") || "",
+    };
+
+    set({
+      filters: filtersFromUrl,
+      activeCatalog: tabFromUrl === "outfits" ? "outfits" : "products",
+      filtersInitialized: true,
+    });
+  },
 
   setActiveCatalog: (catalog) =>
     set({

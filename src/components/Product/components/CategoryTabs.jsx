@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import useProductStore from "@/store/product/useProductStore";
 import styles from "./CategoryTabs.module.css";
@@ -31,26 +30,6 @@ const CategoryTabs = () => {
     activeCatalog === "outfits" ? "outfits" : filters.region || "all";
 
   const activeGender = filters.gender || "";
-
-  useEffect(() => {
-    const tabFromUrl = searchParams.get("tab");
-    const regionFromUrl = searchParams.get("region") || "";
-    const genderFromUrl = searchParams.get("gender") || "";
-
-    if (tabFromUrl === "outfits") {
-      setActiveCatalog("outfits");
-      setFilters({
-        region: "",
-        gender: genderFromUrl,
-      });
-    } else {
-      setActiveCatalog("products");
-      setFilters({
-        region: regionFromUrl,
-        gender: genderFromUrl,
-      });
-    }
-  }, []);
 
   const handleTabClick = (tabId) => {
     const newSearchParams = new URLSearchParams(searchParams);
