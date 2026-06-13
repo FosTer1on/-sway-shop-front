@@ -24,6 +24,10 @@ export const FilterBar = ({ isOpen, onToggle }) => {
   const [brands, setBrands] = useState([]);
   const [availableSizes, setAvailableSizes] = useState([]);
 
+  const [priceInputs, setPriceInputs] = useState({
+    minPrice: filters.minPrice,
+    maxPrice: filters.maxPrice,
+  });
 
   // Вспомогательная функция для фильтрации чтобы менять URL страницы
   const updateFilters = (newFilters) => {
@@ -31,9 +35,9 @@ export const FilterBar = ({ isOpen, onToggle }) => {
       ...filters,
       ...newFilters,
     };
-  
+
     const params = new URLSearchParams(searchParams);
-  
+
     const setParam = (key, value) => {
       if (value) {
         params.set(key, value);
@@ -41,31 +45,31 @@ export const FilterBar = ({ isOpen, onToggle }) => {
         params.delete(key);
       }
     };
-  
+
     const setArrayParam = (key, values) => {
       params.delete(key);
-  
+
       if (values.length) {
         values.forEach((value) => params.append(key, value));
       }
     };
-  
+
     setParam("category", updatedFilters.category);
     setParam("region", updatedFilters.region);
     setParam("sort", updatedFilters.sort);
     setParam("min_price", updatedFilters.minPrice);
     setParam("max_price", updatedFilters.maxPrice);
-  
+
     if (updatedFilters.discountOnly) {
       params.set("discount", "true");
     } else {
       params.delete("discount");
     }
-  
+
     setArrayParam("store", updatedFilters.stores);
     setArrayParam("brand", updatedFilters.brands);
     setArrayParam("size", updatedFilters.sizes);
-  
+
     setSearchParams(params);
     setFilters(updatedFilters);
   };
@@ -101,10 +105,6 @@ export const FilterBar = ({ isOpen, onToggle }) => {
       try {
         const response = await getSizesByCategory(filters.category);
         setAvailableSizes(response.data);
-
-        updateFilters({
-          sizes: [],
-        });
       } catch (error) {
         console.log("Size load error:", error);
       }
@@ -113,14 +113,37 @@ export const FilterBar = ({ isOpen, onToggle }) => {
     fetchSizes();
   }, [filters.category]);
 
+  useEffect(() => {
+    setPriceInputs({
+      minPrice: filters.minPrice,
+      maxPrice: filters.maxPrice,
+    });
+  }, [filters.minPrice, filters.maxPrice]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (
+        priceInputs.minPrice !== filters.minPrice ||
+        priceInputs.maxPrice !== filters.maxPrice
+      ) {
+        updateFilters({
+          minPrice: priceInputs.minPrice,
+          maxPrice: priceInputs.maxPrice,
+        });
+      }
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [priceInputs.minPrice, priceInputs.maxPrice]);
+
   // 🔹 универсальный toggle для multi-select
   const toggleArrayValue = (key, value) => {
     const exists = filters[key].includes(value);
-  
+
     const updated = exists
       ? filters[key].filter((v) => v !== value)
       : [...filters[key], value];
-  
+
     updateFilters({
       [key]: updated,
     });
@@ -137,7 +160,12 @@ export const FilterBar = ({ isOpen, onToggle }) => {
       minPrice: "",
       maxPrice: "",
     });
-  
+
+    setPriceInputs({
+      minPrice: "",
+      maxPrice: "",
+    });
+
     setAvailableSizes([]);
   };
 
@@ -231,9 +259,9 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                       if (!img.dataset.retried) {
                         img.dataset.retried = "true";
                         setTimeout(() => {
-                          img.src = `${
-                            buildMediaUrl(images[0]?.image_url)
-                          }?retry=${Date.now()}`;
+                          img.src = `${buildMediaUrl(
+                            images[0]?.image_url
+                          )}?retry=${Date.now()}`;
                         }, 300);
                       }
                     }}
@@ -254,7 +282,9 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                     key={size.id}
                     type="button"
                     className={`${styles.multiBtn} ${
-                      filters.sizes.includes(String(size.id)) ? styles.activeBtn : ""
+                      filters.sizes.includes(String(size.id))
+                        ? styles.activeBtn
+                        : ""
                     }`}
                     onClick={() => toggleArrayValue("sizes", String(size.id))}
                   >
@@ -307,11 +337,12 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                 type="number"
                 placeholder="Min"
                 className={styles.input}
-                value={filters.minPrice}
+                value={priceInputs.minPrice}
                 onChange={(e) =>
-                  updateFilters({
+                  setPriceInputs((prev) => ({
+                    ...prev,
                     minPrice: e.target.value,
-                  })
+                  }))
                 }
               />
               <span className={styles.separator}>—</span>
@@ -319,11 +350,12 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                 type="number"
                 placeholder="Max"
                 className={styles.input}
-                value={filters.maxPrice}
+                value={priceInputs.maxPrice}
                 onChange={(e) =>
-                  updateFilters({
+                  setPriceInputs((prev) => ({
+                    ...prev,
                     maxPrice: e.target.value,
-                  })
+                  }))
                 }
               />
             </div>

@@ -31,7 +31,6 @@ export default function App() {
 
   useEffect(() => {
     if (isAuth) {
-      console.log("fetchFavorites called from App.jsx");
       fetchFavorites();
     }
   }, [isAuth]);

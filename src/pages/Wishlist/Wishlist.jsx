@@ -38,7 +38,6 @@ export default function Wishlist() {
 
     const loadFavorites = async () => {
       try {
-        console.log("fetchFavorites called from Wishlist");
         const res = await getFavorites();
 
         // API -> [{ id, product }]
@@ -52,7 +51,6 @@ export default function Wishlist() {
         setLoading(false);
       }
     };
-    console.log("loadFavorites called from Wishlist");
     loadFavorites();
   }, [isAuth, i18n.language]);
 

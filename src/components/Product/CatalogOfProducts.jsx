@@ -18,18 +18,20 @@ export const CatalogOfProducts = () => {
     hasMore,
     error,
     filters,
-    filtersInitialized
+    filtersInitialized,
   } = useProductStore();
+
+  const filterKey = JSON.stringify(filters);
 
   useEffect(() => {
     if (!filtersInitialized) return;
-  
+
     if (activeCatalog === "outfits") {
       fetchOutfits({ reset: true });
     } else {
       fetchProducts({ reset: true });
     }
-  }, [filtersInitialized, filters, activeCatalog, i18n.language]);
+  }, [filtersInitialized, filterKey, activeCatalog, i18n.language]);
 
   return (
     <div className={styles.container}>
