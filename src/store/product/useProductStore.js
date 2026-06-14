@@ -28,7 +28,7 @@ const useProductStore = create((set, get) => ({
   error: null,
 
   page: 1,
-  hasMore: true,
+  hasMore: false,
 
   filters: initialFilters,
   filtersInitialized: false,

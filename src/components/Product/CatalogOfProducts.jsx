@@ -4,6 +4,7 @@ import useProductStore from "@/store/product/useProductStore";
 import styles from "./CatalogOfProducts.module.css";
 import { useTranslation } from "react-i18next";
 import { OutfitCard } from "./components/OutfitCard";
+import { ProductCardSkeleton } from "../Skeleton/ProductCardSkeleton";
 
 export const CatalogOfProducts = () => {
   const { i18n, t } = useTranslation();
@@ -45,9 +46,10 @@ export const CatalogOfProducts = () => {
         {loading &&
           (activeCatalog === "outfits"
             ? outfits.length === 0
-            : products.length === 0) && (
-            <p className={styles.loading}>{t("loading_products")}</p>
-          )}
+            : products.length === 0) &&
+          Array.from({ length: 8 }).map((_, index) => (
+            <ProductCardSkeleton key={index} />
+          ))}
 
         {!loading &&
           (activeCatalog === "outfits"
