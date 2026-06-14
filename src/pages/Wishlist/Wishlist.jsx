@@ -18,6 +18,7 @@ import { useFavoritesStore } from "@/store/favorites/useFavoritesStore";
 // STYLE
 import styles from "./Wishlist.module.css";
 import { useTranslation } from "react-i18next";
+import { ProductCardSkeleton } from "@/components/Skeleton/ProductCardSkeleton";
 
 export default function Wishlist() {
   const { i18n, t } = useTranslation();
@@ -63,6 +64,20 @@ export default function Wishlist() {
     );
   };
   
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className={styles.container}>
+          <div className={styles.grid}>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <ProductCardSkeleton key={index} />
+            ))}
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   /* ===== EMPTY STATE ===== */
   if (!loading && items.length === 0) {

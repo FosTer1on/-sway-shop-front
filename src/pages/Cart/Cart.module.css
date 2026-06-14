@@ -70,6 +70,18 @@
   max-width: 400px;
 }
 
+.emptyIcon {
+  margin: 0;
+  font-size: 3rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.skeletonList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
 .continueShopping {
   padding: 0.75rem 1.5rem;
   background-color: hsl(var(--accent));
@@ -110,6 +122,10 @@
 
   .summaryContainer {
     grid-column: 1;
+  }
+
+  .skeletonList {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -153,5 +169,9 @@
 
   .emptyStateSubtext {
     font-size: 0.875rem;
+  }
+
+  .skeletonList {
+    grid-template-columns: 1fr;
   }
 }

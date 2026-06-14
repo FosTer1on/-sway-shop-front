@@ -1,0 +1,46 @@
+.group {
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  width: 120px;
+  height: 16px;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.button {
+  width: 90px;
+  height: 38px;
+  border-radius: 10px;
+}
+
+.title,
+.button {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.12) 37%,
+    rgba(255, 255, 255, 0.05) 63%
+  );
+
+  background-size: 400% 100%;
+
+  animation: skeletonLoading 1.2s ease infinite;
+}
+
+@keyframes skeletonLoading {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
+}

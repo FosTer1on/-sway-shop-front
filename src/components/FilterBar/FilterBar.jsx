@@ -12,12 +12,16 @@ import useProductStore from "@/store/product/useProductStore";
 import { useTranslation } from "react-i18next";
 import { buildMediaUrl } from "@/utils/media";
 import { useSearchParams } from "react-router-dom";
+import { FilterBarSkeleton } from "../Skeleton/FilterBarSkeleton";
 
 export const FilterBar = ({ isOpen, onToggle }) => {
   const { t, i18n } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { filters, setFilters } = useProductStore();
+
+  const [filtersLoading, setFiltersLoading] = useState(true);
+  const [sizesLoading, setSizesLoading] = useState(false);
 
   const [categories, setCategories] = useState([]);
   const [stores, setStores] = useState([]);
@@ -77,6 +81,8 @@ export const FilterBar = ({ isOpen, onToggle }) => {
   // 🔹 при выборе категории меняем размеры
   useEffect(() => {
     const fetchFilters = async () => {
+      setFiltersLoading(true);
+
       try {
         const [catRes, storeRes, brandRes] = await Promise.all([
           getCategories(),
@@ -89,6 +95,8 @@ export const FilterBar = ({ isOpen, onToggle }) => {
         setBrands(brandRes.data);
       } catch (error) {
         console.log("Filter load error:", error);
+      } finally {
+        setFiltersLoading(false);
       }
     };
 
@@ -102,11 +110,14 @@ export const FilterBar = ({ isOpen, onToggle }) => {
     }
 
     const fetchSizes = async () => {
+      setSizesLoading(true);
       try {
         const response = await getSizesByCategory(filters.category);
         setAvailableSizes(response.data);
       } catch (error) {
         console.log("Size load error:", error);
+      } finally {
+        setSizesLoading(false);
       }
     };
 
@@ -197,79 +208,95 @@ export const FilterBar = ({ isOpen, onToggle }) => {
           {/* Category */}
           <div className={styles.filterGroup}>
             <label className={styles.groupTitle}>{t("category")}</label>
-            <select
-              className={styles.select}
-              value={filters.category}
-              onChange={(e) =>
-                updateFilters({
-                  category: e.target.value,
-                  sizes: [],
-                })
-              }
-            >
-              <option value="">{t("choose_category")}</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.slug}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
+            {filtersLoading ? (
+              <FilterBarSkeleton type="select" />
+            ) : (
+              <select
+                className={styles.select}
+                value={filters.category}
+                onChange={(e) =>
+                  updateFilters({
+                    category: e.target.value,
+                    sizes: [],
+                  })
+                }
+              >
+                <option value="">{t("choose_category")}</option>
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.slug}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
           {/* Stores - MULTI BUTTONS */}
           <div className={styles.filterGroup}>
             <label className={styles.groupTitle}>{t("stores")}</label>
-            <div className={styles.options}>
-              {stores.map((store) => (
-                <button
-                  key={store.id}
-                  type="button"
-                  className={`${styles.multiBtn} ${
-                    filters.stores.includes(store.slug) ? styles.activeBtn : ""
-                  }`}
-                  onClick={() => toggleArrayValue("stores", store.slug)}
-                >
-                  {store.name}
-                </button>
-              ))}
-            </div>
+            {filtersLoading ? (
+              <FilterBarSkeleton type="select" />
+            ) : (
+              <div className={styles.options}>
+                {stores.map((store) => (
+                  <button
+                    key={store.id}
+                    type="button"
+                    className={`${styles.multiBtn} ${
+                      filters.stores.includes(store.slug)
+                        ? styles.activeBtn
+                        : ""
+                    }`}
+                    onClick={() => toggleArrayValue("stores", store.slug)}
+                  >
+                    {store.name}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Brands - MULTI BUTTONS */}
           <div className={styles.filterGroup}>
             <label className={styles.groupTitle}>{t("brands")}</label>
-            <div className={styles.options}>
-              {brands.map((brand) => (
-                <button
-                  key={brand.id}
-                  type="button"
-                  className={`${styles.multiBtn} ${
-                    filters.brands.includes(brand.slug) ? styles.activeBtn : ""
-                  }`}
-                  onClick={() => toggleArrayValue("brands", brand.slug)}
-                >
-                  <img
-                    src={buildMediaUrl(brand.icon_url)}
-                    className={styles.brand_icon}
-                    loading="lazy"
-                    alt="Brand icon"
-                    decoding="async"
-                    onError={(e) => {
-                      const img = e.currentTarget;
-                      if (!img.dataset.retried) {
-                        img.dataset.retried = "true";
-                        setTimeout(() => {
-                          img.src = `${buildMediaUrl(
-                            images[0]?.image_url
-                          )}?retry=${Date.now()}`;
-                        }, 300);
-                      }
-                    }}
-                  />
-                  {/* {brand.name} */}
-                </button>
-              ))}
-            </div>
+            {filtersLoading ? (
+              <FilterBarSkeleton type="select" />
+            ) : (
+              <div className={styles.options}>
+                {brands.map((brand) => (
+                  <button
+                    key={brand.id}
+                    type="button"
+                    className={`${styles.multiBtn} ${
+                      filters.brands.includes(brand.slug)
+                        ? styles.activeBtn
+                        : ""
+                    }`}
+                    onClick={() => toggleArrayValue("brands", brand.slug)}
+                  >
+                    <img
+                      src={buildMediaUrl(brand.icon_url)}
+                      className={styles.brand_icon}
+                      loading="lazy"
+                      alt="Brand icon"
+                      decoding="async"
+                      onError={(e) => {
+                        const img = e.currentTarget;
+                        if (!img.dataset.retried) {
+                          img.dataset.retried = "true";
+                          setTimeout(() => {
+                            img.src = `${buildMediaUrl(
+                              images[0]?.image_url
+                            )}?retry=${Date.now()}`;
+                          }, 300);
+                        }
+                      }}
+                    />
+                    {/* {brand.name} */}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Sizes - зависят от категории */}
@@ -277,20 +304,24 @@ export const FilterBar = ({ isOpen, onToggle }) => {
             <div className={styles.filterGroup}>
               <label className={styles.groupTitle}>{t("sizes")}</label>{" "}
               <div className={styles.options}>
-                {availableSizes.map((size) => (
-                  <button
-                    key={size.id}
-                    type="button"
-                    className={`${styles.multiBtn} ${
-                      filters.sizes.includes(String(size.id))
-                        ? styles.activeBtn
-                        : ""
-                    }`}
-                    onClick={() => toggleArrayValue("sizes", String(size.id))}
-                  >
-                    {size.name}
-                  </button>
-                ))}
+                {sizesLoading ? (
+                  <FilterBarSkeleton type="buttons" count={4} />
+                ) : (
+                  availableSizes.map((size) => (
+                    <button
+                      key={size.id}
+                      type="button"
+                      className={`${styles.multiBtn} ${
+                        filters.sizes.includes(String(size.id))
+                          ? styles.activeBtn
+                          : ""
+                      }`}
+                      onClick={() => toggleArrayValue("sizes", String(size.id))}
+                    >
+                      {size.name}
+                    </button>
+                  ))
+                )}
               </div>
             </div>
           )}
