@@ -46,7 +46,7 @@ export default function Home() {
 
             <div className={styles.socialLinks}>
               <a
-                href="https://instagram.com/YOUR_INSTAGRAM"
+                href="https://t.me/SwayShopAdmin"
                 target="_blank"
                 rel="noreferrer"
                 className={styles.socialButton}
@@ -56,7 +56,7 @@ export default function Home() {
               </a>
 
               <a
-                href="https://instagram.com/YOUR_INSTAGRAM"
+                href="https://www.instagram.com/s.w.a.y.shop/"
                 target="_blank"
                 rel="noreferrer"
                 className={styles.socialButton}
@@ -76,7 +76,7 @@ export default function Home() {
               </a>
 
               <a
-                href="tel:+998901234567"
+                href="tel:+998776084342"
                 className={styles.socialButton}
                 aria-label="Phone"
               >
@@ -85,7 +85,13 @@ export default function Home() {
             </div>
           </div>
 
-          <p className={styles.subtitle}>{t("explore")}</p>
+          <p className={styles.subtitle}>
+            {t("desc1")}<br /><br />
+            {t("desc2")}<br /><br />
+            {t("desc3")}<br /><br />
+            {t("desc4")}<br /><br />
+            {t("desc5")}
+          </p>
         </div>
 
         {/* Filter Bar */}
