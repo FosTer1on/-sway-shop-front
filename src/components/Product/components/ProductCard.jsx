@@ -1,7 +1,13 @@
 // & React
 import { Link, useNavigate } from "react-router-dom";
 // ^ Components
-import { HeartIcon, FireIcon, PercentIcon, BestIcon, TelegramIcon } from "@components/icons";
+import {
+  HeartIcon,
+  FireIcon,
+  PercentIcon,
+  BestIcon,
+  TelegramIcon,
+} from "@components/icons";
 // ~ Stores
 import { useFavoritesStore } from "@/store/favorites/useFavoritesStore";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { buildMediaUrl } from "@/utils/media";
 import { buildTelegramOrderUrl } from "@/utils/telegram";
+import { trackEvent } from "@/api/analytics/events";
 
 const API_URL = "http://127.0.0.1:8000";
 
@@ -151,7 +158,13 @@ export const ProductCard = ({
           target="_blank"
           rel="noopener noreferrer"
           className={styles.telegramOrderBtn}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation();
+
+            trackEvent("telegram_order_click", {
+              product_slug: slug,
+            });
+          }}
         >
           <TelegramIcon className={styles.tg_icon} />
           <span> {t("one_click")}</span>

@@ -7,6 +7,7 @@ import {
 } from "@/api/cart/cart";
 import toast from "react-hot-toast";
 import i18n from "@/i18n";
+import { trackEvent } from "@/api/analytics/events";
 
 export const useCartStore = create((set, get) => ({
   items: [],
@@ -38,6 +39,13 @@ export const useCartStore = create((set, get) => ({
       product,
       size,
       quantity: 1, // 👈 всегда 1
+    });
+
+    await trackEvent("cart_add", {
+      product_slug: product,
+      metadata: {
+        size,
+      },
     });
 
     // после добавления — ПЕРЕЗАГРУЖАЕМ корзину
@@ -79,7 +87,17 @@ export const useCartStore = create((set, get) => ({
   },
 
   removeItem: async (itemId) => {
+    const item = get().items.find((item) => item.id === itemId);
+
     await deleteCartItemRequest(itemId);
+
+    await trackEvent("cart_remove", {
+      product_slug: item?.product?.slug,
+      metadata: {
+        item_id: itemId,
+        size_id: item?.size_id,
+      },
+    });
 
     const { data } = await fetchCartRequest();
 

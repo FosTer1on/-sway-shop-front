@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { buildMediaUrl } from "@/utils/media";
 import { PercentIcon, TelegramIcon } from "@/components/icons";
 import { buildTelegramOrderUrl } from "@/utils/telegram";
+import { trackEvent } from "@/api/analytics/events";
 
 export const OutfitCard = ({
   slug,
@@ -65,7 +66,16 @@ export const OutfitCard = ({
           target="_blank"
           rel="noopener noreferrer"
           className={styles.telegramOrderBtn}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation();
+
+            trackEvent("telegram_order_click", {
+              product_slug: slug,
+              metadata: {
+                type: "outfit",
+              },
+            });
+          }}
         >
           <TelegramIcon className={styles.tg_icon} />
           <span> {t("one_click")}</span>

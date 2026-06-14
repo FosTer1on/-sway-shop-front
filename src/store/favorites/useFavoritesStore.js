@@ -4,6 +4,7 @@ import {
   getFavorites,
   removeFromFavorites,
 } from "@/api/favorites/favorites";
+import { trackEvent } from "@/api/analytics/events";
 
 export const useFavoritesStore = create((set, get) => ({
   favorites: [],        // string[]
@@ -48,6 +49,10 @@ export const useFavoritesStore = create((set, get) => ({
       set({
         favorites: [...favorites, slug],
       });
+
+      await trackEvent("favorite_add", {
+        product_slug: slug,
+      });
     } catch (err) {
       console.error("ADD FAVORITE ERROR:", err);
     }
@@ -64,6 +69,10 @@ export const useFavoritesStore = create((set, get) => ({
 
       set({
         favorites: favorites.filter((s) => s !== slug),
+      });
+
+      await trackEvent("favorite_remove", {
+        product_slug: slug,
       });
     } catch (err) {
       console.error("REMOVE FAVORITE ERROR:", err);

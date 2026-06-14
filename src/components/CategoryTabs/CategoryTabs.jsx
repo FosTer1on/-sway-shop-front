@@ -8,6 +8,7 @@ import { RussiaFlag } from "@/components/icons/Flags/Russia";
 import { UzbekistanFlag } from "@/components/icons/Flags/Uzbekistan";
 import { UsaFlag } from "@/components/icons/Flags/UsaFlag";
 import { useEffect, useState } from "react";
+import { trackEvent } from "@/api/analytics/events";
 
 const CATEGORY_TABS = [
   { id: "usa", label: <UsaFlag /> },
@@ -45,6 +46,9 @@ const CategoryTabs = () => {
       const newSearchParams = new URLSearchParams(searchParams);
 
       if (value) {
+        trackEvent("search", {
+          search_query: value,
+        });
         newSearchParams.set("search", value);
       } else {
         newSearchParams.delete("search");

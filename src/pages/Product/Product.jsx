@@ -23,6 +23,7 @@ import { useCartStore } from "@/store/cart/useCartStore";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { buildTelegramOrderUrl } from "@/utils/telegram";
+import { trackEvent } from "@/api/analytics/events";
 
 export default function Product() {
   const { t, i18n } = useTranslation();
@@ -42,6 +43,14 @@ export default function Product() {
   useEffect(() => {
     fetchProductBySlug(slug);
   }, [slug, i18n.language]);
+
+  useEffect(() => {
+    if (!product?.slug) return;
+  
+    trackEvent("product_view", {
+      product_slug: product.slug,
+    });
+  }, [product?.slug]);
 
   useEffect(() => {
     if (isAuth) {
@@ -206,6 +215,11 @@ export default function Product() {
               target="_blank"
               rel="noopener noreferrer"
               className={styles.telegramOrderBtn}
+              onClick={() =>
+                trackEvent("telegram_order_click", {
+                  product_slug: product.slug,
+                })
+              }
             >
               <TelegramIcon className={styles.tg_icon} />
               <span> {t("one_click")}</span>
