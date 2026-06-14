@@ -19,6 +19,7 @@ export const getProducts = (params) =>
       order_by: params.sort || undefined,
       region: params.region || undefined,
       gender: params.gender || undefined,
+      search: params.search || undefined,
     },
     paramsSerializer: (params) =>
       qs.stringify(params, { arrayFormat: "repeat" }),

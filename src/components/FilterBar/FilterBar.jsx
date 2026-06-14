@@ -335,7 +335,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
             <div className={styles.priceInputs}>
               <input
                 type="number"
-                placeholder="Min"
+                placeholder={t("min")}
                 className={styles.input}
                 value={priceInputs.minPrice}
                 onChange={(e) =>
@@ -348,7 +348,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
               <span className={styles.separator}>—</span>
               <input
                 type="number"
-                placeholder="Max"
+                placeholder={t("max")}
                 className={styles.input}
                 value={priceInputs.maxPrice}
                 onChange={(e) =>

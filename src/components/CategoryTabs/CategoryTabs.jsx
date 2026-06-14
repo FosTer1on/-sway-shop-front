@@ -7,6 +7,7 @@ import { EuropeFlag } from "@/components/icons/Flags/EuropeFlag";
 import { RussiaFlag } from "@/components/icons/Flags/Russia";
 import { UzbekistanFlag } from "@/components/icons/Flags/Uzbekistan";
 import { UsaFlag } from "@/components/icons/Flags/UsaFlag";
+import { useEffect, useState } from "react";
 
 const CATEGORY_TABS = [
   { id: "usa", label: <UsaFlag /> },
@@ -30,6 +31,31 @@ const CategoryTabs = () => {
     activeCatalog === "outfits" ? "outfits" : filters.region || "all";
 
   const activeGender = filters.gender || "";
+
+  const [searchValue, setSearchValue] = useState(filters.search || "");
+
+  useEffect(() => {
+    setSearchValue(filters.search || "");
+  }, [filters.search]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const value = searchValue.trim();
+
+      const newSearchParams = new URLSearchParams(searchParams);
+
+      if (value) {
+        newSearchParams.set("search", value);
+      } else {
+        newSearchParams.delete("search");
+      }
+
+      setSearchParams(newSearchParams);
+      setFilters({ search: value });
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchValue]);
 
   const handleTabClick = (tabId) => {
     const newSearchParams = new URLSearchParams(searchParams);
@@ -115,6 +141,26 @@ const CategoryTabs = () => {
               {t(`${tab.id}`)}
             </button>
           ))}
+        </div>
+
+        <div className={styles.searchBox}>
+          <input
+            type="text"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            placeholder={t("search")}
+            className={styles.searchInput}
+          />
+
+          {searchValue && (
+            <button
+              type="button"
+              className={styles.clearButton}
+              onClick={() => setSearchValue("")}
+            >
+              X
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -10,6 +10,7 @@ const initialFilters = {
   category: "",
   region: "",
   gender: "",
+  search: "",
   stores: [],
   brands: [],
   sizes: [],
@@ -154,6 +155,7 @@ const useProductStore = create((set, get) => ({
     const filtersFromUrl = {
       region: tabFromUrl === "outfits" ? "" : searchParams.get("region") || "",
       gender: genderFromUrl,
+      search: searchParams.get("search") || "",
       category: searchParams.get("category") || "",
       stores: searchParams.getAll("store"),
       brands: searchParams.getAll("brand"),
