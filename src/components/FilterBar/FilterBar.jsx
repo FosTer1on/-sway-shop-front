@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { CloseIcon, MenuIcon } from "../icons";
 import {
-  getStores,
+  // getStores,
   getBrands,
   getCategories,
   getSizesByCategory,
@@ -24,7 +24,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
   const [sizesLoading, setSizesLoading] = useState(false);
 
   const [categories, setCategories] = useState([]);
-  const [stores, setStores] = useState([]);
+  // const [stores, setStores] = useState([]);
   const [brands, setBrands] = useState([]);
   const [availableSizes, setAvailableSizes] = useState([]);
 
@@ -70,7 +70,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
       params.delete("discount");
     }
 
-    setArrayParam("store", updatedFilters.stores);
+    // setArrayParam("store", updatedFilters.stores);
     setArrayParam("brand", updatedFilters.brands);
     setArrayParam("size", updatedFilters.sizes);
 
@@ -84,14 +84,14 @@ export const FilterBar = ({ isOpen, onToggle }) => {
       setFiltersLoading(true);
 
       try {
-        const [catRes, storeRes, brandRes] = await Promise.all([
+        const [catRes, brandRes] = await Promise.all([
           getCategories(),
-          getStores(),
+          // getStores(),  нужно добавить storRes в const
           getBrands(),
         ]);
 
         setCategories(catRes.data);
-        setStores(storeRes.data);
+        // setStores(storeRes.data);
         setBrands(brandRes.data);
       } catch (error) {
         console.log("Filter load error:", error);
@@ -163,7 +163,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
   const handleReset = () => {
     updateFilters({
       category: "",
-      stores: [],
+      // stores: [],
       brands: [],
       sizes: [],
       sort: "",
@@ -232,7 +232,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
           </div>
 
           {/* Stores - MULTI BUTTONS */}
-          <div className={styles.filterGroup}>
+          {/* <div className={styles.filterGroup}>
             <label className={styles.groupTitle}>{t("stores")}</label>
             {filtersLoading ? (
               <FilterBarSkeleton type="select" />
@@ -254,7 +254,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                 ))}
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Brands - MULTI BUTTONS */}
           <div className={styles.filterGroup}>

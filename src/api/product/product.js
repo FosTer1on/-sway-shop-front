@@ -8,7 +8,7 @@ export const getProducts = (params) =>
       page: params.page,
       category: params.category || undefined,
 
-      store: params.stores.length ? params.stores : undefined,
+      // store: params.stores.length ? params.stores : undefined,
       brand: params.brands.length ? params.brands : undefined,
       size: params.sizes.length ? params.sizes : undefined,
 
