@@ -30,7 +30,7 @@ export const CartSummary = ({ summary }) => {
 
         <div className={`${styles.row} ${styles.total}`}>
           <span>{t("total")}</span>
-          <span>{summary.total_with_service} {t("sum")}</span>
+          <span>{summary.items_total_price} {t("sum")}</span>
         </div>
       </div>
 
