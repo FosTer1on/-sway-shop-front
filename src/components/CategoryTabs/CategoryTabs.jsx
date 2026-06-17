@@ -13,8 +13,8 @@ import { trackEvent } from "@/api/analytics/events";
 const CATEGORY_TABS = [
   { id: "usa", label: <UsaFlag /> },
   { id: "china", label: <ChinaFlag /> },
-  { id: "europe", label: <EuropeFlag /> },
-  { id: "russia", label: <RussiaFlag /> },
+  // { id: "europe", label: <EuropeFlag /> },
+  // { id: "russia", label: <RussiaFlag /> },
   { id: "uzbekistan", label: <UzbekistanFlag /> },
 ];
 
