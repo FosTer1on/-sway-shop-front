@@ -46,7 +46,7 @@ export default function Product() {
 
   useEffect(() => {
     if (!product?.slug) return;
-  
+
     trackEvent("product_view", {
       product_slug: product.slug,
     });
@@ -236,7 +236,8 @@ export default function Product() {
               </p>
 
               <p>
-                <strong>{t("gender")}</strong> {t(`${product?.gender || "Unisex"}`)}
+                <strong>{t("gender")}</strong>{" "}
+                {t(`${product?.gender || "Unisex"}`)}
               </p>
 
               <p>
@@ -268,6 +269,43 @@ export default function Product() {
                 })}
               </div>
             </div>
+
+            {/* Colors */}
+            {/* Color Variants */}
+            {product.color_variants?.length > 1 && (
+              <div className={styles.colorSelector}>
+                <label className={styles.colorLabel}>Цвет:</label>
+
+                <div className={styles.colorOptions}>
+                  {product.color_variants.map((variant) => {
+                    const isActive = variant.slug === product.slug;
+
+                    return (
+                      <button
+                        key={variant.slug}
+                        type="button"
+                        className={`${styles.colorBtn} ${
+                          isActive ? styles.colorSelected : ""
+                        }`}
+                        onClick={() => {
+                          if (!isActive) {
+                            navigate(`/product/${variant.slug}`);
+                          }
+                        }}
+                        title={variant.color_name || variant.name}
+                      >
+                        <span
+                          className={styles.colorSquare}
+                          style={{
+                            backgroundColor: variant.color_hex || "transparent",
+                          }}
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Description */}
             <div className={styles.descriptionSection}>
