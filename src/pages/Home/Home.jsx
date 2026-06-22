@@ -13,6 +13,7 @@ import CategoryTabs from "@/components/CategoryTabs/CategoryTabs";
 import {
   InstagramIcon,
   PhoneIcon,
+  SupportIcon,
   TelegramIcon,
   TikTokIcon,
 } from "@/components/icons";
@@ -47,16 +48,24 @@ export default function Home() {
             <div className={styles.socialLinks}>
               <a
                 href="https://t.me/SwayShopAdmin"
+                className={styles.socialButton}
+                aria-label="Phone"
+              >
+                <SupportIcon className={styles.socialIcon} />
+              </a>
+
+              <a
+                href="https://t.me/swayshopuz"
                 target="_blank"
                 rel="noreferrer"
                 className={styles.socialButton}
-                aria-label="Instagram"
+                aria-label="Telegram"
               >
                 <TelegramIcon className={styles.socialIcon} />
               </a>
 
               <a
-                href="https://www.instagram.com/s.w.a.y.shop/"
+                href="https://www.instagram.com/swayshopuz?igsh=MTBlcXdma3F6NW0wdQ=="
                 target="_blank"
                 rel="noreferrer"
                 className={styles.socialButton}
@@ -66,7 +75,7 @@ export default function Home() {
               </a>
 
               <a
-                href="https://www.tiktok.com/@YOUR_TIKTOK"
+                href="https://www.tiktok.com/@swayshopuz?_r=1&_t=ZS-97QaYnTfbpy"
                 target="_blank"
                 rel="noreferrer"
                 className={styles.socialButton}
@@ -74,22 +83,22 @@ export default function Home() {
               >
                 <TikTokIcon className={styles.socialIcon} />
               </a>
-
-              <a
-                href="tel:+998776084342"
-                className={styles.socialButton}
-                aria-label="Phone"
-              >
-                <PhoneIcon className={styles.socialIcon} />
-              </a>
             </div>
           </div>
 
           <p className={styles.subtitle}>
-            {t("desc1")}<br /><br />
-            {t("desc2")}<br /><br />
-            {t("desc3")}<br /><br />
-            {t("desc4")}<br /><br />
+            {t("desc1")}
+            <br />
+            <br />
+            {t("desc2")}
+            <br />
+            <br />
+            {t("desc3")}
+            <br />
+            <br />
+            {t("desc4")}
+            <br />
+            <br />
             {t("desc5")}
           </p>
         </div>
