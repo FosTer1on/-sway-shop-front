@@ -6,6 +6,9 @@ export const getProducts = (params) =>
   api.get("/catalog/products/", {
     params: {
       page: params.page,
+
+      seed: params.seed || undefined,
+      
       category: params.category || undefined,
 
       // store: params.stores.length ? params.stores : undefined,

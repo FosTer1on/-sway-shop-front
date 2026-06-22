@@ -35,6 +35,8 @@ const useProductStore = create((set, get) => ({
 
   activeCatalog: "products",
 
+  catalogSeed: crypto.randomUUID(),
+
   outfits: [],
   outfit: null,
 
@@ -51,6 +53,7 @@ const useProductStore = create((set, get) => ({
     try {
       const params = {
         page: currentPage,
+        seed: get().catalogSeed,
         ...filters,
       };
 
@@ -189,6 +192,7 @@ const useProductStore = create((set, get) => ({
       outfits: [],
       page: 1,
       hasMore: true,
+      catalogSeed: crypto.randomUUID(),
     }),
 }));
 
