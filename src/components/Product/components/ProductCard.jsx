@@ -86,17 +86,6 @@ export const ProductCard = ({
           className={styles.image}
           loading="lazy"
           decoding="async"
-          onError={(e) => {
-            const img = e.currentTarget;
-            if (!img.dataset.retried) {
-              img.dataset.retried = "true";
-              setTimeout(() => {
-                img.src = `${buildMediaUrl(
-                  image_url
-                )}?retry=${Date.now()}`;
-              }, 300);
-            }
-          }}
         />
 
         {/* ===== BADGES (TOP LEFT) ===== */}
