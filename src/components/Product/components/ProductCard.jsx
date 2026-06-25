@@ -25,7 +25,7 @@ export const ProductCard = ({
   id,
   slug,
   name,
-  images = [],
+  image_url,
   price,
   final_price,
   discount,
@@ -81,7 +81,7 @@ export const ProductCard = ({
     >
       <div className={styles.imageContainer}>
         <img
-          src={buildMediaUrl(images[0].image_url)}
+          src={buildMediaUrl(image_url)}
           alt={name}
           className={styles.image}
           loading="lazy"
@@ -92,7 +92,7 @@ export const ProductCard = ({
               img.dataset.retried = "true";
               setTimeout(() => {
                 img.src = `${buildMediaUrl(
-                  images[0]?.image_url
+                  image_url
                 )}?retry=${Date.now()}`;
               }, 300);
             }
