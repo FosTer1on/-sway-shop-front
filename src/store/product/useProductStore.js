@@ -51,10 +51,23 @@ const useProductStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
+      const isSearching = Boolean(filters.search?.trim());
+
       const params = {
         page: currentPage,
         seed: get().catalogSeed,
         ...filters,
+        ...(isSearching && {
+          search: filters.search.trim(),
+          category: "",
+          region: "",
+          brands: [],
+          sizes: [],
+          minPrice: "",
+          maxPrice: "",
+          discountOnly: false,
+          sort: "",
+        }),
       };
 
       const response = await getProducts(params);
