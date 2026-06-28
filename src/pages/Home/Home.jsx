@@ -74,7 +74,7 @@ export default function Home() {
                 <InstagramIcon className={styles.socialIcon} />
               </a>
 
-              <a
+              {/* <a
                 href="https://www.tiktok.com/@swayshopuz?_r=1&_t=ZS-97QaYnTfbpy"
                 target="_blank"
                 rel="noreferrer"
@@ -82,7 +82,7 @@ export default function Home() {
                 aria-label="TikTok"
               >
                 <TikTokIcon className={styles.socialIcon} />
-              </a>
+              </a> */}
             </div>
           </div>
 

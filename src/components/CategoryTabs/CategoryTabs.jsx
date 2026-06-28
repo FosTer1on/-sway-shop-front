@@ -9,12 +9,12 @@ import { UzbekistanFlag } from "@/components/icons/Flags/Uzbekistan";
 import { UsaFlag } from "@/components/icons/Flags/UsaFlag";
 import { useEffect, useState } from "react";
 import { trackEvent } from "@/api/analytics/events";
+import toast from "react-hot-toast";
 
 const CATEGORY_TABS = [
   { id: "usa", label: <UsaFlag /> },
   { id: "china", label: <ChinaFlag /> },
-  // { id: "europe", label: <EuropeFlag /> },
-  // { id: "russia", label: <RussiaFlag /> },
+  { id: "europe", label: <EuropeFlag /> },
   { id: "uzbekistan", label: <UzbekistanFlag /> },
 ];
 
@@ -62,29 +62,27 @@ const CategoryTabs = () => {
   }, [searchValue]);
 
   const handleTabClick = (tabId) => {
-    const newSearchParams = new URLSearchParams(searchParams);
-
-    if (tabId === "outfits") {
-      newSearchParams.set("tab", "outfits");
-      newSearchParams.delete("region");
-
-      setSearchParams(newSearchParams);
-      setActiveCatalog("outfits");
-      setFilters({ region: "" });
-
+    const disabledTabs = ["usa", "europe", "uzbekistan", "outfits"];
+  
+    if (disabledTabs.includes(tabId)) {
+      toast(t("disable_function_message"), {
+        duration: 4000,
+      });
       return;
     }
-
+  
+    const newSearchParams = new URLSearchParams(searchParams);
+  
     const region = tabId === "all" ? "" : tabId;
-
+  
     newSearchParams.delete("tab");
-
+  
     if (region) {
       newSearchParams.set("region", region);
     } else {
       newSearchParams.delete("region");
     }
-
+  
     setSearchParams(newSearchParams);
     setActiveCatalog("products");
     setFilters({ region });
