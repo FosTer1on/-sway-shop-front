@@ -24,6 +24,21 @@
   stroke-width: 2;
 }
 
+.filterBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background-color: hsl(var(--accent));
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
 .filterBar {
   display: flex;
   flex-direction: column;

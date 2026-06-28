@@ -33,6 +33,15 @@ export const FilterBar = ({ isOpen, onToggle }) => {
     maxPrice: filters.maxPrice,
   });
 
+  const activeFiltersCount =
+    Number(Boolean(filters.category)) +
+    filters.brands.length +
+    filters.sizes.length +
+    Number(Boolean(filters.sort)) +
+    Number(Boolean(filters.discountOnly)) +
+    Number(Boolean(filters.minPrice)) +
+    Number(Boolean(filters.maxPrice));
+
   // Вспомогательная функция для фильтрации чтобы менять URL страницы
   const updateFilters = (newFilters) => {
     const updatedFilters = {
@@ -190,6 +199,10 @@ export const FilterBar = ({ isOpen, onToggle }) => {
       >
         <MenuIcon className={styles.toggleIcon} />
         <span>{t("filters")}</span>
+
+        {activeFiltersCount > 0 && (
+          <span className={styles.filterBadge}>{activeFiltersCount}</span>
+        )}
       </button>
 
       <div className={`${styles.filterBar} ${isOpen ? styles.open : ""}`}>
@@ -281,15 +294,7 @@ export const FilterBar = ({ isOpen, onToggle }) => {
                       alt="Brand icon"
                       decoding="async"
                       onError={(e) => {
-                        const img = e.currentTarget;
-                        if (!img.dataset.retried) {
-                          img.dataset.retried = "true";
-                          setTimeout(() => {
-                            img.src = `${buildMediaUrl(
-                              images[0]?.image_url
-                            )}?retry=${Date.now()}`;
-                          }, 300);
-                        }
+                        e.currentTarget.style.display = "none";
                       }}
                     />
                     {/* {brand.name} */}
