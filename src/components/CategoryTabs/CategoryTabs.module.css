@@ -80,6 +80,13 @@
   font-size: 1rem;
 }
 
+.soonTab {
+  cursor: not-allowed;
+  opacity: 0.65;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+
 /* Gender */
 .genderTabs {
   display: grid;

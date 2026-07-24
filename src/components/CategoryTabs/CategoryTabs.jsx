@@ -3,20 +3,9 @@ import useProductStore from "@/store/product/useProductStore";
 import styles from "./CategoryTabs.module.css";
 import { useTranslation } from "react-i18next";
 import { ChinaFlag } from "@/components/icons/Flags/ChinaFlag";
-import { EuropeFlag } from "@/components/icons/Flags/EuropeFlag";
-import { RussiaFlag } from "@/components/icons/Flags/Russia";
-import { UzbekistanFlag } from "@/components/icons/Flags/Uzbekistan";
-import { UsaFlag } from "@/components/icons/Flags/UsaFlag";
 import { useEffect, useState } from "react";
 import { trackEvent } from "@/api/analytics/events";
 import toast from "react-hot-toast";
-
-const CATEGORY_TABS = [
-  { id: "usa", label: <UsaFlag /> },
-  { id: "china", label: <ChinaFlag /> },
-  { id: "europe", label: <EuropeFlag /> },
-  { id: "uzbekistan", label: <UzbekistanFlag /> },
-];
 
 const GENDER_TABS = [{ id: "female" }, { id: "all" }, { id: "male" }];
 
@@ -62,27 +51,37 @@ const CategoryTabs = () => {
   }, [searchValue]);
 
   const handleTabClick = (tabId) => {
-    const disabledTabs = ["usa", "europe", "uzbekistan", "outfits"];
-  
-    if (disabledTabs.includes(tabId)) {
+    if (tabId === "soon") {
       toast(t("disable_function_message"), {
         duration: 4000,
       });
+
       return;
     }
-  
+
     const newSearchParams = new URLSearchParams(searchParams);
-  
+
+    if (tabId === "outfits") {
+      newSearchParams.delete("region");
+      newSearchParams.set("tab", "outfits");
+
+      setSearchParams(newSearchParams);
+      setActiveCatalog("outfits");
+      setFilters({ region: "" });
+
+      return;
+    }
+
     const region = tabId === "all" ? "" : tabId;
-  
+
     newSearchParams.delete("tab");
-  
+
     if (region) {
       newSearchParams.set("region", region);
     } else {
       newSearchParams.delete("region");
     }
-  
+
     setSearchParams(newSearchParams);
     setActiveCatalog("products");
     setFilters({ region });
@@ -102,6 +101,7 @@ const CategoryTabs = () => {
       <div className={styles.tabsRow}>
         <div className={styles.tabsScroll}>
           <button
+            type="button"
             className={`${styles.tab} ${
               activeTab === "all" ? styles.active : ""
             }`}
@@ -109,24 +109,34 @@ const CategoryTabs = () => {
           >
             {t("all")}
           </button>
-          {CATEGORY_TABS.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => handleTabClick(tab.id)}
-              className={`${styles.tab} ${
-                activeTab === tab.id ? styles.active : ""
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+
           <button
+            type="button"
+            className={`${styles.tab} ${
+              activeTab === "china" ? styles.active : ""
+            }`}
+            onClick={() => handleTabClick("china")}
+            aria-label={t("china")}
+          >
+            <ChinaFlag />
+          </button>
+
+          <button
+            type="button"
             className={`${styles.tab} ${
               activeTab === "outfits" ? styles.active : ""
             }`}
             onClick={() => handleTabClick("outfits")}
           >
             {t("outfits")}
+          </button>
+
+          <button
+            type="button"
+            className={`${styles.tab} ${styles.soonTab}`}
+            onClick={() => handleTabClick("soon")}
+          >
+            SOON...
           </button>
         </div>
 
