@@ -1,15 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./ProductCard.module.css";
 import { useTranslation } from "react-i18next";
 import { buildMediaUrl } from "@/utils/media";
 import { PercentIcon, TelegramIcon } from "@/components/icons";
 import { buildTelegramOrderUrl } from "@/utils/telegram";
 import { trackEvent } from "@/api/analytics/events";
+import { useLayoutEffect } from "react";
 
 export const OutfitCard = ({
   slug,
   title,
-  image,
+  image_url,
   price,
   final_price,
   discount,
@@ -19,6 +20,10 @@ export const OutfitCard = ({
 
   const navigate = useNavigate();
 
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
+
   const telegramOrderUrl = buildTelegramOrderUrl(slug);
 
   const isDiscount = discount > 0;
@@ -26,13 +31,17 @@ export const OutfitCard = ({
   return (
     <div className={styles.card} onClick={() => navigate(`/outfit/${slug}`)}>
       <div className={styles.imageContainer}>
-        <img
-          src={buildMediaUrl(image)}
-          alt={title}
-          className={styles.image}
-          loading="lazy"
-          decoding="async"
-        />
+        {image_url ? (
+          <img
+            src={buildMediaUrl(image_url)}
+            alt={title}
+            className={styles.image}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div className={styles.imagePlaceholder}>{t("no_image")}</div>
+        )}
 
         <div className={styles.badgesContainer}>
           {isDiscount && (

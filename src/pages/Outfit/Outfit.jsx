@@ -32,12 +32,6 @@ export default function Outfit() {
 
   const isDiscount = outfit.discount > 0;
 
-  const outfitImages = [
-    {
-      image_url: outfit.image,
-    },
-  ];
-
   const telegramOrderUrl = buildTelegramOrderUrl(outfit.slug);
 
   return (
@@ -50,7 +44,7 @@ export default function Outfit() {
 
         <div className={styles.content}>
           <div className={styles.gallerySection}>
-            <ProductGallery images={outfitImages} title={outfit.title} />
+            <ProductGallery images={outfit.images || []} title={outfit.title} />
           </div>
 
           <div className={styles.infoSection}>
@@ -77,6 +71,8 @@ export default function Outfit() {
                   {isDiscount ? outfit.final_price : outfit.price} {t("sum")}
                 </span>
               </div>
+
+              <p className={styles.priceNote}>{t("price_info")}</p>
             </div>
 
             <a
@@ -102,7 +98,7 @@ export default function Outfit() {
           <div className={styles.outfitProductsList}>
             {outfit.items.map((item) => {
               const product = item.product;
-              const image = product.images?.[0]?.image_url;
+              const image = product.image_url;
 
               return (
                 <Link
