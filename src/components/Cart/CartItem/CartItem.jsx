@@ -7,7 +7,7 @@ import { buildMediaUrl } from "@/utils/media";
 export const CartItem = ({
   id,
   name,
-  images,
+  image_url,
   item_price,
   item_discount_price,
   total_price,
@@ -28,7 +28,13 @@ export const CartItem = ({
         onClick={onClick}
         style={{ cursor: "pointer" }}
       >
-        <img src={buildMediaUrl(images[0]?.image_url)} alt={name} className={styles.image} loading="lazy" />
+        <img
+          src={buildMediaUrl(image_url)}
+          alt={name}
+          className={styles.image}
+          loading="lazy"
+          decoding="async"
+        />
       </div>
 
       <div className={styles.content}>
@@ -80,7 +86,9 @@ export const CartItem = ({
 
         <div className={styles.lineTotal}>
           <p className={styles.lineTotalLabel}>{t("item_sum")}</p>
-          <p>{total_price} {t("sum")}</p>
+          <p>
+            {total_price} {t("sum")}
+          </p>
         </div>
       </div>
     </div>

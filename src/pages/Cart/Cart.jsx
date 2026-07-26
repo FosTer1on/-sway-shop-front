@@ -72,13 +72,13 @@ export default function Cart() {
                 key={item.id}
                 id={item.id}
                 name={item.product.name}
-                images={item.product.images}
+                image_url={item.product.image_url}
                 item_price={item.product.price}
                 item_discount_price={item.product.final_price}
                 total_price={item.total_price}
                 size={item.size}
                 quantity={item.quantity}
-                is_discount={item.discount > 0}
+                is_discount={item.product.discount > 0}
                 onIncrease={() =>
                   updateItemQuantity(item.id, item.quantity + 1)
                 }
