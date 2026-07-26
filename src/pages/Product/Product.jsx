@@ -1,5 +1,5 @@
 // & REACT
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 // ^ COMPONENTS
 import Layout from "@/components/NavBar/Layout";
@@ -39,6 +39,10 @@ export default function Product() {
   const [selectedSize, setSelectedSize] = useState(null);
 
   const { addToCart, isInCart, fetchCart, loading } = useCartStore();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
 
   useEffect(() => {
     fetchProductBySlug(slug);
